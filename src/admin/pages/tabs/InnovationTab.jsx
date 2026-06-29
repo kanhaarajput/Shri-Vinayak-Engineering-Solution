@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Save, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+
 export default function InnovationTab() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -19,7 +21,7 @@ export default function InnovationTab() {
 
   const fetchInnovation = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/innovation');
+      const res = await axios.get(`${API_URL}/innovation`);
       if (res.data && res.data._id) {
         setFormData({
           title: res.data.title || '',
@@ -57,7 +59,7 @@ export default function InnovationTab() {
         data.append('image', imageFile);
       }
 
-      await axios.post('http://localhost:3000/api/innovation', data, {
+      await axios.post(`${API_URL}/innovation`, data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       

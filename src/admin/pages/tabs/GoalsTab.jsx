@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Plus, Edit2, Trash2, Loader2, Icon as LucideIcon, Rocket, Factory, Zap, ShieldCheck, MapPin, Globe } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+
 // Available icons mapping
 const AVAILABLE_ICONS = {
   Rocket, Factory, Zap, ShieldCheck, MapPin, Globe
@@ -28,7 +30,7 @@ export default function GoalsTab() {
 
   const fetchGoals = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/goals');
+      const res = await axios.get(`${API_URL}/goals`);
       setGoals(res.data);
     } catch (error) {
       toast.error('Failed to load goals');
@@ -61,10 +63,10 @@ export default function GoalsTab() {
     setSaving(true);
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/api/goals/${editingId}`, formData);
+        await axios.put(`$API_URL/goals/${editingId}`, formData);
         toast.success('Goal updated');
       } else {
-        await axios.post('http://localhost:3000/api/goals', formData);
+        await axios.post(`${API_URL}/goals`, formData);
         toast.success('Goal added');
       }
       fetchGoals();
@@ -79,7 +81,7 @@ export default function GoalsTab() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this goal?')) return;
     try {
-      await axios.delete(`http://localhost:3000/api/goals/${id}`);
+      await axios.delete(`$API_URL/goals/${id}`);
       toast.success('Goal deleted');
       fetchGoals();
     } catch (error) {

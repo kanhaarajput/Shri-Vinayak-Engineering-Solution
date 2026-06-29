@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Plus, Edit2, Trash2, ArrowUp, ArrowDown, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+
 export default function MachinesTab() {
   const [machines, setMachines] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ export default function MachinesTab() {
 
   const fetchMachines = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/machines');
+      const res = await axios.get(`${API_URL}/machines`);
       setMachines(res.data);
     } catch (error) {
       toast.error('Failed to load machines');
@@ -81,10 +83,10 @@ export default function MachinesTab() {
       if (imageFile) data.append('image', imageFile);
 
       if (editingId) {
-        await axios.put(`http://localhost:3000/api/machines/${editingId}`, data);
+        await axios.put(`$API_URL/machines/${editingId}`, data);
         toast.success('Machine updated');
       } else {
-        await axios.post('http://localhost:3000/api/machines', data);
+        await axios.post(`${API_URL}/machines`, data);
         toast.success('Machine added');
       }
       fetchMachines();
@@ -99,7 +101,7 @@ export default function MachinesTab() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this machine?')) return;
     try {
-      await axios.delete(`http://localhost:3000/api/machines/${id}`);
+      await axios.delete(`$API_URL/machines/${id}`);
       toast.success('Machine deleted');
       fetchMachines();
     } catch (error) {
@@ -124,8 +126,8 @@ export default function MachinesTab() {
     // Update backend order
     try {
       await Promise.all([
-        axios.put(`http://localhost:3000/api/machines/${newMachines[index]._id}`, { order: index }),
-        axios.put(`http://localhost:3000/api/machines/${newMachines[index + direction]._id}`, { order: index + direction })
+        axios.put(`$API_URL/machines/${newMachines[index]._id}`, { order: index }),
+        axios.put(`$API_URL/machines/${newMachines[index + direction]._id}`, { order: index + direction })
       ]);
       toast.success('Order updated');
     } catch (error) {
