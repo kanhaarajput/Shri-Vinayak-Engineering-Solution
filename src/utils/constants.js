@@ -3,7 +3,7 @@ export const APP_NAME = 'Shri'
 export const APP_VERSION = '1.0.0'
 
 // API
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
 // Breakpoints (mirrors Tailwind defaults)
 export const BREAKPOINTS = {

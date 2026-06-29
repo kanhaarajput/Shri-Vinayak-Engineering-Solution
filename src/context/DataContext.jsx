@@ -3,7 +3,7 @@ import { CATEGORIES as INITIAL_CATEGORIES } from '../data/galleryData';
 import { INITIAL_SITE_CONTENT } from '../data/siteContentData';
 
 const DataContext = createContext();
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 export const useData = () => {
   const context = useContext(DataContext);
