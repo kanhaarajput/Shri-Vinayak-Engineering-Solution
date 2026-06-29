@@ -28,6 +28,8 @@ export const DataProvider = ({ children }) => {
   const [machines, setMachines] = useState([]);
   const [goals, setGoals] = useState([]);
   const [innovation, setInnovation] = useState({});
+  const [beforeAfter, setBeforeAfter] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -40,7 +42,7 @@ export const DataProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, machinesRes, goalsRes, innovationRes] = await Promise.all([
+        const [servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, machinesRes, goalsRes, innovationRes, beforeAfterRes, videosRes] = await Promise.all([
           fetch(`${API_URL}/services`),
           fetch(`${API_URL}/gallery`),
           fetch(`${API_URL}/site-content`),
@@ -49,7 +51,9 @@ export const DataProvider = ({ children }) => {
           fetch(`${API_URL}/future-vision`),
           fetch(`${API_URL}/machines`),
           fetch(`${API_URL}/goals`),
-          fetch(`${API_URL}/innovation`)
+          fetch(`${API_URL}/innovation`),
+          fetch(`${API_URL}/before-after`),
+          fetch(`${API_URL}/videos`)
         ]);
 
         if (servicesRes.ok) {
@@ -95,6 +99,16 @@ export const DataProvider = ({ children }) => {
 
         if (innovationRes.ok) {
           setInnovation(await innovationRes.json());
+        }
+
+        if (beforeAfterRes.ok) {
+          const baData = await beforeAfterRes.json();
+          setBeforeAfter(baData.map(b => ({ ...b, id: b._id })));
+        }
+
+        if (videosRes.ok) {
+          const vData = await videosRes.json();
+          setVideos(vData.map(v => ({ ...v, id: v._id })));
         }
       } catch (err) {
         console.error("Error fetching data from MongoDB:", err);
@@ -291,6 +305,54 @@ export const DataProvider = ({ children }) => {
     } catch (err) { console.error(err); }
   };
 
+  // Before/After Methods
+  const addBeforeAfter = async (item) => {
+    try {
+      const res = await fetch(`${API_URL}/before-after`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setBeforeAfter((prev) => [newItem, ...prev]);
+      }
+    } catch (err) { console.error(err); }
+  };
+
+  const deleteBeforeAfter = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/before-after/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setBeforeAfter((prev) => prev.filter((item) => item.id !== id));
+      }
+    } catch (err) { console.error(err); }
+  };
+
+  // Video Methods
+  const addVideo = async (video) => {
+    try {
+      const res = await fetch(`${API_URL}/videos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(video)
+      });
+      if (res.ok) {
+        const newVideo = await res.json();
+        setVideos((prev) => [newVideo, ...prev]);
+      }
+    } catch (err) { console.error(err); }
+  };
+
+  const deleteVideo = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/videos/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setVideos((prev) => prev.filter((v) => v.id !== id));
+      }
+    } catch (err) { console.error(err); }
+  };
+
   const value = {
     categories,
     projects,
@@ -302,6 +364,8 @@ export const DataProvider = ({ children }) => {
     machines,
     goals,
     innovation,
+    beforeAfter,
+    videos,
     isAuthenticated,
     loading,
     error,
@@ -319,7 +383,11 @@ export const DataProvider = ({ children }) => {
     deleteMessage,
     addTeamMember,
     updateTeamMember,
-    deleteTeamMember
+    deleteTeamMember,
+    addBeforeAfter,
+    deleteBeforeAfter,
+    addVideo,
+    deleteVideo
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

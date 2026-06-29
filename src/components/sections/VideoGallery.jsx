@@ -7,11 +7,15 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-coverflow'
 
 import { HiPlay } from 'react-icons/hi'
-import { VIDEOS } from '@data/galleryData'
+import { useData } from '../../context/DataContext'
 
 export default function VideoGallery() {
+  const { videos } = useData();
+  
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  if (!videos || videos.length === 0) return null;
 
   return (
     <section ref={ref} className="relative py-24 bg-gray-950 overflow-hidden border-t border-white/5">
@@ -73,12 +77,12 @@ export default function VideoGallery() {
           loop={true}
           className="w-full py-10"
         >
-          {VIDEOS.map((video) => (
+          {videos.map((video) => (
             <SwiperSlide key={video.id} className="w-[320px] sm:w-[500px] lg:w-[700px] h-[220px] sm:h-[300px] lg:h-[400px] relative rounded-3xl overflow-hidden group border border-white/10">
               
               {/* Thumbnail */}
               <img 
-                src={video.thumbnail} 
+                src={video.thumbnailUrl || 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80'} 
                 alt={video.title} 
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 

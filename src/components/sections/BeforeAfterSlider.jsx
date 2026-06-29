@@ -3,48 +3,61 @@ import { motion, useInView } from 'framer-motion'
 import { fadeUp } from '@utils/animations'
 import { HiSwitchHorizontal } from 'react-icons/hi'
 
-import imgBefore from '@assets/die_before.png'
-import imgAfter from '@assets/die_after.png'
+import { useData } from '../../context/DataContext'
 
 export default function BeforeAfterSlider() {
-  const [sliderPosition, setSliderPosition] = useState(50)
-  const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef(null)
+  const { beforeAfter } = useData()
+  
+  // Create state for each slider independently
+  const [sliderPositions, setSliderPositions] = useState({})
+  const [draggingId, setDraggingId] = useState(null)
+  const containerRefs = useRef({})
+  
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
-  const handleMove = (clientX) => {
-    if (!containerRef.current) return
-    const { left, width } = containerRef.current.getBoundingClientRect()
+  // Use default images if database is empty
+  const items = beforeAfter.length > 0 ? beforeAfter : [
+    { _id: 'default', title: 'Damaged Die Repair', beforeImage: '/assets/die_before.png', afterImage: '/assets/die_after.png' }
+  ];
+
+  const handleMove = (id, clientX) => {
+    const container = containerRefs.current[id]
+    if (!container) return
+    const { left, width } = container.getBoundingClientRect()
     const x = clientX - left
     const percent = Math.max(0, Math.min(100, (x / width) * 100))
-    setSliderPosition(percent)
+    setSliderPositions(prev => ({ ...prev, [id]: percent }))
   }
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return
-    handleMove(e.clientX)
+    if (!draggingId) return
+    handleMove(draggingId, e.clientX)
   }
 
   const handleTouchMove = (e) => {
-    if (!isDragging) return
-    handleMove(e.touches[0].clientX)
+    if (!draggingId) return
+    handleMove(draggingId, e.touches[0].clientX)
   }
 
   useEffect(() => {
-    if (isDragging) {
+    if (draggingId) {
       window.addEventListener('mousemove', handleMouseMove)
-      window.addEventListener('mouseup', () => setIsDragging(false))
+      window.addEventListener('mouseup', () => setDraggingId(null))
       window.addEventListener('touchmove', handleTouchMove)
-      window.addEventListener('touchend', () => setIsDragging(false))
+      window.addEventListener('touchend', () => setDraggingId(null))
     }
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', () => setIsDragging(false))
+      window.removeEventListener('mouseup', () => setDraggingId(null))
       window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', () => setIsDragging(false))
+      window.removeEventListener('touchend', () => setDraggingId(null))
     }
-  }, [isDragging])
+  }, [draggingId])
+
+
+
+
 
   return (
     <section ref={ref} className="py-24 bg-[#030610] relative overflow-hidden">
@@ -69,76 +82,91 @@ export default function BeforeAfterSlider() {
           </p>
         </motion.div>
 
-        {/* Slider Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none"
-          ref={containerRef}
-          onMouseDown={(e) => {
-            setIsDragging(true)
-            handleMove(e.clientX)
-          }}
-          onTouchStart={(e) => {
-            setIsDragging(true)
-            handleMove(e.touches[0].clientX)
-          }}
-        >
-          {/* Aspect Ratio Wrapper */}
-          <div className="relative w-full pb-[60%] sm:pb-[50%]">
-            
-            {/* Background Image (Before) */}
-            <img 
-              src={imgBefore} 
-              alt="Damaged Die Before Repair"
-              className="absolute inset-0 w-full h-full object-cover"
-              draggable="false"
-            />
-            
-            {/* Before Label */}
-            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-              <span className="px-4 py-2 bg-gray-950/80 backdrop-blur-md text-white text-sm font-bold tracking-widest uppercase rounded-full border border-white/10">
-                Before
-              </span>
-            </div>
-
-            {/* Foreground Image Wrapper (After) */}
-            <div 
-              className="absolute inset-0 z-20 overflow-hidden border-r border-white/50"
-              style={{ width: `${sliderPosition}%` }}
-            >
-              {/* Foreground Image */}
-              <img 
-                src={imgAfter} 
-                alt="Repaired Die After Welding"
-                className="absolute inset-0 h-full object-cover"
-                style={{ width: `${(100 / sliderPosition) * 100}%`, maxWidth: 'none' }}
-                draggable="false"
-              />
-              
-              {/* After Label */}
-              <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30" style={{ right: `calc(${100 - sliderPosition}% + 1rem)` }}>
-                {sliderPosition > 20 && (
-                  <span className="px-4 py-2 bg-amber-500/90 backdrop-blur-md text-gray-950 text-sm font-black tracking-widest uppercase rounded-full border border-amber-400 whitespace-nowrap">
-                    After
-                  </span>
+        {/* Dynamic Sliders */}
+        <div className="flex flex-col gap-12">
+          {items.map((item, idx) => {
+            const pos = sliderPositions[item._id] ?? 50;
+            return (
+              <motion.div
+                key={item._id || idx}
+                initial={{ opacity: 0, y: 40 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 + (idx * 0.1) }}
+                className="relative max-w-4xl w-full mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none"
+                ref={el => containerRefs.current[item._id] = el}
+                onMouseDown={(e) => {
+                  setDraggingId(item._id)
+                  handleMove(item._id, e.clientX)
+                }}
+                onTouchStart={(e) => {
+                  setDraggingId(item._id)
+                  handleMove(item._id, e.touches[0].clientX)
+                }}
+              >
+                {/* Title overlay */}
+                {item.title && (
+                  <div className="absolute top-0 left-0 w-full p-4 bg-gradient-to-b from-black/80 to-transparent z-40 text-center pointer-events-none">
+                    <h3 className="text-white font-bold tracking-wide">{item.title}</h3>
+                  </div>
                 )}
-              </div>
-            </div>
+                
+                {/* Aspect Ratio Wrapper */}
+                <div className="relative w-full pb-[60%] sm:pb-[50%] bg-gray-900">
+                  
+                  {/* Background Image (Before) */}
+                  <img 
+                    src={item.beforeImage} 
+                    alt="Before"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    draggable="false"
+                  />
+                  
+                  {/* Before Label */}
+                  <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-10 pointer-events-none">
+                    <span className="px-4 py-2 bg-gray-950/80 backdrop-blur-md text-white text-sm font-bold tracking-widest uppercase rounded-full border border-white/10">
+                      Before
+                    </span>
+                  </div>
 
-            {/* Custom Slider Handle */}
-            <div 
-              className="absolute top-0 bottom-0 z-30 w-1 bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] cursor-ew-resize flex items-center justify-center -translate-x-1/2"
-              style={{ left: `${sliderPosition}%` }}
-            >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-amber-400 group-hover:scale-110 transition-transform">
-                <HiSwitchHorizontal size={20} />
-              </div>
-            </div>
+                  {/* Foreground Image Wrapper (After) */}
+                  <div 
+                    className="absolute inset-0 z-20 overflow-hidden border-r border-white/50"
+                    style={{ width: `${pos}%` }}
+                  >
+                    {/* Foreground Image */}
+                    <img 
+                      src={item.afterImage} 
+                      alt="After"
+                      className="absolute inset-0 h-full object-cover"
+                      style={{ width: `${(100 / pos) * 100}%`, maxWidth: 'none' }}
+                      draggable="false"
+                    />
+                    
+                    {/* After Label */}
+                    <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 pointer-events-none" style={{ right: `calc(${100 - pos}% + 1rem)` }}>
+                      {pos > 20 && (
+                        <span className="px-4 py-2 bg-amber-500/90 backdrop-blur-md text-gray-950 text-sm font-black tracking-widest uppercase rounded-full border border-amber-400 whitespace-nowrap">
+                          After
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-          </div>
-        </motion.div>
+                  {/* Custom Slider Handle */}
+                  <div 
+                    className="absolute top-0 bottom-0 z-30 w-1 bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] cursor-ew-resize flex items-center justify-center -translate-x-1/2"
+                    style={{ left: `${pos}%` }}
+                  >
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-amber-400 group-hover:scale-110 transition-transform">
+                      <HiSwitchHorizontal size={20} />
+                    </div>
+                  </div>
+
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
 
       </div>
     </section>

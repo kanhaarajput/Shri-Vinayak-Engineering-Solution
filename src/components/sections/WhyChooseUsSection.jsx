@@ -52,49 +52,16 @@ function useCounter(end, duration = 2000, start = 0, enabled = false) {
   return count
 }
 
-/* ─── Feature data ───────────────────────────────────────────────────────── */
-const FEATURES = [
-  {
-    icon: HiStar,
-    title: 'High Precision',
-    desc: 'Micron-level accuracy across all laser welding, engraving, and VMC wirecut operations.',
-    accent: '#fbbf24',     // amber-400
-    glowColor: 'rgba(251,191,36,0.12)',
-    borderColor: 'rgba(251,191,36,0.20)',
-  },
-  {
-    icon: HiBoltSlash,
-    title: 'Fast Delivery',
-    desc: 'Streamlined workflows and dedicated capacity ensure on-time delivery — every single project.',
-    accent: '#38bdf8',     // sky-400
-    glowColor: 'rgba(56,189,248,0.12)',
-    borderColor: 'rgba(56,189,248,0.20)',
-  },
-  {
-    icon: HiCog8Tooth,
-    title: 'Advanced Machinery',
-    desc: 'State-of-the-art CNC, VMC, Wire EDM, and laser systems from world-leading manufacturers.',
-    accent: '#a78bfa',     // violet-400
-    glowColor: 'rgba(167,139,250,0.12)',
-    borderColor: 'rgba(167,139,250,0.20)',
-  },
-  {
-    icon: HiUserGroup,
-    title: 'Skilled Experts',
-    desc: 'A seasoned team of 50+ engineers with deep domain expertise in precision engineering.',
-    accent: '#34d399',     // emerald-400
-    glowColor: 'rgba(52,211,153,0.12)',
-    borderColor: 'rgba(52,211,153,0.20)',
-  },
-  {
-    icon: HiCurrencyRupee,
-    title: 'Affordable Pricing',
-    desc: 'Competitive rates without compromising quality — maximising ROI for every client.',
-    accent: '#fb923c',     // orange-400
-    glowColor: 'rgba(251,146,60,0.12)',
-    borderColor: 'rgba(251,146,60,0.20)',
-  },
+const DEFAULT_STYLES = [
+  { accent: '#fbbf24', glowColor: 'rgba(251,191,36,0.12)', borderColor: 'rgba(251,191,36,0.20)' },
+  { accent: '#38bdf8', glowColor: 'rgba(56,189,248,0.12)', borderColor: 'rgba(56,189,248,0.20)' },
+  { accent: '#a78bfa', glowColor: 'rgba(167,139,250,0.12)', borderColor: 'rgba(167,139,250,0.20)' },
+  { accent: '#34d399', glowColor: 'rgba(52,211,153,0.12)', borderColor: 'rgba(52,211,153,0.20)' },
+  { accent: '#fb923c', glowColor: 'rgba(251,146,60,0.12)', borderColor: 'rgba(251,146,60,0.20)' },
 ]
+import { useData } from '../../context/DataContext'
+import * as Icons from 'react-icons/hi2'
+import * as IconsSolid from 'react-icons/hi'
 
 /* ─── Counter stats ──────────────────────────────────────────────────────── */
 const COUNTERS = [
@@ -191,8 +158,10 @@ function FeatureCard({ icon: Icon, title, desc, accent, glowColor, borderColor, 
   )
 }
 
-/* ─── WhyChooseUs Section ────────────────────────────────────────────────── */
 export default function WhyChooseUsSection() {
+  const { siteContent } = useData();
+  const whyChooseUs = siteContent?.whyChooseUs || { title: 'Why Choose Us', subtitle: 'Built on Trust & Precision', features: [] };
+
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -234,13 +203,13 @@ export default function WhyChooseUsSection() {
           <div className="flex items-center justify-center gap-3 mb-5">
             <div className="h-px w-8 bg-amber-500/50 rounded-full" />
             <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
-              Why Choose Us
+              {whyChooseUs.title}
             </span>
             <div className="h-px w-8 bg-amber-500/50 rounded-full" />
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
-            Built on{' '}
+            {whyChooseUs.subtitle.split(' ')[0]}{' '}
             <span
               style={{
                 backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
@@ -249,15 +218,9 @@ export default function WhyChooseUsSection() {
                 backgroundClip: 'text',
               }}
             >
-              Trust &amp; Precision
+              {whyChooseUs.subtitle.split(' ').slice(1).join(' ')}
             </span>
           </h2>
-
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
-            Decades of engineering excellence, state-of-the-art machinery, and
-            an unwavering commitment to quality make us the preferred partner
-            for industries across India.
-          </p>
         </motion.div>
 
         {/* ── Animated counter bar ──────────────────────────────────── */}
@@ -281,20 +244,23 @@ export default function WhyChooseUsSection() {
           </div>
         </motion.div>
 
-        {/* ── Feature cards — 2 + 3 layout ─────────────────────────── */}
         <div className="space-y-5">
           {/* Top row — 2 cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {FEATURES.slice(0, 2).map((f, i) => (
-              <FeatureCard key={f.title} {...f} index={i} />
-            ))}
+            {whyChooseUs.features.slice(0, 2).map((f, i) => {
+              const style = DEFAULT_STYLES[i % DEFAULT_STYLES.length];
+              const IconComp = Icons[f.icon] || IconsSolid[f.icon] || Icons.HiStar;
+              return <FeatureCard key={i} title={f.title} desc={f.description} icon={IconComp} {...style} index={i} />
+            })}
           </div>
 
           {/* Bottom row — 3 cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.slice(2).map((f, i) => (
-              <FeatureCard key={f.title} {...f} index={i + 2} />
-            ))}
+            {whyChooseUs.features.slice(2).map((f, i) => {
+              const style = DEFAULT_STYLES[(i + 2) % DEFAULT_STYLES.length];
+              const IconComp = Icons[f.icon] || IconsSolid[f.icon] || Icons.HiStar;
+              return <FeatureCard key={i+2} title={f.title} desc={f.description} icon={IconComp} {...style} index={i + 2} />
+            })}
           </div>
         </div>
 
