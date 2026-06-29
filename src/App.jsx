@@ -14,18 +14,11 @@ const NotFound = lazy(() => import('@pages/NotFound'))
 const AdminLayout = lazy(() => import('./admin/layouts/AdminLayout'))
 const AdminLogin = lazy(() => import('./admin/pages/AdminLogin'))
 const AdminDashboard = lazy(() => import('./admin/pages/AdminDashboard'))
-const AdminGallery = lazy(() => import('./admin/pages/AdminGallery'))
-const AdminServices = lazy(() => import('./admin/pages/AdminServices'))
-const AdminHome = lazy(() => import('./admin/pages/AdminHome'))
-const AdminAbout = lazy(() => import('./admin/pages/AdminAbout'))
-const AdminContact = lazy(() => import('./admin/pages/AdminContact'))
-const AdminMessages = lazy(() => import('./admin/pages/AdminMessages'))
-const AdminTeam = lazy(() => import('./admin/pages/AdminTeam'))
-const AdminFuturePlans = lazy(() => import('./admin/pages/AdminFuturePlans'))
-const AdminFeatures = lazy(() => import('./admin/pages/AdminFeatures'))
-const AdminWorkflow = lazy(() => import('./admin/pages/AdminWorkflow'))
-const AdminMachinery = lazy(() => import('./admin/pages/AdminMachinery'))
-const AdminTestimonials = lazy(() => import('./admin/pages/AdminTestimonials'))
+const AdminHomePage = lazy(() => import('./admin/pages/AdminHomePage'))
+const AdminAboutPage = lazy(() => import('./admin/pages/AdminAboutPage'))
+const AdminServicesPage = lazy(() => import('./admin/pages/AdminServicesPage'))
+const AdminGalleryPage = lazy(() => import('./admin/pages/AdminGalleryPage'))
+const AdminContactPage = lazy(() => import('./admin/pages/AdminContactPage'))
 
 import { DataProvider } from './context/DataContext'
 
@@ -51,18 +44,11 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       { index: true, element: <AdminDashboard /> },
-      { path: 'home', element: <AdminHome /> },
-      { path: 'about', element: <AdminAbout /> },
-      { path: 'contact', element: <AdminContact /> },
-      { path: 'gallery', element: <AdminGallery /> },
-      { path: 'services', element: <AdminServices /> },
-      { path: 'messages', element: <AdminMessages /> },
-      { path: 'team', element: <AdminTeam /> },
-      { path: 'future-plans', element: <AdminFuturePlans /> },
-      { path: 'features', element: <AdminFeatures /> },
-      { path: 'workflow', element: <AdminWorkflow /> },
-      { path: 'machinery', element: <AdminMachinery /> },
-      { path: 'testimonials', element: <AdminTestimonials /> },
+      { path: 'home', element: <AdminHomePage /> },
+      { path: 'about', element: <AdminAboutPage /> },
+      { path: 'services', element: <AdminServicesPage /> },
+      { path: 'gallery', element: <AdminGalleryPage /> },
+      { path: 'contact', element: <AdminContactPage /> },
     ],
   },
 ])

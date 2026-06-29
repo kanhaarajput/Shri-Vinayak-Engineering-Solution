@@ -67,7 +67,7 @@ export default function AdminServices() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Manage Services</h2>
+        <h2 className="text-lg font-semibold text-gray-700">Manage Services</h2>
         <button
           onClick={() => openModal()}
           className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
@@ -218,3 +218,4 @@ export default function AdminServices() {
     </div>
   );
 }
+

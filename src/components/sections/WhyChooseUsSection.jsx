@@ -1,8 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
-} from 'react-icons/hi'
-import {
   HiStar,
   HiBoltSlash,
   HiCog8Tooth,

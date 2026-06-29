@@ -25,12 +25,7 @@ export default function AdminHome() {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Home Page Settings</h2>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-8">
           
           {/* Hero Section */}
           <div className="space-y-4">
@@ -123,7 +118,7 @@ export default function AdminHome() {
             {isSaved && <span className="text-emerald-500 font-medium text-sm">✓ Changes saved successfully!</span>}
           </div>
         </form>
-      </div>
     </div>
   );
 }
+

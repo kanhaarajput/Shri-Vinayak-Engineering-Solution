@@ -9,7 +9,7 @@ export default function AdminMessages() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Inbox</h2>
+        <h2 className="text-lg font-semibold text-gray-700">Inbox</h2>
         <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-100 font-medium text-gray-600">
           Total Messages: {messages.length}
         </div>
@@ -74,3 +74,4 @@ export default function AdminMessages() {
     </div>
   );
 }
+

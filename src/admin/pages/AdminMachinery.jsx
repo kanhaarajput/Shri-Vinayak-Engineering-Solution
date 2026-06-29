@@ -62,7 +62,7 @@ export default function AdminMachinery() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Factory Machinery Showcase</h2>
+        <h2 className="text-lg font-semibold text-gray-700">Factory Machinery Showcase</h2>
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
@@ -154,3 +154,4 @@ export default function AdminMachinery() {
     </div>
   );
 }
+

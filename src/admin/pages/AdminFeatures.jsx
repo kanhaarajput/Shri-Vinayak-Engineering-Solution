@@ -35,7 +35,7 @@ export default function AdminFeatures() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Features ("Why Choose Us")</h2>
+        <h2 className="text-lg font-semibold text-gray-700">Features ("Why Choose Us")</h2>
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
@@ -127,3 +127,4 @@ export default function AdminFeatures() {
     </div>
   );
 }
+
