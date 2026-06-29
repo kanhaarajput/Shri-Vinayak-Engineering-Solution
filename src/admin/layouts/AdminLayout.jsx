@@ -16,6 +16,7 @@ export default function AdminLayout() {
     { name: 'Home Content', path: '/admin/home', icon: Home },
     { name: 'About Content', path: '/admin/about', icon: Info },
     { name: 'Team', path: '/admin/team', icon: Users },
+    { name: 'Future Plans', path: '/admin/future-plans', icon: Info },
     { name: 'Contact Info', path: '/admin/contact', icon: Phone },
     { name: 'Gallery', path: '/admin/gallery', icon: ImageIcon },
     { name: 'Services', path: '/admin/services', icon: Briefcase },

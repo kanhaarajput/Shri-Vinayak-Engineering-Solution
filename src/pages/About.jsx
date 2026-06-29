@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import SEO from '@components/seo/SEO'
 import { staggerContainer, fadeUp, hoverLift } from '@utils/animations'
 import { useData } from '../context/DataContext'
+import FutureVisionSection from '../components/sections/FutureVisionSection'
 
 export default function About() {
   const { team } = useData();
@@ -124,6 +125,10 @@ export default function About() {
         </motion.div>
         
       </div>
+
+      {/* ── Dynamic CMS Future Vision Section ── */}
+      <FutureVisionSection />
+      
     </div>
   )
 }

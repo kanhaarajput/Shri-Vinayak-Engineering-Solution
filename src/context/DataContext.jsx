@@ -24,6 +24,10 @@ export const DataProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [team, setTeam] = useState([]);
   const [siteContent, setSiteContent] = useState(INITIAL_SITE_CONTENT);
+  const [futureVision, setFutureVision] = useState({});
+  const [machines, setMachines] = useState([]);
+  const [goals, setGoals] = useState([]);
+  const [innovation, setInnovation] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -36,12 +40,16 @@ export const DataProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [servicesRes, galleryRes, contentRes, messagesRes, teamRes] = await Promise.all([
+        const [servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, machinesRes, goalsRes, innovationRes] = await Promise.all([
           fetch(`${API_URL}/services`),
           fetch(`${API_URL}/gallery`),
           fetch(`${API_URL}/site-content`),
           fetch(`${API_URL}/messages`),
-          fetch(`${API_URL}/team`)
+          fetch(`${API_URL}/team`),
+          fetch(`${API_URL}/future-vision`),
+          fetch(`${API_URL}/machines`),
+          fetch(`${API_URL}/goals`),
+          fetch(`${API_URL}/innovation`)
         ]);
 
         if (servicesRes.ok) {
@@ -69,6 +77,24 @@ export const DataProvider = ({ children }) => {
         if (teamRes.ok) {
           const teamData = await teamRes.json();
           setTeam(teamData.map(t => ({ ...t, id: t._id })));
+        }
+
+        if (visionRes.ok) {
+          setFutureVision(await visionRes.json());
+        }
+
+        if (machinesRes.ok) {
+          const machinesData = await machinesRes.json();
+          setMachines(machinesData.map(m => ({ ...m, id: m._id })));
+        }
+
+        if (goalsRes.ok) {
+          const goalsData = await goalsRes.json();
+          setGoals(goalsData.map(g => ({ ...g, id: g._id })));
+        }
+
+        if (innovationRes.ok) {
+          setInnovation(await innovationRes.json());
         }
       } catch (err) {
         console.error("Error fetching data from MongoDB:", err);
@@ -272,6 +298,10 @@ export const DataProvider = ({ children }) => {
     siteContent,
     messages,
     team,
+    futureVision,
+    machines,
+    goals,
+    innovation,
     isAuthenticated,
     loading,
     error,

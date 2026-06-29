@@ -26,6 +26,10 @@ const siteContentRoutes = require('./routes/siteContent');
 const messagesRoutes = require('./routes/messages');
 const uploadRoutes = require('./routes/upload');
 const teamRoutes = require('./routes/team');
+const futureVisionRoutes = require('./routes/futureVision');
+const machinesRoutes = require('./routes/machines');
+const goalsRoutes = require('./routes/goals');
+const innovationRoutes = require('./routes/innovation');
 
 app.use('/api/services', servicesRoutes);
 app.use('/api/gallery', galleryRoutes);
@@ -33,6 +37,10 @@ app.use('/api/site-content', siteContentRoutes);
 app.use('/api/messages', messagesRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/team', teamRoutes);
+app.use('/api/future-vision', futureVisionRoutes);
+app.use('/api/machines', machinesRoutes);
+app.use('/api/goals', goalsRoutes);
+app.use('/api/innovation', innovationRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -21,6 +21,7 @@ const AdminAbout = lazy(() => import('./admin/pages/AdminAbout'))
 const AdminContact = lazy(() => import('./admin/pages/AdminContact'))
 const AdminMessages = lazy(() => import('./admin/pages/AdminMessages'))
 const AdminTeam = lazy(() => import('./admin/pages/AdminTeam'))
+const AdminFuturePlans = lazy(() => import('./admin/pages/AdminFuturePlans'))
 
 import { DataProvider } from './context/DataContext'
 
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
       { path: 'services', element: <AdminServices /> },
       { path: 'messages', element: <AdminMessages /> },
       { path: 'team', element: <AdminTeam /> },
+      { path: 'future-plans', element: <AdminFuturePlans /> },
     ],
   },
 ])
