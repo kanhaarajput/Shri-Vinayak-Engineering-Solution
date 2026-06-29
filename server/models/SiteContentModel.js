@@ -28,41 +28,6 @@ const siteContentSchema = new mongoose.Schema({
     whatsapp: String,
     email: String,
   },
-  servicesPage: {
-    title: String,
-    subtitle: String,
-  },
-  galleryPage: {
-    title: String,
-    subtitle: String,
-  },
-  cta: {
-    title: String,
-    subtitle: String,
-    buttonText: String,
-    image: String,
-  },
-  whyChooseUs: {
-    title: String,
-    subtitle: String,
-    features: [
-      {
-        title: String,
-        description: String,
-        icon: String, // lucide icon string
-      },
-    ],
-  },
-  workflow: {
-    title: String,
-    subtitle: String,
-    steps: [
-      {
-        title: String,
-        description: String,
-      },
-    ],
-  },
 });
 
 module.exports = mongoose.model('SiteContent', siteContentSchema);

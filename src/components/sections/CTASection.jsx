@@ -4,13 +4,8 @@ import { Link } from 'react-router-dom'
 import { HiArrowRight, HiPhone } from 'react-icons/hi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { fadeUp } from '@utils/animations'
-import { useData } from '../../context/DataContext'
 
 export default function CTASection() {
-  const { siteContent } = useData();
-  const cta = siteContent?.cta || { title: 'Need Precision Engineering Solutions?', subtitle: 'Partner with Shri Vinayak Engineering Solutions for unparalleled quality, rapid turnaround times, and cost-effective industrial manufacturing.', buttonText: 'Get a Quote' };
-  const contact = siteContent?.contact || { phone: '+91 7505487656', whatsapp: '917505487656' };
-
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -30,14 +25,14 @@ export default function CTASection() {
           
           <div className="relative z-10 flex flex-col items-center">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight">
-              {cta.title.split(' ').slice(0, -2).join(' ')}<br />
+              Need Precision<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-                {cta.title.split(' ').slice(-2).join(' ')}
+                Engineering Solutions?
               </span>
             </h2>
             
             <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-              {cta.subtitle}
+              Partner with Shri Vinayak Engineering Solutions for unparalleled quality, rapid turnaround times, and cost-effective industrial manufacturing.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
@@ -46,12 +41,12 @@ export default function CTASection() {
                 to="/contact"
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-gray-950 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:shadow-[0_0_40px_rgba(245,158,11,0.5)]"
               >
-                {cta.buttonText} <HiArrowRight size={20} />
+                Get a Quote <HiArrowRight size={20} />
               </Link>
               
               {/* Call Now Button */}
               <a
-                href={`tel:${contact.phone.replace(/\s+/g, '')}`}
+                href="tel:+917505487656"
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm"
               >
                 <HiPhone size={20} className="text-sky-400" />
@@ -60,7 +55,7 @@ export default function CTASection() {
 
               {/* WhatsApp Button */}
               <a
-                href={`https://wa.me/${contact.whatsapp}`}
+                href="https://wa.me/917505487656"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm"

@@ -5,12 +5,24 @@ import { Autoplay, Pagination, EffectCoverflow } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-coverflow'
-import { useData } from '../../context/DataContext'
+
+import vmcImg from '@assets/svc_vmc.png'
+import wirecutImg from '@assets/svc_wirecut.png'
+import engImg from '@assets/svc_engraving.png'
+import tigImg from '@assets/svc_tig.png'
+import argonImg from '@assets/svc_argon.png'
+import laserImg from '@assets/gallery_1.png'
+
+const MACHINES = [
+  { name: 'VMC Machine', image: vmcImg },
+  { name: 'Wirecut Machine', image: wirecutImg },
+  { name: 'Laser Engraving Machine', image: engImg },
+  { name: 'Laser Welding Setup', image: laserImg },
+  { name: 'TIG Welding Setup', image: tigImg },
+  { name: 'Argon Welding Setup', image: argonImg },
+]
 
 export default function MachineryShowcase() {
-  const { machines } = useData();
-  const installedMachines = machines.filter(m => m.status === 'Installed');
-  
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -62,7 +74,7 @@ export default function MachineryShowcase() {
           loop={true}
           className="w-full py-10"
         >
-          {installedMachines.map((machine, idx) => (
+          {MACHINES.map((machine, idx) => (
             <SwiperSlide key={idx} className="w-[300px] sm:w-[400px] md:w-[600px] h-[300px] sm:h-[400px] relative rounded-3xl overflow-hidden group">
               <img 
                 src={machine.image} 

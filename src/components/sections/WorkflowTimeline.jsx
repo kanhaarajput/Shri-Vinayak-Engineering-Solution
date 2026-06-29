@@ -5,21 +5,46 @@ import {
   HiClipboardList, HiSearchCircle, HiCog, 
   HiShieldCheck, HiTruck 
 } from 'react-icons/hi'
-import { useData } from '../../context/DataContext'
-import * as Icons from 'react-icons/hi'
 
-const DEFAULT_STEPS = [
-  { iconName: 'HiClipboardList', color: 'text-amber-400', bg: 'bg-amber-400' },
-  { iconName: 'HiSearchCircle', color: 'text-sky-400', bg: 'bg-sky-400' },
-  { iconName: 'HiCog', color: 'text-violet-400', bg: 'bg-violet-400' },
-  { iconName: 'HiShieldCheck', color: 'text-emerald-400', bg: 'bg-emerald-400' },
-  { iconName: 'HiTruck', color: 'text-orange-400', bg: 'bg-orange-400' },
+const WORKFLOW_STEPS = [
+  {
+    icon: HiClipboardList,
+    title: 'Requirement Analysis',
+    desc: 'Understanding exact specifications and engineering tolerances.',
+    color: 'text-amber-400',
+    bg: 'bg-amber-400',
+  },
+  {
+    icon: HiSearchCircle,
+    title: 'Material Inspection',
+    desc: 'Rigorous checks of raw materials before processing.',
+    color: 'text-sky-400',
+    bg: 'bg-sky-400',
+  },
+  {
+    icon: HiCog,
+    title: 'Welding / Machining',
+    desc: 'Executing high-precision manufacturing processes.',
+    color: 'text-violet-400',
+    bg: 'bg-violet-400',
+  },
+  {
+    icon: HiShieldCheck,
+    title: 'Quality Testing',
+    desc: 'Ensuring 100% compliance with ISO quality standards.',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-400',
+  },
+  {
+    icon: HiTruck,
+    title: 'Final Delivery',
+    desc: 'Safe, secure, and on-time delivery of components.',
+    color: 'text-orange-400',
+    bg: 'bg-orange-400',
+  },
 ]
 
 export default function WorkflowTimeline() {
-  const { siteContent } = useData();
-  const workflow = siteContent?.workflow || { title: 'Our Process', subtitle: 'How we work', steps: [] };
-  
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -47,12 +72,12 @@ export default function WorkflowTimeline() {
           <div className="flex items-center justify-center gap-3 mb-5">
             <div className="h-px w-8 bg-amber-500/50 rounded-full" />
             <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
-              {workflow.title}
+              Our Process
             </span>
             <div className="h-px w-8 bg-amber-500/50 rounded-full" />
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
-            {workflow.subtitle.split(',')[0]}<br />
+            Flawless Execution,<br />
             <span
               style={{
                 backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
@@ -61,7 +86,7 @@ export default function WorkflowTimeline() {
                 backgroundClip: 'text',
               }}
             >
-              {workflow.subtitle.split(',').slice(1).join(',')}
+              Every Single Time
             </span>
           </h2>
         </motion.div>
@@ -84,36 +109,32 @@ export default function WorkflowTimeline() {
             animate={inView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10"
           >
-            {workflow.steps.map((step, index) => {
-              const defaultStyle = DEFAULT_STEPS[index % DEFAULT_STEPS.length];
-              const IconComponent = Icons[defaultStyle.iconName] || Icons.HiCog;
-              return (
-                <motion.div key={index} variants={fadeUp} className="flex flex-col items-center text-center group">
+            {WORKFLOW_STEPS.map((step, index) => (
+              <motion.div key={index} variants={fadeUp} className="flex flex-col items-center text-center group">
+                
+                {/* Node Icon */}
+                <div className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105`}
+                     style={{
+                       background: 'rgba(17,24,39,0.9)',
+                       border: '1px solid rgba(255,255,255,0.08)',
+                       backdropFilter: 'blur(10px)'
+                     }}>
+                  <div className={`absolute inset-0 ${step.bg} opacity-10 rounded-2xl blur-md group-hover:opacity-20 transition-opacity`} />
+                  <step.icon className={`${step.color} text-4xl relative z-10`} />
                   
-                  {/* Node Icon */}
-                  <div className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105`}
-                       style={{
-                         background: 'rgba(17,24,39,0.9)',
-                         border: '1px solid rgba(255,255,255,0.08)',
-                         backdropFilter: 'blur(10px)'
-                       }}>
-                    <div className={`absolute inset-0 ${defaultStyle.bg} opacity-10 rounded-2xl blur-md group-hover:opacity-20 transition-opacity`} />
-                    <IconComponent className={`${defaultStyle.color} text-4xl relative z-10`} />
-                    
-                    {/* Step Number Badge */}
-                    <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${defaultStyle.bg} text-gray-950 font-bold flex items-center justify-center text-sm shadow-lg`}>
-                      {index + 1}
-                    </div>
+                  {/* Step Number Badge */}
+                  <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${step.bg} text-gray-950 font-bold flex items-center justify-center text-sm shadow-lg`}>
+                    {index + 1}
                   </div>
+                </div>
 
-                  {/* Content */}
-                  <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed px-2">
-                    {step.description}
-                  </p>
-                </motion.div>
-              )
-            })}
+                {/* Content */}
+                <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed px-2">
+                  {step.desc}
+                </p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
 

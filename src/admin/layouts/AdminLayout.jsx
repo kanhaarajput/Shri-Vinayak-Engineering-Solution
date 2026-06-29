@@ -13,9 +13,8 @@ export default function AdminLayout() {
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { name: 'Inbox', path: '/admin/messages', icon: MessageSquare },
-    { name: 'Page Content', path: '/admin/home', icon: Home },
+    { name: 'Home Content', path: '/admin/home', icon: Home },
     { name: 'About Content', path: '/admin/about', icon: Info },
-    { name: 'Media / Sliders', path: '/admin/media', icon: ImageIcon },
     { name: 'Team', path: '/admin/team', icon: Users },
     { name: 'Future Plans', path: '/admin/future-plans', icon: Info },
     { name: 'Contact Info', path: '/admin/contact', icon: Phone },

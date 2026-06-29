@@ -30,8 +30,6 @@ const futureVisionRoutes = require('./routes/futureVision');
 const machinesRoutes = require('./routes/machines');
 const goalsRoutes = require('./routes/goals');
 const innovationRoutes = require('./routes/innovation');
-const beforeAfterRoutes = require('./routes/beforeAfter');
-const videosRoutes = require('./routes/videos');
 
 app.use('/api/services', servicesRoutes);
 app.use('/api/gallery', galleryRoutes);
@@ -43,8 +41,6 @@ app.use('/api/future-vision', futureVisionRoutes);
 app.use('/api/machines', machinesRoutes);
 app.use('/api/goals', goalsRoutes);
 app.use('/api/innovation', innovationRoutes);
-app.use('/api/before-after', beforeAfterRoutes);
-app.use('/api/videos', videosRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
