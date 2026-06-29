@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
-  HiShieldCheck,
 } from 'react-icons/hi'
 import {
   HiStar,
@@ -9,7 +8,10 @@ import {
   HiCog8Tooth,
   HiUserGroup,
   HiCurrencyRupee,
+  HiShieldCheck,
+  HiCheckBadge
 } from 'react-icons/hi2'
+import { useData } from '../../context/DataContext'
 
 /* ─── Shared ─────────────────────────────────────────────────────────────── */
 const EASE = [0.25, 0.46, 0.45, 0.94]
@@ -53,48 +55,17 @@ function useCounter(end, duration = 2000, start = 0, enabled = false) {
 }
 
 /* ─── Feature data ───────────────────────────────────────────────────────── */
-const FEATURES = [
-  {
-    icon: HiStar,
-    title: 'High Precision',
-    desc: 'Micron-level accuracy across all laser welding, engraving, and VMC wirecut operations.',
-    accent: '#fbbf24',     // amber-400
-    glowColor: 'rgba(251,191,36,0.12)',
-    borderColor: 'rgba(251,191,36,0.20)',
-  },
-  {
-    icon: HiBoltSlash,
-    title: 'Fast Delivery',
-    desc: 'Streamlined workflows and dedicated capacity ensure on-time delivery — every single project.',
-    accent: '#38bdf8',     // sky-400
-    glowColor: 'rgba(56,189,248,0.12)',
-    borderColor: 'rgba(56,189,248,0.20)',
-  },
-  {
-    icon: HiCog8Tooth,
-    title: 'Advanced Machinery',
-    desc: 'State-of-the-art CNC, VMC, Wire EDM, and laser systems from world-leading manufacturers.',
-    accent: '#a78bfa',     // violet-400
-    glowColor: 'rgba(167,139,250,0.12)',
-    borderColor: 'rgba(167,139,250,0.20)',
-  },
-  {
-    icon: HiUserGroup,
-    title: 'Skilled Experts',
-    desc: 'A seasoned team of 50+ engineers with deep domain expertise in precision engineering.',
-    accent: '#34d399',     // emerald-400
-    glowColor: 'rgba(52,211,153,0.12)',
-    borderColor: 'rgba(52,211,153,0.20)',
-  },
-  {
-    icon: HiCurrencyRupee,
-    title: 'Affordable Pricing',
-    desc: 'Competitive rates without compromising quality — maximising ROI for every client.',
-    accent: '#fb923c',     // orange-400
-    glowColor: 'rgba(251,146,60,0.12)',
-    borderColor: 'rgba(251,146,60,0.20)',
-  },
-]
+const iconMap = {
+  star: { icon: HiStar, accent: '#fbbf24', glow: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.20)' },
+  bolt: { icon: HiBoltSlash, accent: '#38bdf8', glow: 'rgba(56,189,248,0.12)', border: 'rgba(56,189,248,0.20)' },
+  cog: { icon: HiCog8Tooth, accent: '#a78bfa', glow: 'rgba(167,139,250,0.12)', border: 'rgba(167,139,250,0.20)' },
+  shield: { icon: HiShieldCheck, accent: '#34d399', glow: 'rgba(52,211,153,0.12)', border: 'rgba(52,211,153,0.20)' },
+  check: { icon: HiCheckBadge, accent: '#fb923c', glow: 'rgba(251,146,60,0.12)', border: 'rgba(251,146,60,0.20)' }
+}
+
+const getIconConfig = (name) => {
+  return iconMap[name] || iconMap.star;
+}
 
 /* ─── Counter stats ──────────────────────────────────────────────────────── */
 const COUNTERS = [
@@ -122,7 +93,9 @@ function CounterCard({ end, suffix, label, accent, enabled }) {
 }
 
 /* ─── Feature card ───────────────────────────────────────────────────────── */
-function FeatureCard({ icon: Icon, title, desc, accent, glowColor, borderColor, index }) {
+function FeatureCard({ title, desc, iconName, index }) {
+  const { icon: Icon, accent, glow: glowColor, border: borderColor } = getIconConfig(iconName);
+  
   return (
     <motion.div
       custom={index}
@@ -198,6 +171,9 @@ export default function WhyChooseUsSection() {
 
   const counterRef = useRef(null)
   const counterInView = useInView(counterRef, { once: true, margin: '-60px' })
+  const { features } = useData();
+
+  if (!features || features.length === 0) return null;
 
   return (
     <section
@@ -283,19 +259,21 @@ export default function WhyChooseUsSection() {
 
         {/* ── Feature cards — 2 + 3 layout ─────────────────────────── */}
         <div className="space-y-5">
-          {/* Top row — 2 cards */}
+          {/* Top row — up to 2 cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {FEATURES.slice(0, 2).map((f, i) => (
-              <FeatureCard key={f.title} {...f} index={i} />
+            {features.slice(0, 2).map((f, i) => (
+              <FeatureCard key={f.id || f.title} {...f} index={i} />
             ))}
           </div>
 
-          {/* Bottom row — 3 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.slice(2).map((f, i) => (
-              <FeatureCard key={f.title} {...f} index={i + 2} />
-            ))}
-          </div>
+          {/* Bottom row — remaining cards */}
+          {features.length > 2 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {features.slice(2).map((f, i) => (
+                <FeatureCard key={f.id || f.title} {...f} index={i + 2} />
+              ))}
+            </div>
+          )}
         </div>
 
       </div>

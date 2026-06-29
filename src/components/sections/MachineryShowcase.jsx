@@ -6,25 +6,14 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-coverflow'
 
-import vmcImg from '@assets/svc_vmc.png'
-import wirecutImg from '@assets/svc_wirecut.png'
-import engImg from '@assets/svc_engraving.png'
-import tigImg from '@assets/svc_tig.png'
-import argonImg from '@assets/svc_argon.png'
-import laserImg from '@assets/gallery_1.png'
-
-const MACHINES = [
-  { name: 'VMC Machine', image: vmcImg },
-  { name: 'Wirecut Machine', image: wirecutImg },
-  { name: 'Laser Engraving Machine', image: engImg },
-  { name: 'Laser Welding Setup', image: laserImg },
-  { name: 'TIG Welding Setup', image: tigImg },
-  { name: 'Argon Welding Setup', image: argonImg },
-]
+import { useData } from '../../context/DataContext'
 
 export default function MachineryShowcase() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { machinery } = useData();
+
+  if (!machinery || machinery.length === 0) return null;
 
   return (
     <section ref={ref} className="relative py-24 bg-[#050914] overflow-hidden">
@@ -74,8 +63,8 @@ export default function MachineryShowcase() {
           loop={true}
           className="w-full py-10"
         >
-          {MACHINES.map((machine, idx) => (
-            <SwiperSlide key={idx} className="w-[300px] sm:w-[400px] md:w-[600px] h-[300px] sm:h-[400px] relative rounded-3xl overflow-hidden group">
+          {machinery.map((machine, idx) => (
+            <SwiperSlide key={machine.id || idx} className="w-[300px] sm:w-[400px] md:w-[600px] h-[300px] sm:h-[400px] relative rounded-3xl overflow-hidden group">
               <img 
                 src={machine.image} 
                 alt={machine.name} 
@@ -85,7 +74,16 @@ export default function MachineryShowcase() {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/40 to-transparent pointer-events-none" />
               
               <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 text-center transition-transform duration-300 group-hover:-translate-y-2">
-                <h3 className="text-white font-bold text-xl drop-shadow-md">{machine.name}</h3>
+                <h3 className="text-white font-bold text-xl drop-shadow-md mb-2">{machine.name}</h3>
+                {machine.specs && machine.specs.length > 0 && (
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {machine.specs.map((spec, i) => (
+                      <span key={i} className="bg-amber-500/20 text-amber-200 border border-amber-500/30 text-xs px-2 py-1 rounded-md">
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </SwiperSlide>
           ))}

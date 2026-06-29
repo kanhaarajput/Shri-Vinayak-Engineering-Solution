@@ -30,6 +30,10 @@ const futureVisionRoutes = require('./routes/futureVision');
 const machinesRoutes = require('./routes/machines');
 const goalsRoutes = require('./routes/goals');
 const innovationRoutes = require('./routes/innovation');
+const testimonialsRoutes = require('./routes/testimonials');
+const featuresRoutes = require('./routes/features');
+const workflowRoutes = require('./routes/workflow');
+const machineryRoutes = require('./routes/machinery');
 
 app.use('/api/services', servicesRoutes);
 app.use('/api/gallery', galleryRoutes);
@@ -41,6 +45,10 @@ app.use('/api/future-vision', futureVisionRoutes);
 app.use('/api/machines', machinesRoutes);
 app.use('/api/goals', goalsRoutes);
 app.use('/api/innovation', innovationRoutes);
+app.use('/api/testimonials', testimonialsRoutes);
+app.use('/api/features', featuresRoutes);
+app.use('/api/workflow', workflowRoutes);
+app.use('/api/machinery', machineryRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

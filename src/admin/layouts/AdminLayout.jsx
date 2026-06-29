@@ -1,6 +1,6 @@
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
-import { LayoutDashboard, Image as ImageIcon, Briefcase, Home, Info, Phone, LogOut, MessageSquare, Users } from 'lucide-react';
+import { LayoutDashboard, Image as ImageIcon, Briefcase, Home, Info, Phone, LogOut, MessageSquare, Users, Star, Target, Cog, MessageCircle } from 'lucide-react';
 
 export default function AdminLayout() {
   const { isAuthenticated, logout } = useData();
@@ -15,6 +15,10 @@ export default function AdminLayout() {
     { name: 'Inbox', path: '/admin/messages', icon: MessageSquare },
     { name: 'Home Content', path: '/admin/home', icon: Home },
     { name: 'About Content', path: '/admin/about', icon: Info },
+    { name: 'Features', path: '/admin/features', icon: Star },
+    { name: 'Workflow', path: '/admin/workflow', icon: Target },
+    { name: 'Machinery', path: '/admin/machinery', icon: Cog },
+    { name: 'Testimonials', path: '/admin/testimonials', icon: MessageCircle },
     { name: 'Team', path: '/admin/team', icon: Users },
     { name: 'Future Plans', path: '/admin/future-plans', icon: Info },
     { name: 'Contact Info', path: '/admin/contact', icon: Phone },

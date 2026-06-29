@@ -28,6 +28,10 @@ export const DataProvider = ({ children }) => {
   const [machines, setMachines] = useState([]);
   const [goals, setGoals] = useState([]);
   const [innovation, setInnovation] = useState({});
+  const [testimonials, setTestimonials] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [workflow, setWorkflow] = useState([]);
+  const [machinery, setMachinery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -40,7 +44,11 @@ export const DataProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, machinesRes, goalsRes, innovationRes] = await Promise.all([
+        const [
+          servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, 
+          machinesRes, goalsRes, innovationRes, testimonialsRes, featuresRes, 
+          workflowRes, machineryRes
+        ] = await Promise.all([
           fetch(`${API_URL}/services`),
           fetch(`${API_URL}/gallery`),
           fetch(`${API_URL}/site-content`),
@@ -49,7 +57,11 @@ export const DataProvider = ({ children }) => {
           fetch(`${API_URL}/future-vision`),
           fetch(`${API_URL}/machines`),
           fetch(`${API_URL}/goals`),
-          fetch(`${API_URL}/innovation`)
+          fetch(`${API_URL}/innovation`),
+          fetch(`${API_URL}/testimonials`),
+          fetch(`${API_URL}/features`),
+          fetch(`${API_URL}/workflow`),
+          fetch(`${API_URL}/machinery`)
         ]);
 
         if (servicesRes.ok) {
@@ -95,6 +107,26 @@ export const DataProvider = ({ children }) => {
 
         if (innovationRes.ok) {
           setInnovation(await innovationRes.json());
+        }
+
+        if (testimonialsRes.ok) {
+          const testData = await testimonialsRes.json();
+          setTestimonials(testData.map(t => ({ ...t, id: t._id })));
+        }
+
+        if (featuresRes.ok) {
+          const featData = await featuresRes.json();
+          setFeatures(featData.map(f => ({ ...f, id: f._id })));
+        }
+
+        if (workflowRes.ok) {
+          const wfData = await workflowRes.json();
+          setWorkflow(wfData.map(w => ({ ...w, id: w._id })));
+        }
+
+        if (machineryRes.ok) {
+          const machData = await machineryRes.json();
+          setMachinery(machData.map(m => ({ ...m, id: m._id })));
         }
       } catch (err) {
         console.error("Error fetching data from MongoDB:", err);
@@ -291,6 +323,138 @@ export const DataProvider = ({ children }) => {
     } catch (err) { console.error(err); }
   };
 
+  // Testimonials Methods
+  const addTestimonial = async (item) => {
+    try {
+      const isFormData = item instanceof FormData;
+      const res = await fetch(`${API_URL}/testimonials`, {
+        method: 'POST',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? item : JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setTestimonials((prev) => [ { ...newItem, id: newItem._id }, ...prev]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateTestimonial = async (id, updated) => {
+    try {
+      const isFormData = updated instanceof FormData;
+      const res = await fetch(`${API_URL}/testimonials/${id}`, {
+        method: 'PUT',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? updated : JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setTestimonials((prev) => prev.map((t) => (t.id === id ? { ...newItem, id: newItem._id } : t)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteTestimonial = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/testimonials/${id}`, { method: 'DELETE' });
+      if (res.ok) setTestimonials((prev) => prev.filter((t) => t.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
+  // Features Methods
+  const addFeature = async (item) => {
+    try {
+      const res = await fetch(`${API_URL}/features`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setFeatures((prev) => [...prev, { ...newItem, id: newItem._id }]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateFeature = async (id, updated) => {
+    try {
+      const res = await fetch(`${API_URL}/features/${id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setFeatures((prev) => prev.map((f) => (f.id === id ? { ...newItem, id: newItem._id } : f)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteFeature = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/features/${id}`, { method: 'DELETE' });
+      if (res.ok) setFeatures((prev) => prev.filter((f) => f.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
+  // Workflow Methods
+  const addWorkflow = async (item) => {
+    try {
+      const res = await fetch(`${API_URL}/workflow`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setWorkflow((prev) => [...prev, { ...newItem, id: newItem._id }]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateWorkflow = async (id, updated) => {
+    try {
+      const res = await fetch(`${API_URL}/workflow/${id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setWorkflow((prev) => prev.map((w) => (w.id === id ? { ...newItem, id: newItem._id } : w)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteWorkflow = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/workflow/${id}`, { method: 'DELETE' });
+      if (res.ok) setWorkflow((prev) => prev.filter((w) => w.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
+  // Machinery Methods
+  const addMachinery = async (item) => {
+    try {
+      const isFormData = item instanceof FormData;
+      const res = await fetch(`${API_URL}/machinery`, {
+        method: 'POST',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? item : JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setMachinery((prev) => [ { ...newItem, id: newItem._id }, ...prev]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateMachinery = async (id, updated) => {
+    try {
+      const isFormData = updated instanceof FormData;
+      const res = await fetch(`${API_URL}/machinery/${id}`, {
+        method: 'PUT',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? updated : JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setMachinery((prev) => prev.map((m) => (m.id === id ? { ...newItem, id: newItem._id } : m)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteMachinery = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/machinery/${id}`, { method: 'DELETE' });
+      if (res.ok) setMachinery((prev) => prev.filter((m) => m.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
   const value = {
     categories,
     projects,
@@ -302,6 +466,10 @@ export const DataProvider = ({ children }) => {
     machines,
     goals,
     innovation,
+    testimonials,
+    features,
+    workflow,
+    machinery,
     isAuthenticated,
     loading,
     error,
@@ -319,7 +487,19 @@ export const DataProvider = ({ children }) => {
     deleteMessage,
     addTeamMember,
     updateTeamMember,
-    deleteTeamMember
+    deleteTeamMember,
+    addTestimonial,
+    updateTestimonial,
+    deleteTestimonial,
+    addFeature,
+    updateFeature,
+    deleteFeature,
+    addWorkflow,
+    updateWorkflow,
+    deleteWorkflow,
+    addMachinery,
+    updateMachinery,
+    deleteMachinery
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

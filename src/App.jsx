@@ -22,6 +22,10 @@ const AdminContact = lazy(() => import('./admin/pages/AdminContact'))
 const AdminMessages = lazy(() => import('./admin/pages/AdminMessages'))
 const AdminTeam = lazy(() => import('./admin/pages/AdminTeam'))
 const AdminFuturePlans = lazy(() => import('./admin/pages/AdminFuturePlans'))
+const AdminFeatures = lazy(() => import('./admin/pages/AdminFeatures'))
+const AdminWorkflow = lazy(() => import('./admin/pages/AdminWorkflow'))
+const AdminMachinery = lazy(() => import('./admin/pages/AdminMachinery'))
+const AdminTestimonials = lazy(() => import('./admin/pages/AdminTestimonials'))
 
 import { DataProvider } from './context/DataContext'
 
@@ -55,6 +59,10 @@ const router = createBrowserRouter([
       { path: 'messages', element: <AdminMessages /> },
       { path: 'team', element: <AdminTeam /> },
       { path: 'future-plans', element: <AdminFuturePlans /> },
+      { path: 'features', element: <AdminFeatures /> },
+      { path: 'workflow', element: <AdminWorkflow /> },
+      { path: 'machinery', element: <AdminMachinery /> },
+      { path: 'testimonials', element: <AdminTestimonials /> },
     ],
   },
 ])

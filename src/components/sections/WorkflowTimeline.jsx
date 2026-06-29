@@ -6,47 +6,22 @@ import {
   HiShieldCheck, HiTruck 
 } from 'react-icons/hi'
 
-const WORKFLOW_STEPS = [
-  {
-    icon: HiClipboardList,
-    title: 'Requirement Analysis',
-    desc: 'Understanding exact specifications and engineering tolerances.',
-    color: 'text-amber-400',
-    bg: 'bg-amber-400',
-  },
-  {
-    icon: HiSearchCircle,
-    title: 'Material Inspection',
-    desc: 'Rigorous checks of raw materials before processing.',
-    color: 'text-sky-400',
-    bg: 'bg-sky-400',
-  },
-  {
-    icon: HiCog,
-    title: 'Welding / Machining',
-    desc: 'Executing high-precision manufacturing processes.',
-    color: 'text-violet-400',
-    bg: 'bg-violet-400',
-  },
-  {
-    icon: HiShieldCheck,
-    title: 'Quality Testing',
-    desc: 'Ensuring 100% compliance with ISO quality standards.',
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-400',
-  },
-  {
-    icon: HiTruck,
-    title: 'Final Delivery',
-    desc: 'Safe, secure, and on-time delivery of components.',
-    color: 'text-orange-400',
-    bg: 'bg-orange-400',
-  },
+const ICONS_AND_COLORS = [
+  { icon: HiClipboardList, color: 'text-amber-400', bg: 'bg-amber-400' },
+  { icon: HiSearchCircle, color: 'text-sky-400', bg: 'bg-sky-400' },
+  { icon: HiCog, color: 'text-violet-400', bg: 'bg-violet-400' },
+  { icon: HiShieldCheck, color: 'text-emerald-400', bg: 'bg-emerald-400' },
+  { icon: HiTruck, color: 'text-orange-400', bg: 'bg-orange-400' },
 ]
+
+import { useData } from '../../context/DataContext'
 
 export default function WorkflowTimeline() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { workflow } = useData();
+
+  if (!workflow || workflow.length === 0) return null;
 
   return (
     <section ref={ref} className="relative py-24 bg-gray-950 overflow-hidden">
@@ -109,8 +84,11 @@ export default function WorkflowTimeline() {
             animate={inView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10"
           >
-            {WORKFLOW_STEPS.map((step, index) => (
-              <motion.div key={index} variants={fadeUp} className="flex flex-col items-center text-center group">
+            {workflow.map((step, index) => {
+              const style = ICONS_AND_COLORS[index % ICONS_AND_COLORS.length];
+              const Icon = style.icon;
+              return (
+              <motion.div key={step.id || index} variants={fadeUp} className="flex flex-col items-center text-center group">
                 
                 {/* Node Icon */}
                 <div className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105`}
@@ -119,12 +97,12 @@ export default function WorkflowTimeline() {
                        border: '1px solid rgba(255,255,255,0.08)',
                        backdropFilter: 'blur(10px)'
                      }}>
-                  <div className={`absolute inset-0 ${step.bg} opacity-10 rounded-2xl blur-md group-hover:opacity-20 transition-opacity`} />
-                  <step.icon className={`${step.color} text-4xl relative z-10`} />
+                  <div className={`absolute inset-0 ${style.bg} opacity-10 rounded-2xl blur-md group-hover:opacity-20 transition-opacity`} />
+                  <Icon className={`${style.color} text-4xl relative z-10`} />
                   
                   {/* Step Number Badge */}
-                  <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${step.bg} text-gray-950 font-bold flex items-center justify-center text-sm shadow-lg`}>
-                    {index + 1}
+                  <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${style.bg} text-gray-950 font-bold flex items-center justify-center text-sm shadow-lg`}>
+                    {step.step}
                   </div>
                 </div>
 
@@ -134,7 +112,7 @@ export default function WorkflowTimeline() {
                   {step.desc}
                 </p>
               </motion.div>
-            ))}
+            )})}
           </motion.div>
         </div>
 

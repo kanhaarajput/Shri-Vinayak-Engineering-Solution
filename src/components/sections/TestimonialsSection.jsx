@@ -19,52 +19,14 @@ const fadeUp = {
 }
 
 /* ─── Testimonials Data ──────────────────────────────────────────────────── */
-const TESTIMONIALS = [
-  {
-    name: 'Rajesh Sharma',
-    company: 'TechFab Industries',
-    feedback: 'Shri Vinayak Engineering Solutions delivered flawless laser welding on our complex aerospace components. Their precision and attention to detail are unmatched in the industry.',
-    rating: 5,
-    initials: 'RS',
-    color: 'from-blue-500 to-cyan-500',
-  },
-  {
-    name: 'Amit Patel',
-    company: 'Precision Tools Pvt Ltd',
-    feedback: 'We rely on them for all our VMC wirecut job work. They consistently meet extremely tight tolerances and their delivery times are always reliable.',
-    rating: 5,
-    initials: 'AP',
-    color: 'from-amber-500 to-orange-500',
-  },
-  {
-    name: 'Suresh Kumar',
-    company: 'AutoMould India',
-    feedback: 'Their die and mould repair services saved us countless hours of downtime and significant replacement costs. The welded surfaces were perfect after machining.',
-    rating: 5,
-    initials: 'SK',
-    color: 'from-emerald-500 to-teal-500',
-  },
-  {
-    name: 'Vikram Singh',
-    company: 'HeavyForge Engineering',
-    feedback: 'Exceptional manufacturing capabilities. The custom fixtures they produced for our assembly line were spot on and extremely durable.',
-    rating: 5,
-    initials: 'VS',
-    color: 'from-purple-500 to-violet-500',
-  },
-  {
-    name: 'Anil Desai',
-    company: 'Desai Industrial Automation',
-    feedback: 'Professional, highly skilled, and technologically advanced. Shri Vinayak is our go-to partner for all high-precision laser engraving needs.',
-    rating: 5,
-    initials: 'AD',
-    color: 'from-rose-500 to-pink-500',
-  },
-]
+import { useData } from '../../context/DataContext';
 
 export default function TestimonialsSection() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { testimonials } = useData();
+
+  if (!testimonials || testimonials.length === 0) return null;
 
   return (
     <section
@@ -143,7 +105,7 @@ export default function TestimonialsSection() {
             loop={true}
             className="pb-16"
           >
-            {TESTIMONIALS.map((testimonial, index) => (
+            {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index} className="h-auto">
                 <div 
                   className="h-full flex flex-col p-8 rounded-2xl transition-all duration-500 hover:-translate-y-2 group"
@@ -156,35 +118,38 @@ export default function TestimonialsSection() {
                 >
                   {/* Rating */}
                   <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(testimonial.rating || 5)].map((_, i) => (
                       <HiStar key={i} className="text-amber-400" size={20} />
                     ))}
                   </div>
 
                   {/* Feedback */}
                   <p className="text-gray-300 text-sm leading-relaxed mb-8 flex-grow">
-                    "{testimonial.feedback}"
+                    "{testimonial.content}"
                   </p>
 
                   {/* Client Info */}
                   <div className="flex items-center gap-4 pt-6 mt-auto border-t border-white/5">
-                    <div 
-                      className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg bg-gradient-to-br ${testimonial.color}`}
-                    >
-                      {testimonial.initials}
-                    </div>
+                    {testimonial.image ? (
+                      <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover shadow-lg border border-white/10" />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg bg-gradient-to-br from-amber-500 to-orange-500">
+                        {testimonial.name.charAt(0)}
+                      </div>
+                    )}
                     <div>
                       <h4 className="text-white font-bold text-sm group-hover:text-amber-300 transition-colors duration-300">
                         {testimonial.name}
                       </h4>
                       <p className="text-gray-500 text-xs mt-0.5">
-                        {testimonial.company}
+                        {testimonial.role}
                       </p>
                     </div>
                   </div>
                 </div>
               </SwiperSlide>
             ))}
+            
             
             {/* Custom Pagination Container overrides */}
             <style>{`
