@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiX, HiArrowsExpand } from 'react-icons/hi'
-import { CATEGORIES, PROJECTS } from '@data/galleryData'
+import { useData } from '../../context/DataContext'
 
 export default function ProjectGallery() {
+  const { categories: CATEGORIES, projects: PROJECTS } = useData();
   const [activeCategory, setActiveCategory] = useState('All')
   const [filteredProjects, setFilteredProjects] = useState(PROJECTS)
   const [selectedImage, setSelectedImage] = useState(null) // Holds the full project object for the lightbox
@@ -15,7 +16,7 @@ export default function ProjectGallery() {
     } else {
       setFilteredProjects(PROJECTS.filter(p => p.category === activeCategory))
     }
-  }, [activeCategory])
+  }, [activeCategory, PROJECTS])
 
   return (
     <section className="py-24 bg-gray-950 relative min-h-screen">

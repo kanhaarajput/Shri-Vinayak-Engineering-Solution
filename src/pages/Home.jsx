@@ -9,6 +9,7 @@ import GallerySection from '@components/sections/GallerySection'
 import TestimonialsSection from '@components/sections/TestimonialsSection'
 import ContactSection from '@components/sections/ContactSection'
 import SEO from '@components/seo/SEO'
+import { useData } from '../context/DataContext'
 
 /* ─── Animation ──────────────────────────────────────────────────────────── */
 const fadeUp = {
@@ -20,14 +21,10 @@ const fadeUp = {
 }
 
 /* ─── Stats ──────────────────────────────────────────────────────────────── */
-const STATS = [
-  { value: '25+',  label: 'Years Experience' },
-  { value: '500+', label: 'Projects Delivered' },
-  { value: '98%',  label: 'Client Satisfaction' },
-  { value: '50+',  label: 'Expert Engineers' },
-]
 
 export default function Home() {
+  const { siteContent } = useData();
+  const STATS = siteContent.home.stats;
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <SEO 

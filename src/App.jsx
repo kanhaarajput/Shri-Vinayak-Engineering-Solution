@@ -10,6 +10,20 @@ const Gallery = lazy(() => import('@pages/Gallery'))
 const Contact = lazy(() => import('@pages/Contact'))
 const NotFound = lazy(() => import('@pages/NotFound'))
 
+// Admin Pages
+const AdminLayout = lazy(() => import('./admin/layouts/AdminLayout'))
+const AdminLogin = lazy(() => import('./admin/pages/AdminLogin'))
+const AdminDashboard = lazy(() => import('./admin/pages/AdminDashboard'))
+const AdminGallery = lazy(() => import('./admin/pages/AdminGallery'))
+const AdminServices = lazy(() => import('./admin/pages/AdminServices'))
+const AdminHome = lazy(() => import('./admin/pages/AdminHome'))
+const AdminAbout = lazy(() => import('./admin/pages/AdminAbout'))
+const AdminContact = lazy(() => import('./admin/pages/AdminContact'))
+const AdminMessages = lazy(() => import('./admin/pages/AdminMessages'))
+const AdminTeam = lazy(() => import('./admin/pages/AdminTeam'))
+
+import { DataProvider } from './context/DataContext'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -23,6 +37,24 @@ const router = createBrowserRouter([
       { path: 'contact',    element: <Contact /> },
     ],
   },
+  {
+    path: '/admin/login',
+    element: <AdminLogin />,
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: 'home', element: <AdminHome /> },
+      { path: 'about', element: <AdminAbout /> },
+      { path: 'contact', element: <AdminContact /> },
+      { path: 'gallery', element: <AdminGallery /> },
+      { path: 'services', element: <AdminServices /> },
+      { path: 'messages', element: <AdminMessages /> },
+      { path: 'team', element: <AdminTeam /> },
+    ],
+  },
 ])
 
 // A premium loading fallback spinner
@@ -34,8 +66,10 @@ const LoadingFallback = () => (
 
 export default function App() {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <DataProvider>
+      <Suspense fallback={<LoadingFallback />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </DataProvider>
   )
 }

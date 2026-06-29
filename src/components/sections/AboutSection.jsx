@@ -11,6 +11,7 @@ import {
   HiBoltSlash,
   HiShieldCheck,
 } from 'react-icons/hi2'
+import { useData } from '../../context/DataContext'
 import aboutImg from '@assets/about_workshop.png'
 
 /* ─── Animation variants ─────────────────────────────────────────────────── */
@@ -57,16 +58,13 @@ const HIGHLIGHTS = [
   'End-to-end Project Management',
 ]
 
-const STATS = [
-  { value: '25+',  label: 'Years\nExperience' },
-  { value: '500+', label: 'Projects\nDelivered' },
-  { value: '50+',  label: 'Expert\nEngineers' },
-]
-
 /* ─── About Section ──────────────────────────────────────────────────────── */
 export default function AboutSection() {
   const ref   = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { siteContent } = useData();
+  const aboutContent = siteContent.about;
+  const stats = siteContent.home.stats.slice(0, 3).map(s => ({ ...s, label: s.label.replace(' ', '\n') }));
 
   return (
     <section
@@ -94,7 +92,7 @@ export default function AboutSection() {
         >
           <div className="h-px w-10 bg-amber-500/60 rounded-full" />
           <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
-            Who We Are
+            {aboutContent.heading}
           </span>
         </motion.div>
 
@@ -111,10 +109,10 @@ export default function AboutSection() {
             {/* Main image */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
               <img
-                src={aboutImg}
+                src={aboutContent.image || aboutImg}
                 alt="Industrial Engineering Workshop"
                 loading="lazy"
-                className="w-full h-full object-cover rounded-2xl"
+                className="w-full h-full object-cover rounded-2xl aspect-[4/5] lg:aspect-auto lg:h-[600px]"
                 style={{ filter: 'brightness(0.88) saturate(1.1)' }}
               />
 
@@ -129,7 +127,7 @@ export default function AboutSection() {
 
               {/* Floating stat cards inside image */}
               <div className="absolute bottom-5 left-5 right-5 flex justify-between gap-3">
-                {STATS.map(({ value, label }) => (
+                {stats.map(({ value, label }) => (
                   <div
                     key={value}
                     className="flex-1 text-center py-3 px-2 rounded-xl"
@@ -179,39 +177,20 @@ export default function AboutSection() {
               animate={inView ? 'visible' : 'hidden'}
               className="text-3xl sm:text-4xl xl:text-[2.75rem] font-black leading-[1.12] tracking-tight text-white mb-5"
             >
-              Engineering Precision,{' '}
-              <span
-                style={{
-                  backgroundImage: 'linear-gradient(90deg,#fbbf24,#f97316)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                Delivering Excellence
-              </span>
+              {aboutContent.title}
             </motion.h2>
 
             {/* Body text */}
-            <motion.p
+            <motion.div
               custom={1}
               variants={fadeUp}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
               className="text-gray-400 text-base leading-[1.85] mb-6"
             >
-              <strong className="text-white font-semibold">
-                Shri Vinayak Engineering Solutions
-              </strong>{' '}
-              specialises in advanced laser welding, laser engraving, and VMC
-              wirecut job work with deep expertise in die &amp; mould welding,
-              manufacturing, and repairing. Built on a foundation of{' '}
-              <span className="text-amber-400 font-medium">
-                25+ years of industrial excellence
-              </span>
-              , we combine cutting-edge technology with seasoned craftsmanship
-              to deliver uncompromising quality on every project.
-            </motion.p>
+              <p className="mb-4">{aboutContent.description1}</p>
+              <p>{aboutContent.description2}</p>
+            </motion.div>
 
             {/* Expertise chips */}
             <motion.div

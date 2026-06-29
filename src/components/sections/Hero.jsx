@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { HiArrowRight, HiChevronDown } from 'react-icons/hi'
 import { HiStar } from 'react-icons/hi2'
+import { useData } from '../../context/DataContext'
 import heroBg from '@assets/laser_welding_hero.png'
 
 /* ─── Shared easing ──────────────────────────────────────────────────────── */
@@ -87,6 +88,10 @@ function ScrollIndicator() {
 
 /* ─── Hero ───────────────────────────────────────────────────────────────── */
 export default function Hero() {
+  const { siteContent } = useData();
+  const heroContent = siteContent.home.hero;
+  const stats = siteContent.home.stats;
+
   return (
     <section
       id="hero"
@@ -147,19 +152,6 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl">
 
-          {/* Badge */}
-          <motion.div
-            custom={0}
-            variants={scaleIn}
-            initial="hidden"
-            animate="visible"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8
-                       border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm
-                       text-amber-400 text-[11px] font-bold tracking-widest uppercase"
-          >
-            <HiStar size={13} />
-            ISO 9001:2015 Certified  &bull;  Since 1998
-          </motion.div>
 
           {/* Heading */}
           <motion.h1
@@ -170,7 +162,7 @@ export default function Hero() {
             className="font-black tracking-tight leading-[1.06] mb-6
                        text-4xl sm:text-5xl lg:text-[4.5rem]"
           >
-            <span className="block text-white">Precision Laser</span>
+            <span className="block text-white">{heroContent.titleLine1}</span>
             <span
               className="block mt-1"
               style={{
@@ -180,9 +172,9 @@ export default function Hero() {
                 backgroundClip: 'text',
               }}
             >
-              Welding &amp; Engraving
+              {heroContent.titleHighlight}
             </span>
-            <span className="block text-white mt-1">Solutions</span>
+            <span className="block text-white mt-1">{heroContent.titleLine2}</span>
           </motion.h1>
 
           {/* Amber divider */}
@@ -209,11 +201,7 @@ export default function Hero() {
             className="text-gray-300/90 text-base sm:text-lg leading-relaxed mb-10
                        max-w-2xl font-light"
           >
-            Experts in{' '}
-            <span className="text-amber-400 font-medium">VMC Wirecut Job Work</span>,{' '}
-            <span className="text-amber-400 font-medium">Die &amp; Mould Welding</span>
-            , Manufacturing &amp; Repairing — delivering unmatched precision for
-            every industrial challenge.
+            {heroContent.subtitle}
           </motion.p>
 
           {/* CTA buttons */}
@@ -265,29 +253,7 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Mini stats */}
-          <motion.div
-            custom={5}
-            variants={fadeIn}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-wrap items-center gap-8 mt-12"
-          >
-            {[
-              { value: '25+',  label: 'Years Experience' },
-              { value: '500+', label: 'Projects Delivered' },
-              { value: '98%',  label: 'Client Satisfaction' },
-            ].map(({ value, label }, i) => (
-              <div key={i} className="flex items-baseline gap-2">
-                <span className="text-2xl font-black text-amber-400 leading-none">
-                  {value}
-                </span>
-                <span className="text-xs text-gray-400 font-medium uppercase tracking-wider leading-tight">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </motion.div>
+
 
         </div>
       </div>

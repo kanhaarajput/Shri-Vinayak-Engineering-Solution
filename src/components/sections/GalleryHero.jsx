@@ -35,18 +35,7 @@ export default function GalleryHero() {
           animate="visible"
           className="flex flex-col items-center"
         >
-          {/* Breadcrumb Navigation */}
-          <motion.nav 
-            variants={fadeUp}
-            className="flex items-center gap-2 text-sm font-medium mb-8 bg-white/5 backdrop-blur-md px-5 py-2 rounded-full border border-white/10 shadow-xl"
-          >
-            <Link to="/" className="text-gray-400 hover:text-white flex items-center gap-1.5 transition-colors">
-              <HiHome size={16} />
-              Home
-            </Link>
-            <HiChevronRight className="text-gray-500" />
-            <span className="text-amber-400">Gallery</span>
-          </motion.nav>
+
 
           {/* Heading */}
           <motion.h1 

@@ -1,33 +1,11 @@
 import { motion } from 'framer-motion'
 import SEO from '@components/seo/SEO'
 import { staggerContainer, fadeUp, hoverLift } from '@utils/animations'
-
-import team1 from '@assets/team_1.png'
-import team2 from '@assets/team_2.png'
-import team3 from '@assets/team_3.png'
-
-const TEAM_MEMBERS = [
-  {
-    name: 'Vikram Sharma',
-    designation: 'Founder & CEO',
-    about: 'Driving the vision and strategic growth of ShriVinayak Engineering Solution with over 20 years of experience in industrial engineering and precision manufacturing.',
-    image: team1,
-  },
-  {
-    name: 'Priya Desai',
-    designation: 'Chief Engineer',
-    about: 'Leading our technical operations, Priya ensures unparalleled precision and innovation across all our complex VMC wirecut and laser welding processes.',
-    image: team2,
-  },
-  {
-    name: 'Rahul Singh',
-    designation: 'Operations Manager',
-    about: 'Rahul orchestrates our day-to-day workshop logistics, ensuring flawless execution, high quality control, and on-time delivery for every project.',
-    image: team3,
-  },
-]
+import { useData } from '../context/DataContext'
 
 export default function About() {
+  const { team } = useData();
+
   return (
     <div className="min-h-screen bg-gray-950 text-white pt-28 pb-20 overflow-hidden relative">
       <SEO 
@@ -85,7 +63,7 @@ export default function About() {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {TEAM_MEMBERS.map((member, index) => (
+          {team && team.length > 0 ? team.map((member, index) => (
             <motion.div
               key={index}
               variants={fadeUp}
@@ -138,7 +116,11 @@ export default function About() {
                 </div>
               </div>
             </motion.div>
-          ))}
+          )) : (
+            <div className="col-span-full text-center py-20 text-gray-500">
+              No team members found. Add some from the Admin Panel.
+            </div>
+          )}
         </motion.div>
         
       </div>

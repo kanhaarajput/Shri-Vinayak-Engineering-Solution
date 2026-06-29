@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import emailjs from '@emailjs/browser'
 import {
   HiLocationMarker,
   HiPhone,
   HiMail,
 } from 'react-icons/hi'
 import { FaWhatsapp } from 'react-icons/fa'
+import { useData } from '../../context/DataContext'
 
 /* ─── Animation ──────────────────────────────────────────────────────────── */
 const EASE = [0.25, 0.46, 0.45, 0.94]
@@ -39,69 +39,83 @@ const fadeLeft = {
 }
 
 /* ─── Info Items ─────────────────────────────────────────────────────────── */
-const CONTACT_INFO = [
-  {
-    icon: HiLocationMarker,
-    title: 'Factory Address',
-    content: 'Near Saraswati Public School, Bhangrola Sec. 8, Road IMT Manesar, Gurugram',
-    href: 'https://maps.google.com/?q=IMT+Manesar,Gurugram',
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/20',
-  },
-  {
-    icon: HiPhone,
-    title: 'Phone Number',
-    content: '+91 7505487656',
-    href: 'tel:+917505487656',
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/20',
-  },
-  {
-    icon: HiMail,
-    title: 'Email Address',
-    content: 'svengg24@gmail.com',
-    href: 'mailto:svengg24@gmail.com',
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/20',
-  },
-]
 
 export default function ContactSection() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const formRef = useRef()
+  const { siteContent } = useData();
+  const contactInfoData = siteContent.contact;
+
+  const CONTACT_INFO = [
+    {
+      icon: HiLocationMarker,
+      title: 'Factory Address',
+      content: contactInfoData.address,
+      href: 'https://maps.google.com/?q=IMT+Manesar,Gurugram',
+      color: 'text-amber-400',
+      bg: 'bg-amber-500/10',
+      border: 'border-amber-500/20',
+    },
+    {
+      icon: HiPhone,
+      title: 'Phone Number',
+      content: contactInfoData.phone,
+      href: `tel:${contactInfoData.phone.replace(/\\s/g, '')}`,
+      color: 'text-emerald-400',
+      bg: 'bg-emerald-500/10',
+      border: 'border-emerald-500/20',
+    },
+    {
+      icon: HiMail,
+      title: 'Email Address',
+      content: contactInfoData.email,
+      href: `mailto:${contactInfoData.email}`,
+      color: 'text-blue-400',
+      bg: 'bg-blue-500/10',
+      border: 'border-blue-500/20',
+    },
+  ];
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null) // 'success' | 'error' | null
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus(null)
 
-    // Note: You will need to replace these with your actual EmailJS Service ID, Template ID, and Public Key
-    emailjs
-      .sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        formRef.current,
-        'YOUR_PUBLIC_KEY'
-      )
-      .then(
-        () => {
-          setIsSubmitting(false)
-          setSubmitStatus('success')
-          e.target.reset()
+    const formData = new FormData(formRef.current)
+    const data = {
+      name: formData.get('user_name'),
+      email: formData.get('user_email'),
+      phone: formData.get('user_phone'),
+      service: formData.get('service'),
+      message: formData.get('message')
+    }
+
+    try {
+      const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+      const res = await fetch(`${API_URL}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        (error) => {
-          console.error(error)
-          setIsSubmitting(false)
-          setSubmitStatus('error')
-        }
-      )
+        body: JSON.stringify(data)
+      })
+
+      if (res.ok) {
+        setSubmitStatus('success')
+        formRef.current.reset()
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error("Failed to send message", error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -189,7 +203,7 @@ export default function ContactSection() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/917505487656"
+              href={`https://wa.me/${contactInfoData.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/20"
