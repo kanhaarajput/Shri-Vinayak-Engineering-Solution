@@ -14,6 +14,7 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from 'react-icons/fa'
+import { useData } from '../../context/DataContext'
 
 /* ─── Footer Data ────────────────────────────────────────────────────────── */
 const QUICK_LINKS = [
@@ -41,6 +42,8 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { siteContent } = useData()
+  const contactInfo = siteContent.contact
 
   return (
     <footer className="relative bg-[#020617] pt-20 pb-10 overflow-hidden border-t border-white/5">
@@ -147,19 +150,19 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <HiLocationMarker className="text-amber-400 flex-shrink-0 mt-0.5" size={18} />
                 <span className="text-gray-400 text-sm leading-relaxed">
-                  Near Saraswati Public School, Bhangrola Sec. 8, Road IMT Manesar, Gurugram
+                  {contactInfo.address}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <HiPhone className="text-emerald-400 flex-shrink-0" size={18} />
-                <a href="tel:+917505487656" className="text-gray-400 text-sm hover:text-white transition-colors">
-                  +91 7505487656
+                <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="text-gray-400 text-sm hover:text-white transition-colors">
+                  {contactInfo.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <HiMail className="text-blue-400 flex-shrink-0" size={18} />
-                <a href="mailto:svengg24@gmail.com" className="text-gray-400 text-sm hover:text-white transition-colors">
-                  svengg24@gmail.com
+                <a href={`mailto:${contactInfo.email}`} className="text-gray-400 text-sm hover:text-white transition-colors">
+                  {contactInfo.email}
                 </a>
               </li>
             </ul>
