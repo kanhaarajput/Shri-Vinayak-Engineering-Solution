@@ -7,11 +7,11 @@ import {
 } from 'react-icons/hi'
 
 const ICONS_AND_COLORS = [
-  { icon: HiClipboardList, color: 'text-amber-400', bg: 'bg-amber-400' },
+  { icon: HiClipboardList, color: 'text-green-400', bg: 'bg-green-400' },
   { icon: HiSearchCircle, color: 'text-sky-400', bg: 'bg-sky-400' },
   { icon: HiCog, color: 'text-violet-400', bg: 'bg-violet-400' },
   { icon: HiShieldCheck, color: 'text-emerald-400', bg: 'bg-emerald-400' },
-  { icon: HiTruck, color: 'text-orange-400', bg: 'bg-orange-400' },
+  { icon: HiTruck, color: 'text-emerald-400', bg: 'bg-emerald-400' },
 ]
 
 import { useData } from '../../context/DataContext'
@@ -24,7 +24,7 @@ export default function WorkflowTimeline() {
   if (!workflow || workflow.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative py-24 bg-gray-950 overflow-hidden">
+    <section ref={ref} className="relative py-24 bg-white dark:bg-gray-950 overflow-hidden">
       
       {/* Background texture */}
       <div
@@ -45,17 +45,17 @@ export default function WorkflowTimeline() {
           className="text-center mb-20"
         >
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Our Process
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Flawless Execution,<br />
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -69,12 +69,12 @@ export default function WorkflowTimeline() {
         {/* Timeline */}
         <div className="relative">
           {/* Connecting Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[45px] left-0 right-0 h-0.5 bg-white/10 z-0">
+          <div className="hidden lg:block absolute top-[45px] left-0 right-0 h-0.5 bg-black/10 dark:bg-white/10 z-0">
             <motion.div 
               initial={{ scaleX: 0, transformOrigin: 'left' }}
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 1.5, ease: 'easeOut', delay: 0.2 }}
-              className="h-full bg-gradient-to-r from-amber-500 via-sky-500 to-emerald-500"
+              className="h-full bg-gradient-to-r from-green-500 via-sky-500 to-emerald-500"
             />
           </div>
 
@@ -91,12 +91,7 @@ export default function WorkflowTimeline() {
               <motion.div key={step.id || index} variants={fadeUp} className="flex flex-col items-center text-center group">
                 
                 {/* Node Icon */}
-                <div className={`w-24 h-24 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105`}
-                     style={{
-                       background: 'rgba(17,24,39,0.9)',
-                       border: '1px solid rgba(255,255,255,0.08)',
-                       backdropFilter: 'blur(10px)'
-                     }}>
+                <div className="w-24 h-24 rounded-2xl flex items-center justify-center mb-6 relative transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105 bg-gray-900/90 border border-white/[0.08] backdrop-blur-md">
                   <div className={`absolute inset-0 ${style.bg} opacity-10 rounded-2xl blur-md group-hover:opacity-20 transition-opacity`} />
                   <Icon className={`${style.color} text-4xl relative z-10`} />
                   
@@ -107,8 +102,8 @@ export default function WorkflowTimeline() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed px-2">
+                <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-2">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed px-2">
                   {step.desc}
                 </p>
               </motion.div>

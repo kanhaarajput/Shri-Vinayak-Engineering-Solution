@@ -139,13 +139,13 @@ export default function MachinesTab() {
   if (loading) return <div className="p-8 text-center text-gray-500">Loading machines...</div>;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+    <div className="bg-gray-900 rounded-xl shadow-sm border border-white/[0.08]">
       {/* Header */}
-      <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-900">Upcoming Machines ({machines.length})</h3>
+      <div className="p-6 border-b border-white/[0.06] flex justify-between items-center">
+        <h3 className="text-lg font-bold text-white">Upcoming Machines ({machines.length})</h3>
         <button 
           onClick={() => { resetForm(); setIsModalOpen(true); }}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-gray-950 dark:bg-gray-900 text-white dark:text-white rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
         >
           <Plus size={16} /> Add Machine
         </button>
@@ -153,8 +153,8 @@ export default function MachinesTab() {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-gray-600">
-          <thead className="bg-gray-50 text-gray-500 font-medium">
+        <table className="w-full text-left text-sm text-gray-400">
+          <thead className="bg-gray-950 text-gray-500 font-medium">
             <tr>
               <th className="px-6 py-4 w-20">Order</th>
               <th className="px-6 py-4">Image</th>
@@ -166,29 +166,29 @@ export default function MachinesTab() {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {machines.map((machine, index) => (
-              <tr key={machine._id} className="hover:bg-gray-50 transition-colors">
+              <tr key={machine._id} className="hover:bg-gray-950 transition-colors">
                 <td className="px-6 py-4">
-                  <div className="flex flex-col items-center gap-1 text-gray-400">
-                    <button onClick={() => moveOrder(index, -1)} disabled={index === 0} className="hover:text-amber-500 disabled:opacity-30">
+                  <div className="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-400">
+                    <button onClick={() => moveOrder(index, -1)} disabled={index === 0} className="hover:text-green-500 disabled:opacity-30">
                       <ArrowUp size={16} />
                     </button>
-                    <span className="text-xs font-bold text-gray-700">{index + 1}</span>
-                    <button onClick={() => moveOrder(index, 1)} disabled={index === machines.length - 1} className="hover:text-amber-500 disabled:opacity-30">
+                    <span className="text-xs font-bold text-gray-300">{index + 1}</span>
+                    <button onClick={() => moveOrder(index, 1)} disabled={index === machines.length - 1} className="hover:text-green-500 disabled:opacity-30">
                       <ArrowDown size={16} />
                     </button>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="w-16 h-16 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-lg bg-gray-900/60 border border-white/[0.08] overflow-hidden flex items-center justify-center">
                     {machine.image ? (
                       <img src={machine.image} alt={machine.name} className="w-full h-full object-cover" />
                     ) : (
-                      <ImageIcon className="text-gray-400" size={20} />
+                      <ImageIcon className="text-gray-400 dark:text-gray-400" size={20} />
                     )}
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <p className="font-bold text-gray-900">{machine.name}</p>
+                  <p className="font-bold text-white">{machine.name}</p>
                   <p className="text-xs text-gray-500 mt-1 line-clamp-1 max-w-xs">{machine.description}</p>
                 </td>
                 <td className="px-6 py-4">
@@ -200,20 +200,20 @@ export default function MachinesTab() {
                 </td>
                 <td className="px-6 py-4">
                   {machine.isHidden ? (
-                    <span className="text-red-500 text-xs font-medium bg-red-50 px-2 py-1 rounded">Hidden</span>
+                    <span className="text-red-500 text-xs font-medium bg-red-500/10 px-2 py-1 rounded">Hidden</span>
                   ) : (
-                    <span className="text-green-500 text-xs font-medium bg-green-50 px-2 py-1 rounded">Visible</span>
+                    <span className="text-green-500 text-xs font-medium bg-green-500/10 px-2 py-1 rounded">Visible</span>
                   )}
                   {machine.isFeatured && (
-                    <span className="ml-2 text-amber-500 text-xs font-medium bg-amber-50 px-2 py-1 rounded">Featured</span>
+                    <span className="ml-2 text-green-500 text-xs font-medium bg-green-500/10 px-2 py-1 rounded">Featured</span>
                   )}
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-3">
-                    <button onClick={() => openEditModal(machine)} className="p-2 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                    <button onClick={() => openEditModal(machine)} className="p-2 text-gray-400 dark:text-gray-400 hover:text-green-400 hover:bg-green-500/10 rounded-lg transition-colors">
                       <Edit2 size={16} />
                     </button>
-                    <button onClick={() => handleDelete(machine._id)} className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                    <button onClick={() => handleDelete(machine._id)} className="p-2 text-gray-400 dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                       <Trash2 size={16} />
                     </button>
                   </div>
@@ -232,65 +232,65 @@ export default function MachinesTab() {
       {/* Add/Edit Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
-              <h3 className="text-xl font-bold text-gray-900">{editingId ? 'Edit Machine' : 'Add New Machine'}</h3>
-              <button onClick={resetForm} className="text-gray-400 hover:text-gray-600 font-bold text-xl">&times;</button>
+          <div className="bg-gray-900 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-white/[0.06] flex justify-between items-center sticky top-0 bg-gray-900 z-10">
+              <h3 className="text-xl font-bold text-white">{editingId ? 'Edit Machine' : 'Add New Machine'}</h3>
+              <button onClick={resetForm} className="text-gray-400 dark:text-gray-400 hover:text-gray-400 font-bold text-xl">&times;</button>
             </div>
             
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               
               <div className="flex gap-6 items-center">
-                <div className="w-32 h-32 rounded-xl border-2 border-dashed border-gray-300 flex-shrink-0 flex items-center justify-center bg-gray-50 overflow-hidden relative group">
+                <div className="w-32 h-32 rounded-xl border-2 border-dashed border-white/10 flex-shrink-0 flex items-center justify-center bg-gray-950 overflow-hidden relative group">
                   {imagePreview ? (
                     <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                   ) : (
-                    <ImageIcon className="text-gray-400" size={32} />
+                    <ImageIcon className="text-gray-400 dark:text-gray-400" size={32} />
                   )}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="text-white text-xs font-medium">Upload</span>
+                    <span className="text-white dark:text-white text-xs font-medium">Upload</span>
                   </div>
                   <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Machine Name *</label>
-                  <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="e.g. 5-Axis CNC Milling Center" />
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Machine Name *</label>
+                  <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g. 5-Axis CNC Milling Center" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none" placeholder="Details about capabilities..."></textarea>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
+                <textarea rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none" placeholder="Details about capabilities..."></textarea>
               </div>
 
               <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                  <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
+                  <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                     <option value="Upcoming">Upcoming (Arriving Soon)</option>
                     <option value="Installed">Installed & Active</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Expected Launch Date</label>
-                  <input type="date" value={formData.launchDate} onChange={e => setFormData({...formData, launchDate: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" />
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Expected Launch Date</label>
+                  <input type="date" value={formData.launchDate} onChange={e => setFormData({...formData, launchDate: e.target.value})} className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" />
                 </div>
               </div>
 
               <div className="flex gap-6 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={formData.isHidden} onChange={e => setFormData({...formData, isHidden: e.target.checked})} className="w-4 h-4 text-amber-600 rounded border-gray-300 focus:ring-amber-500" />
-                  <span className="text-sm text-gray-700">Hide from public view</span>
+                  <input type="checkbox" checked={formData.isHidden} onChange={e => setFormData({...formData, isHidden: e.target.checked})} className="w-4 h-4 text-green-400 rounded border-white/10 focus:ring-green-500" />
+                  <span className="text-sm text-gray-300">Hide from public view</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={formData.isFeatured} onChange={e => setFormData({...formData, isFeatured: e.target.checked})} className="w-4 h-4 text-amber-600 rounded border-gray-300 focus:ring-amber-500" />
-                  <span className="text-sm text-gray-700">Mark as Featured</span>
+                  <input type="checkbox" checked={formData.isFeatured} onChange={e => setFormData({...formData, isFeatured: e.target.checked})} className="w-4 h-4 text-green-400 rounded border-white/10 focus:ring-green-500" />
+                  <span className="text-sm text-gray-300">Mark as Featured</span>
                 </label>
               </div>
 
-              <div className="flex justify-end pt-6 border-t border-gray-100 gap-3">
-                <button type="button" onClick={resetForm} className="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancel</button>
-                <button type="submit" disabled={saving} className="flex items-center gap-2 px-6 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-70 transition-colors font-medium">
+              <div className="flex justify-end pt-6 border-t border-white/[0.06] gap-3">
+                <button type="button" onClick={resetForm} className="px-5 py-2.5 text-gray-400 hover:bg-gray-900/60 rounded-lg font-medium transition-colors">Cancel</button>
+                <button type="submit" disabled={saving} className="flex items-center gap-2 px-6 py-2.5 bg-gray-950 dark:bg-gray-900 text-white dark:text-white rounded-lg hover:bg-white/10 disabled:opacity-70 transition-colors font-medium">
                   {saving && <Loader2 size={16} className="animate-spin" />}
                   {saving ? 'Saving...' : 'Save Machine'}
                 </button>

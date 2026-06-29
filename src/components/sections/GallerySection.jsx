@@ -50,7 +50,7 @@ export default function GallerySection() {
     <section
       id="gallery"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Background texture ─────────────────────────────────────── */}
       <div
@@ -72,18 +72,18 @@ export default function GallerySection() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Our Facility
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Industrial{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -92,7 +92,7 @@ export default function GallerySection() {
               Gallery
             </span>
           </h2>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
             Take a look at our state-of-the-art machinery and precision processes in action.
           </p>
         </motion.div>
@@ -117,8 +117,8 @@ export default function GallerySection() {
             }}
             pagination={{
               clickable: true,
-              bulletClass: 'swiper-pagination-bullet !bg-white/40 !w-3 !h-3 !transition-all !duration-300 hover:!bg-amber-400',
-              bulletActiveClass: '!bg-amber-500 !w-6 !rounded-full',
+              bulletClass: 'swiper-pagination-bullet !bg-white/40 !w-3 !h-3 !transition-all !duration-300 hover:!bg-green-400',
+              bulletActiveClass: '!bg-green-500 !w-6 !rounded-full',
             }}
             navigation={{
               nextEl: '.swiper-button-next-custom',
@@ -153,10 +153,10 @@ export default function GallerySection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 drop-shadow-md">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2 drop-shadow-md">
                       {item.title}
                     </h3>
-                    <p className="text-amber-300 md:text-lg font-medium drop-shadow-sm max-w-2xl">
+                    <p className="text-green-300 md:text-lg font-medium drop-shadow-sm max-w-2xl">
                       {item.desc}
                     </p>
                   </motion.div>
@@ -165,12 +165,12 @@ export default function GallerySection() {
             ))}
 
             {/* Custom Navigation Buttons */}
-            <button aria-label="Previous slide" className="swiper-button-prev-custom absolute top-1/2 left-4 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-amber-500/80 hover:border-amber-400">
+            <button aria-label="Previous slide" className="swiper-button-prev-custom absolute top-1/2 left-4 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-green-500/80 hover:border-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
               </svg>
             </button>
-            <button aria-label="Next slide" className="swiper-button-next-custom absolute top-1/2 right-4 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-amber-500/80 hover:border-amber-400">
+            <button aria-label="Next slide" className="swiper-button-next-custom absolute top-1/2 right-4 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-green-500/80 hover:border-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>

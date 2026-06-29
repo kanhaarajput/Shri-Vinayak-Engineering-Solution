@@ -10,7 +10,7 @@ import CTASection from '@components/sections/CTASection'
 
 export default function Gallery() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-950">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950">
       <SEO 
         title="Our Work Gallery | Shri Vinayak Engineering Solutions"
         description="Explore our portfolio of precision engineering, laser welding, CNC machining, and industrial fabrication projects."

@@ -24,7 +24,7 @@ export default function GalleryHero() {
           }}
         />
         {/* Bottom gradient fade for smooth transition to next section */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-950 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white dark:from-gray-950 to-transparent" />
       </motion.div>
 
       {/* Hero Content */}
@@ -45,7 +45,7 @@ export default function GalleryHero() {
             Our{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',

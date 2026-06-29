@@ -6,6 +6,9 @@ const serviceSchema = new mongoose.Schema({
   iconName: { type: String, default: 'HiStar' },
   image: { type: String },
   color: { type: String, default: '#fbbf24' },
+  benefits: { type: [String], default: [] },
+  applications: { type: [String], default: [] },
+  features: { type: [String], default: [] }
 });
 
 module.exports = mongoose.model('Service', serviceSchema);

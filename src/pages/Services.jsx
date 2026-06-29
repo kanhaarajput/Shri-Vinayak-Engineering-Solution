@@ -15,7 +15,7 @@ import heroBg from '@assets/services_hero_bg.png'
 
 export default function Services() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
       <SEO 
         title="Our Services | Shri Vinayak Engineering Solutions"
         description="Explore our precision engineering services: Laser Welding, Laser Engraving, VMC Wirecut Job Work, and Custom Manufacturing."
@@ -53,12 +53,12 @@ export default function Services() {
             {/* Heading */}
             <motion.h1 
               variants={fadeUp}
-              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6"
+              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-gray-900 dark:text-white mb-6"
             >
               Our{' '}
               <span
                 style={{
-                  backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                  backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -71,7 +71,7 @@ export default function Services() {
             {/* Subheading */}
             <motion.p 
               variants={fadeUp}
-              className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+              className="text-gray-700 dark:text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed drop-shadow-md"
             >
               Precision Welding, Engraving, Wirecut &amp; Manufacturing Solutions tailored to meet the highest industrial standards.
             </motion.p>

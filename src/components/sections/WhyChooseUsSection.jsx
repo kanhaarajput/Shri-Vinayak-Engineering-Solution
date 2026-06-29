@@ -54,7 +54,7 @@ function useCounter(end, duration = 2000, start = 0, enabled = false) {
 
 /* ─── Feature data ───────────────────────────────────────────────────────── */
 const iconMap = {
-  star: { icon: HiStar, accent: '#fbbf24', glow: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.20)' },
+  star: { icon: HiStar, accent: '#4ade80', glow: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.20)' },
   bolt: { icon: HiBoltSlash, accent: '#38bdf8', glow: 'rgba(56,189,248,0.12)', border: 'rgba(56,189,248,0.20)' },
   cog: { icon: HiCog8Tooth, accent: '#a78bfa', glow: 'rgba(167,139,250,0.12)', border: 'rgba(167,139,250,0.20)' },
   shield: { icon: HiShieldCheck, accent: '#34d399', glow: 'rgba(52,211,153,0.12)', border: 'rgba(52,211,153,0.20)' },
@@ -67,7 +67,7 @@ const getIconConfig = (name) => {
 
 /* ─── Counter stats ──────────────────────────────────────────────────────── */
 const COUNTERS = [
-  { end: 25,  suffix: '+', label: 'Years of\nExperience',      accent: '#fbbf24' },
+  { end: 25,  suffix: '+', label: 'Years of\nExperience',      accent: '#4ade80' },
   { end: 500, suffix: '+', label: 'Projects\nDelivered',       accent: '#38bdf8' },
   { end: 98,  suffix: '%', label: 'Client\nSatisfaction',      accent: '#a78bfa' },
   { end: 50,  suffix: '+', label: 'Skilled\nEngineers',        accent: '#34d399' },
@@ -83,7 +83,7 @@ function CounterCard({ end, suffix, label, accent, enabled }) {
         {count}
         <span className="text-2xl sm:text-3xl">{suffix}</span>
       </p>
-      <p className="text-xs text-gray-400 font-medium tracking-wider uppercase mt-2 leading-snug whitespace-pre-line">
+      <p className="text-xs text-gray-600 dark:text-gray-400 font-medium tracking-wider uppercase mt-2 leading-snug whitespace-pre-line">
         {label}
       </p>
     </div>
@@ -114,13 +114,7 @@ function FeatureCard({ title, desc, iconName, index }) {
       {/* Card body */}
       <div
         className="relative h-full rounded-2xl p-6 transition-all duration-500
-                   group-hover:-translate-y-1"
-        style={{
-          background: 'rgba(17,24,39,0.8)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-        }}
+                   group-hover:-translate-y-1 bg-white/80 dark:bg-gray-900/85 border border-black/5 dark:border-white/[0.06] backdrop-blur-md"
       >
         {/* Corner glow on hover */}
         <div
@@ -149,12 +143,12 @@ function FeatureCard({ title, desc, iconName, index }) {
           {/* Text */}
           <div className="flex-1 min-w-0">
             <h3
-              className="text-base font-bold text-white mb-1 transition-colors duration-300"
+              className="text-base font-bold text-gray-900 dark:text-white mb-1 transition-colors duration-300"
               style={{ '--hover-color': accent }}
             >
               {title}
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{desc}</p>
           </div>
         </div>
       </div>
@@ -177,7 +171,7 @@ export default function WhyChooseUsSection() {
     <section
       id="why-choose-us"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Background texture ─────────────────────────────────────── */}
       <div
@@ -206,18 +200,18 @@ export default function WhyChooseUsSection() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Why Choose Us
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Built on{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -227,7 +221,7 @@ export default function WhyChooseUsSection() {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
             Decades of engineering excellence, state-of-the-art machinery, and
             an unwavering commitment to quality make us the preferred partner
             for industries across India.
@@ -240,13 +234,7 @@ export default function WhyChooseUsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={counterInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mb-16 rounded-2xl overflow-hidden"
-          style={{
-            background: 'rgba(17,24,39,0.7)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-          }}
+          className="mb-16 rounded-2xl overflow-hidden bg-white/80 dark:bg-gray-900/85 border border-black/5 dark:border-white/[0.06] backdrop-blur-md"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/[0.06]">
             {COUNTERS.map((c) => (

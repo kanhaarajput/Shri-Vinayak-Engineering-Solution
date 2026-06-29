@@ -26,7 +26,7 @@ export default function Home() {
   const { siteContent } = useData();
   const STATS = siteContent.home.stats;
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
       <SEO 
         title="Industrial Laser Welding & VMC Services | Shri Vinayak"
         description="Premium laser welding, VMC wirecut job work, die & mould manufacturing and repair services by Shri Vinayak Engineering Solutions."

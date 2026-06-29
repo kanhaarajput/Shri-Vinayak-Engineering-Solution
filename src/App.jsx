@@ -19,6 +19,7 @@ const AdminAboutPage = lazy(() => import('./admin/pages/AdminAboutPage'))
 const AdminServicesPage = lazy(() => import('./admin/pages/AdminServicesPage'))
 const AdminGalleryPage = lazy(() => import('./admin/pages/AdminGalleryPage'))
 const AdminContactPage = lazy(() => import('./admin/pages/AdminContactPage'))
+const AdminSettingsPage = lazy(() => import('./admin/pages/AdminSettingsPage'))
 
 import { DataProvider } from './context/DataContext'
 
@@ -48,15 +49,16 @@ const router = createBrowserRouter([
       { path: 'about', element: <AdminAboutPage /> },
       { path: 'services', element: <AdminServicesPage /> },
       { path: 'gallery', element: <AdminGalleryPage /> },
-      { path: 'contact', element: <AdminContactPage /> },
+      { path: 'contact',  element: <AdminContactPage /> },
+      { path: 'settings', element: <AdminSettingsPage /> },
     ],
   },
 ])
 
 // A premium loading fallback spinner
 const LoadingFallback = () => (
-  <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-    <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div>
+  <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-green-500/20 border-t-green-500 rounded-full animate-spin"></div>
   </div>
 )
 

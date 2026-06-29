@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 /* ─── Tailwind v4 Theme ──────────────────────────────────────────────────── */
 /*  All --color-* variables automatically generate Tailwind utility classes.  */
@@ -14,7 +15,7 @@
   --color-popover:             hsl(0 0% 100%);
   --color-popover-foreground:  hsl(224 71.4% 4.1%);
 
-  --color-primary:             hsl(262.1 83.3% 57.8%);
+  --color-primary:             hsl(142 71% 45%);
   --color-primary-foreground:  hsl(210 20% 98%);
 
   --color-secondary:           hsl(220 14.3% 95.9%);
@@ -61,7 +62,7 @@
   --color-popover:             hsl(224 71.4% 4.1%);
   --color-popover-foreground:  hsl(210 20% 98%);
 
-  --color-primary:             hsl(263.4 70% 50.4%);
+  --color-primary:             hsl(142 71% 45%);
   --color-primary-foreground:  hsl(210 20% 98%);
 
   --color-secondary:           hsl(215 27.9% 16.9%);
@@ -142,8 +143,8 @@
     background-clip: text;
   }
 
-  .gradient-text-amber {
-    background: linear-gradient(90deg, #fbbf24, #f97316, #fb923c);
+  .gradient-text-green {
+    background: linear-gradient(90deg, #4ade80, #16a34a, #15803d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -158,8 +159,8 @@
     background: linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #06b6d4 100%);
   }
 
-  .gradient-bg-amber {
-    background: linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ea580c 100%);
+  .gradient-bg-green {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 55%, #16a34a 100%);
   }
 
   /* Thin scrollbar */

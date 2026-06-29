@@ -53,9 +53,9 @@ export default function ContactSection() {
       title: 'Factory Address',
       content: contactInfoData.address,
       href: 'https://maps.google.com/?q=IMT+Manesar,Gurugram',
-      color: 'text-amber-400',
-      bg: 'bg-amber-500/10',
-      border: 'border-amber-500/20',
+      color: 'text-green-400',
+      bg: 'bg-green-500/10',
+      border: 'border-green-500/20',
     },
     {
       icon: HiPhone,
@@ -122,11 +122,11 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Background Elements ────────────────────────────────────── */}
       <div
-        className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-0 right-0 w-[600px] h-[600px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none"
       />
       <div
         className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"
@@ -142,18 +142,18 @@ export default function ContactSection() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Get in Touch
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Contact{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -162,7 +162,7 @@ export default function ContactSection() {
               Our Experts
             </span>
           </h2>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
             Ready to discuss your engineering needs? Reach out to us for free consultations, quotations, or technical inquiries.
           </p>
         </motion.div>
@@ -190,12 +190,12 @@ export default function ContactSection() {
                     border: '1px solid rgba(255,255,255,0.06)',
                   }}
                 >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${info.bg} ${info.border} transition-colors group-hover:bg-white/10`}>
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${info.bg} ${info.border} transition-colors group-hover:bg-black/10 dark:bg-white/10`}>
                     <info.icon className={`${info.color} text-xl`} />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-sm mb-1">{info.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">{info.content}</p>
+                    <h4 className="text-gray-900 dark:text-white font-bold text-sm mb-1">{info.title}</h4>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed group-hover:text-gray-700 dark:text-gray-300 transition-colors">{info.content}</p>
                   </div>
                 </a>
               ))}
@@ -206,7 +206,7 @@ export default function ContactSection() {
               href={`https://wa.me/${contactInfoData.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/20"
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-gray-900 dark:text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/20"
               style={{
                 background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
               }}
@@ -216,7 +216,7 @@ export default function ContactSection() {
             </a>
 
             {/* Google Map */}
-            <div className="w-full h-64 rounded-2xl overflow-hidden border border-white/10 mt-2">
+            <div className="w-full h-64 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 mt-2">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509.309489508826!2d76.9208031!3d28.3999905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d3d573b06cf79%3A0x7d6a2f8b1a53303a!2sIMT%20Manesar%2C%20Gurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                 width="100%"
@@ -237,27 +237,21 @@ export default function ContactSection() {
             variants={fadeRight}
           >
             <div 
-              className="p-8 sm:p-10 rounded-3xl h-full shadow-2xl shadow-black/50"
-              style={{
-                background: 'rgba(17,24,39,0.8)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-              }}
+              className="p-8 sm:p-10 rounded-3xl h-full shadow-2xl shadow-black/50 bg-white/80 dark:bg-gray-900/85 border border-black/5 dark:border-white/[0.06] backdrop-blur-md"
             >
-              <h3 className="text-2xl font-bold text-white mb-2">Send us a Message</h3>
-              <p className="text-gray-400 text-sm mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Send us a Message</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
 
               <form ref={formRef} onSubmit={sendEmail} className="flex flex-col gap-5">
                 {/* Name */}
                 <div>
-                  <label htmlFor="user_name" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Full Name</label>
+                  <label htmlFor="user_name" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">Full Name</label>
                   <input
                     type="text"
                     name="user_name"
                     id="user_name"
                     required
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder:text-gray-600"
+                    className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all placeholder:text-gray-600"
                     placeholder="John Doe"
                   />
                 </div>
@@ -265,25 +259,25 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Email */}
                   <div>
-                    <label htmlFor="user_email" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Email Address</label>
+                    <label htmlFor="user_email" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">Email Address</label>
                     <input
                       type="email"
                       name="user_email"
                       id="user_email"
                       required
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder:text-gray-600"
+                      className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all placeholder:text-gray-600"
                       placeholder="john@company.com"
                     />
                   </div>
                   
                   {/* Phone */}
                   <div>
-                    <label htmlFor="user_phone" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Phone Number</label>
+                    <label htmlFor="user_phone" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">Phone Number</label>
                     <input
                       type="tel"
                       name="user_phone"
                       id="user_phone"
-                      className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder:text-gray-600"
+                      className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all placeholder:text-gray-600"
                       placeholder="+91 98765 43210"
                     />
                   </div>
@@ -291,30 +285,30 @@ export default function ContactSection() {
 
                 {/* Service Interest */}
                 <div>
-                  <label htmlFor="service" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Service of Interest</label>
+                  <label htmlFor="service" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">Service of Interest</label>
                   <select
                     name="service"
                     id="service"
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all appearance-none"
+                    className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all appearance-none"
                   >
-                    <option value="" className="bg-gray-900">Select a service</option>
-                    <option value="Laser Welding" className="bg-gray-900">Laser Welding & Engraving</option>
-                    <option value="VMC Wirecut" className="bg-gray-900">VMC Wirecut Job Work</option>
-                    <option value="Die & Mould" className="bg-gray-900">Die & Mould Repairing</option>
-                    <option value="Manufacturing" className="bg-gray-900">Manufacturing Solutions</option>
-                    <option value="Other" className="bg-gray-900">Other Inquiry</option>
+                    <option value="" className="bg-gray-50 dark:bg-gray-900">Select a service</option>
+                    <option value="Laser Welding" className="bg-gray-50 dark:bg-gray-900">Laser Welding & Engraving</option>
+                    <option value="VMC Wirecut" className="bg-gray-50 dark:bg-gray-900">VMC Wirecut Job Work</option>
+                    <option value="Die & Mould" className="bg-gray-50 dark:bg-gray-900">Die & Mould Repairing</option>
+                    <option value="Manufacturing" className="bg-gray-50 dark:bg-gray-900">Manufacturing Solutions</option>
+                    <option value="Other" className="bg-gray-50 dark:bg-gray-900">Other Inquiry</option>
                   </select>
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Your Message</label>
+                  <label htmlFor="message" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">Your Message</label>
                   <textarea
                     name="message"
                     id="message"
                     rows="4"
                     required
-                    className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder:text-gray-600 resize-none"
+                    className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 focus:ring-1 focus:ring-green-500/50 transition-all placeholder:text-gray-600 resize-none"
                     placeholder="Tell us about your project requirements..."
                   ></textarea>
                 </div>
@@ -323,9 +317,9 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 mt-2 rounded-xl font-bold text-gray-950 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-orange-600/20"
+                  className="w-full py-4 mt-2 rounded-xl font-bold text-gray-950 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20"
                   style={{
-                    background: 'linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ea580c 100%)',
+                    background: 'linear-gradient(135deg, #4ade80 0%, #10b981 55%, #ea580c 100%)',
                   }}
                 >
                   {isSubmitting ? 'Sending Message...' : 'Send Message'}

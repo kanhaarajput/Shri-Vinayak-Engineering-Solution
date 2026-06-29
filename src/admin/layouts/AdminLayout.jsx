@@ -2,51 +2,17 @@ import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import {
   LayoutDashboard, Home, Info, Briefcase, Image as ImageIcon, Phone,
-  LogOut, ExternalLink, ChevronRight
+  LogOut, ChevronRight, Settings
 } from 'lucide-react';
 
-const PAGE_GROUPS = [
-  {
-    label: 'DASHBOARD',
-    items: [
-      { name: 'Overview', path: '/admin', icon: LayoutDashboard },
-    ],
-  },
-  {
-    label: 'HOME PAGE',
-    desc: '/',
-    items: [
-      { name: 'Home Sections', path: '/admin/home', icon: Home },
-    ],
-  },
-  {
-    label: 'ABOUT PAGE',
-    desc: '/about',
-    items: [
-      { name: 'About Sections', path: '/admin/about', icon: Info },
-    ],
-  },
-  {
-    label: 'SERVICES PAGE',
-    desc: '/services',
-    items: [
-      { name: 'Services Sections', path: '/admin/services', icon: Briefcase },
-    ],
-  },
-  {
-    label: 'GALLERY PAGE',
-    desc: '/gallery',
-    items: [
-      { name: 'Gallery Sections', path: '/admin/gallery', icon: ImageIcon },
-    ],
-  },
-  {
-    label: 'CONTACT PAGE',
-    desc: '/contact',
-    items: [
-      { name: 'Contact Sections', path: '/admin/contact', icon: Phone },
-    ],
-  },
+const NAV_ITEMS = [
+  { name: 'Overview',          path: '/admin',          icon: LayoutDashboard },
+  { name: 'Home Sections',     path: '/admin/home',     icon: Home },
+  { name: 'About Sections',    path: '/admin/about',    icon: Info },
+  { name: 'Services Sections', path: '/admin/services', icon: Briefcase },
+  { name: 'Gallery Sections',  path: '/admin/gallery',  icon: ImageIcon },
+  { name: 'Contact Sections',  path: '/admin/contact',  icon: Phone },
+  { name: 'Site Settings',     path: '/admin/settings', icon: Settings },
 ];
 
 export default function AdminLayout() {
@@ -57,82 +23,63 @@ export default function AdminLayout() {
     return <Navigate to="/admin/login" replace />;
   }
 
-  // Find which group + item is active
-  const currentItem = PAGE_GROUPS.flatMap(g => g.items).find(i => i.path === location.pathname);
+  const currentItem = NAV_ITEMS.find(i => i.path === location.pathname);
   const pageTitle = currentItem?.name || 'Admin Panel';
 
   return (
-    <div className="flex h-screen bg-gray-100 text-gray-900 font-sans">
-      {/* ─── Sidebar ─────────────────────────────────────── */}
-      <aside className="w-72 bg-gray-950 text-white flex flex-col shadow-xl overflow-y-auto">
-        {/* Logo */}
-        <div className="px-6 py-5 border-b border-white/[0.06] flex items-center justify-between">
-          <h2 className="text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-            Shri Admin
-          </h2>
-          <a
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="View Live Site"
-            className="p-2 rounded-lg text-gray-500 hover:text-amber-400 hover:bg-white/5 transition-colors"
-          >
-            <ExternalLink size={16} />
-          </a>
+    <div className="flex h-screen bg-gray-950 text-white font-sans">
+      {/* ─── Sidebar ─────────────────────────────────────────── */}
+      <aside className="w-64 bg-gray-900/80 backdrop-blur-xl border-r border-white/[0.06] flex flex-col shadow-2xl overflow-y-auto flex-shrink-0">
+        {/* Branding */}
+        <div className="px-6 py-6 border-b border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/30">
+              <span className="text-gray-950 font-black text-sm">S</span>
+            </div>
+            <div>
+              <h2 className="text-sm font-black tracking-tight text-white">Shri Admin</h2>
+              <p className="text-[10px] text-gray-500 tracking-wide">Management Panel</p>
+            </div>
+          </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-4 px-3 space-y-6">
-          {PAGE_GROUPS.map((group) => (
-            <div key={group.label}>
-              {/* Group Label */}
-              <div className="flex items-center justify-between px-3 mb-2">
-                <span className="text-[10px] font-extrabold tracking-[0.18em] uppercase text-gray-500">
-                  {group.label}
-                </span>
-                {group.desc && (
-                  <span className="text-[10px] font-mono text-gray-600 bg-white/5 px-1.5 py-0.5 rounded">
-                    {group.desc}
-                  </span>
-                )}
-              </div>
-
-              {/* Group Items */}
-              <div className="space-y-1">
-                {group.items.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-                        isActive
-                          ? 'bg-amber-500/10 text-amber-400 shadow-sm shadow-amber-500/5'
-                          : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                          isActive ? 'bg-amber-500/20' : 'bg-white/[0.04] group-hover:bg-white/[0.08]'
-                        }`}>
-                          <Icon size={16} />
-                        </div>
-                        <span className="text-sm font-semibold">{item.name}</span>
-                      </div>
-                      {/* Unread messages badge for contact */}
-                      {item.path === '/admin/contact' && messages.length > 0 && (
-                        <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
-                          {messages.length}
-                        </span>
-                      )}
-                      <ChevronRight size={14} className={`transition-colors ${isActive ? 'text-amber-500' : 'text-gray-700'}`} />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+        <nav className="flex-1 py-4 px-3">
+          <div className="space-y-1">
+            {NAV_ITEMS.map((item) => {
+              const isActive = location.pathname === item.path;
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 group ${
+                    isActive
+                      ? 'bg-green-500/10 text-green-400 border border-green-500/20 shadow-sm shadow-green-500/10'
+                      : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                      isActive ? 'bg-green-500/20' : 'bg-white/[0.04] group-hover:bg-white/[0.08]'
+                    }`}>
+                      <Icon size={16} />
+                    </div>
+                    <span className="text-sm font-semibold">{item.name}</span>
+                  </div>
+                  {/* Unread messages badge */}
+                  {item.path === '/admin/contact' && messages.length > 0 && (
+                    <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+                      {messages.length}
+                    </span>
+                  )}
+                  {isActive && (
+                    <ChevronRight size={14} className="text-green-500" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Logout */}
@@ -149,17 +96,23 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      {/* ─── Main Content Area ────────────────────────────── */}
-      <main className="flex-1 overflow-auto bg-gray-50">
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-100 px-8 py-4 flex items-center justify-between">
-          <h1 className="text-lg font-bold text-gray-800">{pageTitle}</h1>
+      {/* ─── Main Content ─────────────────────────────────────── */}
+      <main className="flex-1 overflow-auto bg-gray-950">
+        {/* Topbar */}
+        <header className="sticky top-0 z-30 bg-gray-950/80 backdrop-blur-md border-b border-white/[0.06] px-8 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-base font-bold text-white">{pageTitle}</h1>
+            <p className="text-xs text-gray-500 mt-0.5">Shri Vinayak Engineering Solutions</p>
+          </div>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-gray-950 font-black text-sm shadow-md shadow-green-500/30">
               A
             </div>
-            <span className="font-medium text-sm text-gray-600">Admin</span>
+            <span className="font-medium text-sm text-gray-400">Admin</span>
           </div>
         </header>
+
+        {/* Page Content */}
         <div className="p-6 lg:p-8">
           <Outlet />
         </div>

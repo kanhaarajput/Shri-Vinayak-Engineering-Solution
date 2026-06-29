@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js",
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js",
     "build": "echo 'No build required'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +21,8 @@
     "mongoose": "^8.24.1",
     "multer": "^2.2.0",
     "multer-storage-cloudinary": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

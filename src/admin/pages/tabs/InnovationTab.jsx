@@ -78,23 +78,23 @@ export default function InnovationTab() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-bold text-gray-900 mb-6">Edit Innovation Section</h3>
+    <div className="bg-gray-900 rounded-xl shadow-sm border border-white/[0.08] p-6">
+      <h3 className="text-lg font-bold text-white mb-6">Edit Innovation Section</h3>
       
       <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
         
         {/* Cover Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Innovation Image</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Innovation Image</label>
           <div className="flex items-center gap-6">
-            <div className="w-48 h-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50 overflow-hidden relative group">
+            <div className="w-48 h-32 rounded-lg border-2 border-dashed border-white/10 flex items-center justify-center bg-gray-950 overflow-hidden relative group">
               {imagePreview ? (
                 <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
               ) : (
-                <ImageIcon className="text-gray-400" size={32} />
+                <ImageIcon className="text-gray-400 dark:text-gray-400" size={32} />
               )}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Click to upload</span>
+                <span className="text-white dark:text-white text-sm font-medium">Click to upload</span>
               </div>
               <input 
                 type="file" 
@@ -112,35 +112,35 @@ export default function InnovationTab() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Title *</label>
             <input 
               type="text" 
               value={formData.title}
               onChange={e => setFormData({...formData, title: e.target.value})}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+              className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
               placeholder="e.g. Research & Development"
               required
             />
           </div>
 
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Description *</label>
             <textarea 
               value={formData.description}
               onChange={e => setFormData({...formData, description: e.target.value})}
               rows={5}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none"
+              className="w-full px-4 py-2 bg-gray-950 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-none"
               placeholder="Details about R&D initiatives..."
               required
             />
           </div>
         </div>
 
-        <div className="flex justify-end pt-4 border-t border-gray-100">
+        <div className="flex justify-end pt-4 border-t border-white/[0.06]">
           <button 
             type="submit" 
             disabled={saving}
-            className="flex items-center gap-2 px-6 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-70 transition-colors font-medium"
+            className="flex items-center gap-2 px-6 py-2.5 bg-gray-950 dark:bg-gray-900 text-white dark:text-white rounded-lg hover:bg-white/10 disabled:opacity-70 transition-colors font-medium"
           >
             {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
             {saving ? 'Saving...' : 'Save Changes'}

@@ -7,14 +7,19 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-coverflow'
 
 import { HiPlay } from 'react-icons/hi'
-import { VIDEOS } from '@data/galleryData'
+import { useData } from '../../context/DataContext'
 
 export default function VideoGallery() {
+  const { videos } = useData();
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
+  if (!videos || videos.length === 0) {
+    return null;
+  }
+
   return (
-    <section ref={ref} className="relative py-24 bg-gray-950 overflow-hidden border-t border-white/5">
+    <section ref={ref} className="relative py-24 bg-white dark:bg-gray-950 overflow-hidden border-t border-black/5 dark:border-white/5">
       
       {/* Background Texture */}
       <div
@@ -33,16 +38,16 @@ export default function VideoGallery() {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Media
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Process Video Gallery
           </h2>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto">
             Watch our high-precision machinery and master welders in action. Experience the meticulous process behind our engineering solutions.
           </p>
         </motion.div>
@@ -68,13 +73,13 @@ export default function VideoGallery() {
             slideShadows: true,
           }}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
-          pagination={{ clickable: true, bulletClass: 'swiper-pagination-bullet !bg-white/40 !w-2 !h-2', bulletActiveClass: '!bg-amber-500 !w-6 !rounded-full' }}
+          pagination={{ clickable: true, bulletClass: 'swiper-pagination-bullet !bg-white/40 !w-2 !h-2', bulletActiveClass: '!bg-green-500 !w-6 !rounded-full' }}
           modules={[EffectCoverflow, Pagination, Autoplay]}
           loop={true}
           className="w-full py-10"
         >
-          {VIDEOS.map((video) => (
-            <SwiperSlide key={video.id} className="w-[320px] sm:w-[500px] lg:w-[700px] h-[220px] sm:h-[300px] lg:h-[400px] relative rounded-3xl overflow-hidden group border border-white/10">
+          {videos.map((video) => (
+            <SwiperSlide key={video.id || video._id} className="w-[320px] sm:w-[500px] lg:w-[700px] h-[220px] sm:h-[300px] lg:h-[400px] relative rounded-3xl overflow-hidden group border border-black/10 dark:border-white/10">
               
               {/* Thumbnail */}
               <img 
@@ -90,7 +95,7 @@ export default function VideoGallery() {
               
               {/* Play Button */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-500/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.5)] group-hover:scale-110 group-hover:bg-amber-400 transition-all duration-300">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.5)] group-hover:scale-110 group-hover:bg-green-400 transition-all duration-300">
                   <HiPlay className="text-white text-3xl sm:text-4xl ml-2" />
                 </div>
               </div>

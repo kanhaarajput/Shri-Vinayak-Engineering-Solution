@@ -32,13 +32,13 @@ export default function TestimonialsSection() {
     <section
       id="testimonials"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Background Elements ────────────────────────────────────── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(245,158,11,0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(34,197,94,0.05) 0%, transparent 70%)',
         }}
       />
       
@@ -52,18 +52,18 @@ export default function TestimonialsSection() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Client Feedback
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Trusted by{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
               Industry Leaders
             </span>
           </h2>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
             Don't just take our word for it. Here is what our clients have to say about our commitment to quality, precision, and delivery.
           </p>
         </motion.div>
@@ -99,8 +99,8 @@ export default function TestimonialsSection() {
             }}
             pagination={{
               clickable: true,
-              bulletClass: 'swiper-pagination-bullet !bg-white/30 !w-2 !h-2 !transition-all !duration-300 hover:!bg-amber-400',
-              bulletActiveClass: '!bg-amber-500 !w-6 !rounded-full',
+              bulletClass: 'swiper-pagination-bullet !bg-white/30 !w-2 !h-2 !transition-all !duration-300 hover:!bg-green-400',
+              bulletActiveClass: '!bg-green-500 !w-6 !rounded-full',
             }}
             loop={true}
             className="pb-16"
@@ -119,26 +119,26 @@ export default function TestimonialsSection() {
                   {/* Rating */}
                   <div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating || 5)].map((_, i) => (
-                      <HiStar key={i} className="text-amber-400" size={20} />
+                      <HiStar key={i} className="text-green-400" size={20} />
                     ))}
                   </div>
 
                   {/* Feedback */}
-                  <p className="text-gray-300 text-sm leading-relaxed mb-8 flex-grow">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-8 flex-grow">
                     "{testimonial.content}"
                   </p>
 
                   {/* Client Info */}
-                  <div className="flex items-center gap-4 pt-6 mt-auto border-t border-white/5">
+                  <div className="flex items-center gap-4 pt-6 mt-auto border-t border-black/5 dark:border-white/5">
                     {testimonial.image ? (
-                      <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover shadow-lg border border-white/10" />
+                      <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover shadow-lg border border-black/10 dark:border-white/10" />
                     ) : (
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg bg-gradient-to-br from-amber-500 to-orange-500">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-gray-900 dark:text-white shadow-lg bg-gradient-to-br from-green-500 to-emerald-500">
                         {testimonial.name.charAt(0)}
                       </div>
                     )}
                     <div>
-                      <h4 className="text-white font-bold text-sm group-hover:text-amber-300 transition-colors duration-300">
+                      <h4 className="text-gray-900 dark:text-white font-bold text-sm group-hover:text-green-300 transition-colors duration-300">
                         {testimonial.name}
                       </h4>
                       <p className="text-gray-500 text-xs mt-0.5">

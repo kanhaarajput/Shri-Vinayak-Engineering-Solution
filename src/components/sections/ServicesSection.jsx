@@ -30,9 +30,9 @@ const SERVICES = [
     icon: HiStar,
     title: 'Laser Welding',
     desc: 'High-precision laser beam welding for die, mould, and industrial components with micron-level accuracy and minimal heat-affected zones.',
-    gradient: 'from-amber-400 to-orange-600',
-    glowColor: 'rgba(245,158,11,0.15)',
-    borderColor: 'rgba(245,158,11,0.25)',
+    gradient: 'from-green-400 to-emerald-600',
+    glowColor: 'rgba(34,197,94,0.15)',
+    borderColor: 'rgba(34,197,94,0.25)',
   },
   {
     icon: HiCog6Tooth,
@@ -70,7 +70,7 @@ const SERVICES = [
     icon: HiArrowPath,
     title: 'Repairing',
     desc: 'Comprehensive industrial machinery and component repair services — restoring performance, precision, and longevity to critical equipment.',
-    gradient: 'from-amber-300 to-yellow-500',
+    gradient: 'from-green-300 to-yellow-500',
     glowColor: 'rgba(252,211,77,0.15)',
     borderColor: 'rgba(252,211,77,0.25)',
   },
@@ -98,13 +98,10 @@ function ServiceCard({ icon: Icon, title, desc, gradient, glowColor, borderColor
       {/* Card body */}
       <div
         className="relative h-full rounded-2xl p-7 transition-all duration-500
-                   group-hover:-translate-y-1"
-        style={{
-          background: 'rgba(17,24,39,0.85)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-        }}
+                   group-hover:-translate-y-1 
+                   bg-white/80 dark:bg-gray-900/85 
+                   border border-black/5 dark:border-white/[0.06] 
+                   backdrop-blur-md"
       >
         {/* Glow on hover */}
         <div
@@ -136,12 +133,12 @@ function ServiceCard({ icon: Icon, title, desc, gradient, glowColor, borderColor
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-bold text-white mb-3 group-hover:text-amber-300 transition-colors duration-300">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-300 transition-colors duration-300">
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-gray-400 text-sm leading-relaxed mb-5">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-5">
             {desc}
           </p>
 
@@ -175,14 +172,14 @@ export default function ServicesSection() {
     <section
       id="services"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Subtle background ──────────────────────────────────────── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 40% at 70% 20%, rgba(245,158,11,0.04) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 20% 80%, rgba(59,130,246,0.04) 0%, transparent 60%)',
+            'radial-gradient(ellipse 50% 40% at 70% 20%, rgba(34,197,94,0.04) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 20% 80%, rgba(59,130,246,0.04) 0%, transparent 60%)',
         }}
       />
 
@@ -207,19 +204,19 @@ export default function ServicesSection() {
         >
           {/* Label */}
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
-            <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
+            <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
               Our Services
             </span>
-            <div className="h-px w-8 bg-amber-500/50 rounded-full" />
+            <div className="h-px w-8 bg-green-500/50 rounded-full" />
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             What We{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -229,7 +226,7 @@ export default function ServicesSection() {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
             From precision laser welding to end-to-end manufacturing, we deliver
             industrial solutions built on decades of expertise and cutting-edge technology.
           </p>
@@ -255,12 +252,12 @@ export default function ServicesSection() {
             id="services-cta"
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl
                        font-bold text-sm tracking-wide text-gray-950
-                       shadow-xl shadow-orange-600/30
-                       hover:shadow-orange-500/50 hover:scale-[1.04] active:scale-[0.97]
+                       shadow-xl shadow-emerald-600/30
+                       hover:shadow-emerald-500/50 hover:scale-[1.04] active:scale-[0.97]
                        transition-all duration-200"
             style={{
               backgroundImage:
-                'linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ea580c 100%)',
+                'linear-gradient(135deg, #4ade80 0%, #10b981 55%, #ea580c 100%)',
             }}
           >
             <HiStar size={16} />

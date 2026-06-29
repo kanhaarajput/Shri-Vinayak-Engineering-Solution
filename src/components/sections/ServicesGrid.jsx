@@ -21,7 +21,7 @@ export default function ServicesGrid() {
   const { services: SERVICES } = useData();
 
   return (
-    <section ref={ref} className="relative py-24 bg-gray-950 overflow-hidden">
+    <section ref={ref} className="relative py-24 bg-white dark:bg-gray-950 overflow-hidden">
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
         
         {/* Header */}
@@ -31,11 +31,11 @@ export default function ServicesGrid() {
           variants={fadeUp}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
             Complete{' '}
             <span
               style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #f97316)',
+                backgroundImage: 'linear-gradient(90deg, #4ade80, #10b981)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -44,7 +44,7 @@ export default function ServicesGrid() {
               Industrial Solutions
             </span>
           </h2>
-          <p className="text-gray-400 text-base max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto">
             From precision micron-level laser welding to heavy industrial manufacturing, we offer a complete suite of engineering services.
           </p>
         </motion.div>
@@ -73,13 +73,7 @@ export default function ServicesGrid() {
 
               {/* Card Body */}
               <div
-                className="relative h-full rounded-3xl overflow-hidden flex flex-col transition-all duration-500"
-                style={{
-                  background: 'rgba(17,24,39,0.8)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                }}
+                className="relative h-full rounded-3xl overflow-hidden flex flex-col transition-all duration-500 bg-white/80 dark:bg-gray-900/85 border border-black/5 dark:border-white/[0.06] backdrop-blur-md"
               >
                 {/* Image Section */}
                 <div className="w-full h-48 overflow-hidden relative">
@@ -94,15 +88,15 @@ export default function ServicesGrid() {
 
                 {/* Content Section */}
                 <div className="p-6 flex flex-col flex-grow relative z-20">
-                  <h3 className="text-xl font-bold text-white mb-2 transition-colors duration-300" style={{ '--hover-color': service.color }}>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300" style={{ '--hover-color': service.color }}>
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
                     {service.desc}
                   </p>
                   
                   {/* Learn More link */}
-                  <div className="mt-auto flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group-hover:text-amber-400 text-gray-500">
+                  <div className="mt-auto flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group-hover:text-green-400 text-gray-500">
                     Explore Service <span>&rarr;</span>
                   </div>
                 </div>

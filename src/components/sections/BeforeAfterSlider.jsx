@@ -2,11 +2,18 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { fadeUp } from '@utils/animations'
 import { HiSwitchHorizontal } from 'react-icons/hi'
+import { useData } from '../../context/DataContext'
 
-import imgBefore from '@assets/die_before.png'
-import imgAfter from '@assets/die_after.png'
+import defaultImgBefore from '@assets/die_before.png'
+import defaultImgAfter from '@assets/die_after.png'
 
 export default function BeforeAfterSlider() {
+  const { siteContent } = useData();
+  const galleryData = siteContent?.gallery?.beforeAfter || {};
+  
+  const imgBefore = galleryData.beforeImage || defaultImgBefore;
+  const imgAfter = galleryData.afterImage || defaultImgAfter;
+
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
   const containerRef = useRef(null)
@@ -47,10 +54,10 @@ export default function BeforeAfterSlider() {
   }, [isDragging])
 
   return (
-    <section ref={ref} className="py-24 bg-[#030610] relative overflow-hidden">
+    <section ref={ref} className="py-24 bg-gray-50 dark:bg-[#030610] relative overflow-hidden">
       
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-green-500/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -61,10 +68,10 @@ export default function BeforeAfterSlider() {
           animate={inView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4">
-            Transformation Through <span className="text-amber-400">Precision</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white mb-4">
+            Transformation Through <span className="text-green-400">Precision</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
             Drag the slider to see how our advanced laser welding technology perfectly restores heavily damaged industrial dies to their original condition.
           </p>
         </motion.div>
@@ -74,7 +81,7 @@ export default function BeforeAfterSlider() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none"
+          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 select-none group touch-none"
           ref={containerRef}
           onMouseDown={(e) => {
             setIsDragging(true)
@@ -98,7 +105,7 @@ export default function BeforeAfterSlider() {
             
             {/* Before Label */}
             <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-              <span className="px-4 py-2 bg-gray-950/80 backdrop-blur-md text-white text-sm font-bold tracking-widest uppercase rounded-full border border-white/10">
+              <span className="px-4 py-2 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md text-gray-900 dark:text-white text-sm font-bold tracking-widest uppercase rounded-full border border-black/10 dark:border-white/10">
                 Before
               </span>
             </div>
@@ -120,7 +127,7 @@ export default function BeforeAfterSlider() {
               {/* After Label */}
               <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30" style={{ right: `calc(${100 - sliderPosition}% + 1rem)` }}>
                 {sliderPosition > 20 && (
-                  <span className="px-4 py-2 bg-amber-500/90 backdrop-blur-md text-gray-950 text-sm font-black tracking-widest uppercase rounded-full border border-amber-400 whitespace-nowrap">
+                  <span className="px-4 py-2 bg-green-500/90 backdrop-blur-md text-gray-950 text-sm font-black tracking-widest uppercase rounded-full border border-green-400 whitespace-nowrap">
                     After
                   </span>
                 )}
@@ -132,7 +139,7 @@ export default function BeforeAfterSlider() {
               className="absolute top-0 bottom-0 z-30 w-1 bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] cursor-ew-resize flex items-center justify-center -translate-x-1/2"
               style={{ left: `${sliderPosition}%` }}
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-amber-400 group-hover:scale-110 transition-transform">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-green-400 group-hover:scale-110 transition-transform">
                 <HiSwitchHorizontal size={20} />
               </div>
             </div>

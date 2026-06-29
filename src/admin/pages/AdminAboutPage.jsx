@@ -1,8 +1,7 @@
 import AdminSection from '../components/AdminSection';
 import AdminAbout from './AdminAbout';
 import AdminTeam from './AdminTeam';
-import AdminFuturePlans from './AdminFuturePlans';
-import { FileText, Users, Rocket } from 'lucide-react';
+import { FileText, Users } from 'lucide-react';
 
 export default function AdminAboutPage() {
   return (
@@ -10,14 +9,14 @@ export default function AdminAboutPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-black text-gray-900">About Page</h2>
-          <p className="text-sm text-gray-500 mt-1">Manage your company info, team members, and future vision</p>
+          <h2 className="text-2xl font-black text-white">About Page</h2>
+          <p className="text-sm text-gray-500 mt-1">Manage your company info and team members</p>
         </div>
         <a
           href="/about"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 text-sm font-semibold text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-lg transition-colors"
+          className="flex items-center gap-2 text-sm font-semibold text-white dark:text-white bg-gray-950 dark:bg-gray-900 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
         >
           View Live Page →
         </a>
@@ -42,16 +41,6 @@ export default function AdminAboutPage() {
         siteLink="/about#team"
       >
         <AdminTeam />
-      </AdminSection>
-
-      {/* Section 3: Future Plans */}
-      <AdminSection
-        title="Future Vision & Goals"
-        icon={Rocket}
-        rendersOn={["About (/about)"]}
-        siteLink="/about#future-vision"
-      >
-        <AdminFuturePlans />
       </AdminSection>
     </div>
   );

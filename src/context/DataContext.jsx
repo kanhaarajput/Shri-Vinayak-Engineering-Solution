@@ -14,10 +14,9 @@ export const useData = () => {
 };
 
 export const DataProvider = ({ children }) => {
-  const [categories, setCategories] = useState(() => {
-    const saved = localStorage.getItem('shri_categories');
-    return saved ? JSON.parse(saved) : INITIAL_CATEGORIES;
-  });
+  const [categories, setCategories] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [industries, setIndustries] = useState([]);
 
   const [projects, setProjects] = useState([]);
   const [services, setServices] = useState([]);
@@ -47,7 +46,7 @@ export const DataProvider = ({ children }) => {
         const [
           servicesRes, galleryRes, contentRes, messagesRes, teamRes, visionRes, 
           machinesRes, goalsRes, innovationRes, testimonialsRes, featuresRes, 
-          workflowRes, machineryRes
+          workflowRes, machineryRes, videosRes, industriesRes, categoriesRes
         ] = await Promise.all([
           fetch(`${API_URL}/services`),
           fetch(`${API_URL}/gallery`),
@@ -61,7 +60,10 @@ export const DataProvider = ({ children }) => {
           fetch(`${API_URL}/testimonials`),
           fetch(`${API_URL}/features`),
           fetch(`${API_URL}/workflow`),
-          fetch(`${API_URL}/machinery`)
+          fetch(`${API_URL}/machinery`),
+          fetch(`${API_URL}/videos`),
+          fetch(`${API_URL}/industries`),
+          fetch(`${API_URL}/categories`)
         ]);
 
         if (servicesRes.ok) {
@@ -128,6 +130,22 @@ export const DataProvider = ({ children }) => {
           const machData = await machineryRes.json();
           setMachinery(machData.map(m => ({ ...m, id: m._id })));
         }
+
+        if (videosRes.ok) {
+          const videosData = await videosRes.json();
+          setVideos(videosData.map(v => ({ ...v, id: v._id })));
+        }
+
+        if (industriesRes.ok) {
+          const indData = await industriesRes.json();
+          setIndustries(indData.map(i => ({ ...i, id: i._id })));
+        }
+
+        if (categoriesRes.ok) {
+          const catData = await categoriesRes.json();
+          // catData is just array of strings as per routes/categories.js
+          setCategories(catData);
+        }
       } catch (err) {
         console.error("Error fetching data from MongoDB:", err);
         setError("Failed to connect to database. Please check if the server is running.");
@@ -139,11 +157,7 @@ export const DataProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  // Sync auth and categories to localStorage (not migrated to MongoDB yet)
-  useEffect(() => {
-    localStorage.setItem('shri_categories', JSON.stringify(categories));
-  }, [categories]);
-
+  // Sync auth to localStorage
   useEffect(() => {
     localStorage.setItem('shri_admin_auth', isAuthenticated);
   }, [isAuthenticated]);
@@ -201,14 +215,24 @@ export const DataProvider = ({ children }) => {
     } catch (err) { console.error(err); }
   };
   
-  const addCategory = (category) => {
-    if (!categories.includes(category)) {
-      setCategories([...categories, category]);
-    }
+  const addCategory = async (category) => {
+    try {
+      const res = await fetch(`${API_URL}/categories`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: category })
+      });
+      if (res.ok) {
+        setCategories([...categories, category]);
+      }
+    } catch (err) { console.error(err); }
   };
   
-  const deleteCategory = (category) => {
-    setCategories(categories.filter(c => c !== category));
+  const deleteCategory = async (category) => {
+    try {
+      const res = await fetch(`${API_URL}/categories/${category}`, { method: 'DELETE' });
+      if (res.ok) {
+        setCategories(categories.filter(c => c !== category));
+      }
+    } catch (err) { console.error(err); }
   };
 
   // Services Methods
@@ -285,33 +309,33 @@ export const DataProvider = ({ children }) => {
 
   // Team Methods
   const addTeamMember = async (member) => {
-    try {
-      const isFormData = member instanceof FormData;
-      const res = await fetch(`${API_URL}/team`, {
-        method: 'POST',
-        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
-        body: isFormData ? member : JSON.stringify(member)
-      });
-      if (res.ok) {
-        const newMember = await res.json();
-        setTeam((prev) => [...prev, { ...newMember, id: newMember._id }]);
-      }
-    } catch (err) { console.error(err); }
+    const isFormData = member instanceof FormData;
+    const res = await fetch(`${API_URL}/team`, {
+      method: 'POST',
+      headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+      body: isFormData ? member : JSON.stringify(member)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || `Server error ${res.status}`);
+    }
+    setTeam((prev) => [...prev, { ...data, id: data._id }]);
+    return data;
   };
 
   const updateTeamMember = async (id, updatedMember) => {
-    try {
-      const isFormData = updatedMember instanceof FormData;
-      const res = await fetch(`${API_URL}/team/${id}`, {
-        method: 'PUT',
-        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
-        body: isFormData ? updatedMember : JSON.stringify(updatedMember)
-      });
-      if (res.ok) {
-        const newMember = await res.json();
-        setTeam((prev) => prev.map((t) => (t.id === id ? { ...newMember, id: newMember._id } : t)));
-      }
-    } catch (err) { console.error(err); }
+    const isFormData = updatedMember instanceof FormData;
+    const res = await fetch(`${API_URL}/team/${id}`, {
+      method: 'PUT',
+      headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+      body: isFormData ? updatedMember : JSON.stringify(updatedMember)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || `Server error ${res.status}`);
+    }
+    setTeam((prev) => prev.map((t) => (t.id === id ? { ...data, id: data._id } : t)));
+    return data;
   };
 
   const deleteTeamMember = async (id) => {
@@ -455,6 +479,72 @@ export const DataProvider = ({ children }) => {
     } catch (err) { console.error(err); }
   };
 
+  // Video Methods
+  const addVideo = async (item) => {
+    try {
+      const isFormData = item instanceof FormData;
+      const res = await fetch(`${API_URL}/videos`, {
+        method: 'POST',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? item : JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setVideos((prev) => [...prev, { ...newItem, id: newItem._id }]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateVideo = async (id, updated) => {
+    try {
+      const isFormData = updated instanceof FormData;
+      const res = await fetch(`${API_URL}/videos/${id}`, {
+        method: 'PUT',
+        headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+        body: isFormData ? updated : JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setVideos((prev) => prev.map((v) => (v.id === id ? { ...newItem, id: newItem._id } : v)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteVideo = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/videos/${id}`, { method: 'DELETE' });
+      if (res.ok) setVideos((prev) => prev.filter((v) => v.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
+  // Industry Methods
+  const addIndustry = async (item) => {
+    try {
+      const res = await fetch(`${API_URL}/industries`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setIndustries((prev) => [...prev, { ...newItem, id: newItem._id }]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateIndustry = async (id, updated) => {
+    try {
+      const res = await fetch(`${API_URL}/industries/${id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setIndustries((prev) => prev.map((i) => (i.id === id ? { ...newItem, id: newItem._id } : i)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteIndustry = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/industries/${id}`, { method: 'DELETE' });
+      if (res.ok) setIndustries((prev) => prev.filter((i) => i.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
   const value = {
     categories,
     projects,
@@ -470,6 +560,8 @@ export const DataProvider = ({ children }) => {
     features,
     workflow,
     machinery,
+    videos,
+    industries,
     isAuthenticated,
     loading,
     error,
@@ -499,7 +591,13 @@ export const DataProvider = ({ children }) => {
     deleteWorkflow,
     addMachinery,
     updateMachinery,
-    deleteMachinery
+    deleteMachinery,
+    addVideo,
+    updateVideo,
+    deleteVideo,
+    addIndustry,
+    updateIndustry,
+    deleteIndustry
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

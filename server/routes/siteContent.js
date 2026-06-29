@@ -35,6 +35,11 @@ router.get('/', async (req, res) => {
           whatsapp: '917505487656',
           email: 'svengg24@gmail.com',
         },
+        global: {
+          companyName: 'Shri Vinayak',
+          companySubtitle: 'Engineering Solutions',
+          logoUrl: '',
+        },
       });
       await content.save();
     }
@@ -51,9 +56,11 @@ router.put('/', async (req, res) => {
     if (!content) {
       content = new SiteContent(req.body);
     } else {
-      content.home = req.body.home || content.home;
-      content.about = req.body.about || content.about;
+      content.home    = req.body.home    || content.home;
+      content.about   = req.body.about   || content.about;
       content.contact = req.body.contact || content.contact;
+      content.global  = req.body.global  || content.global;
+      content.gallery = req.body.gallery || content.gallery;
     }
 
     const updatedContent = await content.save();

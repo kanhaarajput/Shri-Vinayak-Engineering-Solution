@@ -70,14 +70,14 @@ export default function AboutSection() {
     <section
       id="about"
       ref={ref}
-      className="relative py-24 lg:py-32 bg-gray-950 overflow-hidden"
+      className="relative py-24 lg:py-32 bg-white dark:bg-gray-950 overflow-hidden"
     >
       {/* ── Subtle background glow ─────────────────────────────────── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 50% at 20% 60%, rgba(245,158,11,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 30%, rgba(59,130,246,0.05) 0%, transparent 60%)',
+            'radial-gradient(ellipse 70% 50% at 20% 60%, rgba(34,197,94,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 30%, rgba(59,130,246,0.05) 0%, transparent 60%)',
         }}
       />
 
@@ -90,8 +90,8 @@ export default function AboutSection() {
           transition={{ duration: 0.5, ease: EASE }}
           className="flex items-center gap-3 mb-16"
         >
-          <div className="h-px w-10 bg-amber-500/60 rounded-full" />
-          <span className="text-xs font-bold tracking-[0.22em] uppercase text-amber-400">
+          <div className="h-px w-10 bg-green-500/60 rounded-full" />
+          <span className="text-xs font-bold tracking-[0.22em] uppercase text-green-400">
             {aboutContent.heading}
           </span>
         </motion.div>
@@ -138,7 +138,7 @@ export default function AboutSection() {
                       border: '1px solid rgba(255,255,255,0.10)',
                     }}
                   >
-                    <p className="text-xl font-black text-amber-400 leading-none">
+                    <p className="text-xl font-black text-green-400 leading-none">
                       {value}
                     </p>
                     <p
@@ -156,8 +156,8 @@ export default function AboutSection() {
               className="absolute -bottom-3 -right-3 w-2/3 h-2/3 rounded-2xl -z-10"
               style={{
                 background:
-                  'linear-gradient(135deg, rgba(245,158,11,0.18) 0%, transparent 70%)',
-                border: '1px solid rgba(245,158,11,0.15)',
+                  'linear-gradient(135deg, rgba(34,197,94,0.18) 0%, transparent 70%)',
+                border: '1px solid rgba(34,197,94,0.15)',
               }}
             />
           </motion.div>
@@ -175,7 +175,7 @@ export default function AboutSection() {
               variants={fadeUp}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
-              className="text-3xl sm:text-4xl xl:text-[2.75rem] font-black leading-[1.12] tracking-tight text-white mb-5"
+              className="text-3xl sm:text-4xl xl:text-[2.75rem] font-black leading-[1.12] tracking-tight text-gray-900 dark:text-white mb-5"
             >
               {aboutContent.title}
             </motion.h2>
@@ -186,7 +186,7 @@ export default function AboutSection() {
               variants={fadeUp}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
-              className="text-gray-400 text-base leading-[1.85] mb-6"
+              className="text-gray-600 dark:text-gray-400 text-base leading-[1.85] mb-6"
             >
               <p className="mb-4">{aboutContent.description1}</p>
               <p>{aboutContent.description2}</p>
@@ -211,8 +211,8 @@ export default function AboutSection() {
                     border: '1px solid rgba(255,255,255,0.07)',
                   }}
                 >
-                  <Icon className="text-amber-400 flex-shrink-0" size={17} />
-                  <span className="text-gray-300 text-xs font-medium leading-tight">
+                  <Icon className="text-green-400 flex-shrink-0" size={17} />
+                  <span className="text-gray-700 dark:text-gray-300 text-xs font-medium leading-tight">
                     {label}
                   </span>
                 </div>
@@ -228,24 +228,24 @@ export default function AboutSection() {
               className="rounded-2xl p-6 mb-8"
               style={{
                 background:
-                  'linear-gradient(135deg,rgba(245,158,11,0.06) 0%,rgba(255,255,255,0.03) 100%)',
+                  'linear-gradient(135deg,rgba(34,197,94,0.06) 0%,rgba(255,255,255,0.03) 100%)',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(245,158,11,0.15)',
+                border: '1px solid rgba(34,197,94,0.15)',
                 boxShadow: '0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)',
               }}
             >
-              <p className="text-xs font-bold tracking-widest uppercase text-amber-400 mb-4">
+              <p className="text-xs font-bold tracking-widest uppercase text-green-400 mb-4">
                 Why Choose Us
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-4">
                 {HIGHLIGHTS.map((item) => (
                   <li key={item} className="flex items-start gap-2">
                     <HiCheckCircle
-                      className="text-amber-400 flex-shrink-0 mt-0.5"
+                      className="text-green-400 flex-shrink-0 mt-0.5"
                       size={15}
                     />
-                    <span className="text-gray-300 text-sm leading-snug">
+                    <span className="text-gray-700 dark:text-gray-300 text-sm leading-snug">
                       {item}
                     </span>
                   </li>
@@ -266,12 +266,12 @@ export default function AboutSection() {
                 id="about-get-quote"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
                            font-bold text-sm tracking-wide text-gray-950
-                           shadow-lg shadow-orange-600/30
-                           hover:shadow-orange-500/50 hover:scale-[1.04]
+                           shadow-lg shadow-emerald-600/30
+                           hover:shadow-emerald-500/50 hover:scale-[1.04]
                            active:scale-[0.97] transition-all duration-200"
                 style={{
                   backgroundImage:
-                    'linear-gradient(135deg,#fbbf24 0%,#f97316 55%,#ea580c 100%)',
+                    'linear-gradient(135deg,#4ade80 0%,#10b981 55%,#ea580c 100%)',
                 }}
               >
                 <HiStar size={15} />
@@ -281,9 +281,9 @@ export default function AboutSection() {
                 to="/about"
                 id="about-learn-more"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                           font-semibold text-sm text-white
-                           border border-white/15 bg-white/5
-                           hover:bg-white/10 hover:border-white/25
+                           font-semibold text-sm text-gray-900 dark:text-white
+                           border border-white/15 bg-black/5 dark:bg-white/5
+                           hover:bg-black/10 dark:bg-white/10 hover:border-white/25
                            hover:scale-[1.03] active:scale-[0.97]
                            transition-all duration-200"
               >

@@ -11,14 +11,14 @@ export default function AdminHomePage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-black text-gray-900">Home Page</h2>
+          <h2 className="text-2xl font-black text-white">Home Page</h2>
           <p className="text-sm text-gray-500 mt-1">Manage all sections that appear on your homepage</p>
         </div>
         <a
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 text-sm font-semibold text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-lg transition-colors"
+          className="flex items-center gap-2 text-sm font-semibold text-white dark:text-white bg-gray-950 dark:bg-gray-900 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
         >
           View Live Page →
         </a>

@@ -20,6 +20,9 @@ router.post('/', async (req, res) => {
     iconName: req.body.iconName,
     image: req.body.image,
     color: req.body.color,
+    benefits: req.body.benefits || [],
+    applications: req.body.applications || [],
+    features: req.body.features || [],
   });
 
   try {
@@ -41,6 +44,9 @@ router.put('/:id', async (req, res) => {
     if (req.body.iconName != null) service.iconName = req.body.iconName;
     if (req.body.image != null) service.image = req.body.image;
     if (req.body.color != null) service.color = req.body.color;
+    if (req.body.benefits != null) service.benefits = req.body.benefits;
+    if (req.body.applications != null) service.applications = req.body.applications;
+    if (req.body.features != null) service.features = req.body.features;
 
     const updatedService = await service.save();
     res.json(updatedService);

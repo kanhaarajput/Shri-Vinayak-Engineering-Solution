@@ -3,24 +3,24 @@ import { Link } from 'react-router-dom';
 import {
   Image as ImageIcon, Briefcase, Users, MessageSquare,
   Star, Cog, GitBranch, MessageCircle, Home, Info, Phone,
-  ArrowUpRight, TrendingUp
+  ArrowUpRight, TrendingUp, Layers
 } from 'lucide-react';
 
 export default function AdminDashboard() {
   const {
     projects, services, team, messages, testimonials,
-    features, workflow, machinery, categories
+    features, workflow, machinery
   } = useData();
 
   const stats = [
-    { name: 'Gallery Items', value: projects.length, icon: ImageIcon, color: 'from-blue-500 to-cyan-500' },
-    { name: 'Services', value: services.length, icon: Briefcase, color: 'from-amber-500 to-orange-500' },
-    { name: 'Team Members', value: team.length, icon: Users, color: 'from-emerald-500 to-teal-500' },
-    { name: 'Testimonials', value: testimonials.length, icon: MessageCircle, color: 'from-purple-500 to-violet-500' },
-    { name: 'Features', value: features.length, icon: Star, color: 'from-pink-500 to-rose-500' },
-    { name: 'Workflow Steps', value: workflow.length, icon: GitBranch, color: 'from-sky-500 to-blue-500' },
-    { name: 'Machinery', value: machinery.length, icon: Cog, color: 'from-indigo-500 to-purple-500' },
-    { name: 'Messages', value: messages.length, icon: MessageSquare, color: 'from-red-500 to-orange-500' },
+    { name: 'Gallery Items',   value: projects.length,     icon: ImageIcon,    color: 'from-blue-500 to-cyan-500',     glow: 'shadow-blue-500/20' },
+    { name: 'Services',        value: services.length,     icon: Briefcase,    color: 'from-green-500 to-emerald-500', glow: 'shadow-green-500/20' },
+    { name: 'Team Members',    value: team.length,         icon: Users,        color: 'from-emerald-500 to-teal-500',  glow: 'shadow-emerald-500/20' },
+    { name: 'Testimonials',    value: testimonials.length, icon: MessageCircle,color: 'from-purple-500 to-violet-500', glow: 'shadow-purple-500/20' },
+    { name: 'Features',        value: features.length,     icon: Star,         color: 'from-pink-500 to-rose-500',     glow: 'shadow-pink-500/20' },
+    { name: 'Workflow Steps',  value: workflow.length,     icon: GitBranch,    color: 'from-sky-500 to-blue-500',      glow: 'shadow-sky-500/20' },
+    { name: 'Machinery',       value: machinery.length,    icon: Cog,          color: 'from-indigo-500 to-purple-500', glow: 'shadow-indigo-500/20' },
+    { name: 'Messages',        value: messages.length,     icon: MessageSquare,color: 'from-red-500 to-rose-500',      glow: 'shadow-red-500/20' },
   ];
 
   const siteMap = [
@@ -29,11 +29,12 @@ export default function AdminDashboard() {
       path: '/admin/home',
       livePath: '/',
       icon: Home,
+      color: 'from-green-500 to-emerald-500',
       sections: [
-        { name: 'Hero & Stats', count: '4 stats' },
+        { name: 'Hero Banner & Stats' },
         { name: 'Features (Why Choose Us)', count: `${features.length} items` },
         { name: 'Testimonials', count: `${testimonials.length} items` },
-        { name: 'Contact Info', count: 'Phone, Email, Address' },
+        { name: 'Contact Info' },
       ],
     },
     {
@@ -41,10 +42,11 @@ export default function AdminDashboard() {
       path: '/admin/about',
       livePath: '/about',
       icon: Info,
+      color: 'from-blue-500 to-cyan-500',
       sections: [
-        { name: 'About Content', count: 'Mission, Vision' },
+        { name: 'About Content' },
         { name: 'Team Members', count: `${team.length} members` },
-        { name: 'Future Plans', count: 'Vision & Goals' },
+        { name: 'Future Plans' },
       ],
     },
     {
@@ -52,6 +54,7 @@ export default function AdminDashboard() {
       path: '/admin/services',
       livePath: '/services',
       icon: Briefcase,
+      color: 'from-purple-500 to-violet-500',
       sections: [
         { name: 'Services List', count: `${services.length} services` },
         { name: 'Workflow Steps', count: `${workflow.length} steps` },
@@ -63,6 +66,7 @@ export default function AdminDashboard() {
       path: '/admin/gallery',
       livePath: '/gallery',
       icon: ImageIcon,
+      color: 'from-sky-500 to-blue-500',
       sections: [
         { name: 'Gallery Images', count: `${projects.length} images` },
       ],
@@ -72,8 +76,9 @@ export default function AdminDashboard() {
       path: '/admin/contact',
       livePath: '/contact',
       icon: Phone,
+      color: 'from-orange-500 to-rose-500',
       sections: [
-        { name: 'Contact Information', count: 'Phone, Email, Address' },
+        { name: 'Contact Information' },
         { name: 'Inbox Messages', count: `${messages.length} messages` },
       ],
     },
@@ -81,10 +86,19 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Welcome */}
-      <div>
-        <h2 className="text-2xl font-black text-gray-900">Welcome back, Admin 👋</h2>
-        <p className="text-sm text-gray-500 mt-1">Here's a snapshot of your website content</p>
+      {/* Welcome Banner */}
+      <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-transparent border border-green-500/20 px-8 py-7">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(34,197,94,0.12),_transparent_60%)] pointer-events-none" />
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-black text-white mb-1">Welcome back, Admin 👋</h2>
+            <p className="text-sm text-gray-400">Here's an overview of your website content</p>
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <Layers className="text-green-400" size={18} />
+            <span className="text-sm font-semibold text-green-400">{stats.reduce((a, s) => a + s.value, 0)} total items</span>
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -92,15 +106,18 @@ export default function AdminDashboard() {
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 group hover:shadow-md transition-shadow">
+            <div
+              key={stat.name}
+              className="bg-gray-900/60 backdrop-blur-sm rounded-2xl p-5 border border-white/[0.06] group hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5"
+            >
               <div className="flex items-center justify-between mb-3">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-md`}>
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-lg ${stat.glow}`}>
                   <Icon size={18} />
                 </div>
-                <TrendingUp size={14} className="text-gray-300" />
+                <TrendingUp size={14} className="text-gray-600" />
               </div>
-              <p className="text-2xl font-black text-gray-900">{stat.value}</p>
-              <p className="text-xs font-medium text-gray-400 mt-0.5">{stat.name}</p>
+              <p className="text-2xl font-black text-white">{stat.value}</p>
+              <p className="text-xs font-medium text-gray-500 mt-0.5">{stat.name}</p>
             </div>
           );
         })}
@@ -108,26 +125,29 @@ export default function AdminDashboard() {
 
       {/* Site Map */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-4">📍 Site Map — Your Pages & Sections</h3>
+        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">📍 Manage Your Pages</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {siteMap.map((page) => {
             const Icon = page.icon;
             return (
-              <div key={page.page} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                {/* Page Header */}
-                <div className="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+              <div
+                key={page.page}
+                className="bg-gray-900/60 backdrop-blur-sm rounded-2xl border border-white/[0.06] overflow-hidden hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-0.5"
+              >
+                {/* Header */}
+                <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-gray-900 flex items-center justify-center text-white">
+                    <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${page.color} flex items-center justify-center text-white shadow-md`}>
                       <Icon size={16} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 text-sm">{page.page}</h4>
-                      <span className="text-[10px] font-mono text-gray-400">{page.livePath}</span>
+                      <h4 className="font-bold text-white text-sm">{page.page}</h4>
+                      <span className="text-[10px] font-mono text-gray-500">{page.livePath}</span>
                     </div>
                   </div>
                   <Link
                     to={page.path}
-                    className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center hover:bg-amber-100 transition-colors"
+                    className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 flex items-center justify-center hover:bg-green-500/20 transition-colors"
                   >
                     <ArrowUpRight size={14} />
                   </Link>
@@ -136,17 +156,19 @@ export default function AdminDashboard() {
                 {/* Sections List */}
                 <div className="px-5 py-3">
                   {page.sections.map((section, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-                      <span className="text-sm text-gray-600">{section.name}</span>
-                      <span className="text-xs font-semibold text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">{section.count}</span>
+                    <div key={idx} className="flex items-center justify-between py-2 border-b border-white/[0.04] last:border-0">
+                      <span className="text-sm text-gray-400">{section.name}</span>
+                      {section.count && (
+                        <span className="text-xs font-semibold text-gray-500 bg-white/[0.04] px-2 py-0.5 rounded-full">{section.count}</span>
+                      )}
                     </div>
                   ))}
                 </div>
 
-                {/* Footer Link */}
+                {/* Footer */}
                 <Link
                   to={page.path}
-                  className="block px-5 py-3 bg-gray-50 text-center text-xs font-bold text-amber-600 hover:bg-amber-50 transition-colors"
+                  className="block px-5 py-3 bg-white/[0.02] hover:bg-green-500/10 border-t border-white/[0.06] text-center text-xs font-bold text-green-400 hover:text-green-300 transition-colors"
                 >
                   Manage {page.page} →
                 </Link>
@@ -158,4 +180,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-

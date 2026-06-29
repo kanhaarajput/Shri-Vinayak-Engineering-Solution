@@ -49,7 +49,7 @@ export default function Footer() {
     <footer className="relative bg-[#020617] pt-20 pb-10 overflow-hidden border-t border-white/5">
       {/* ── Background Glow ────────────────────────────────────────── */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-amber-500/5 rounded-[100%] blur-[120px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-green-500/5 rounded-[100%] blur-[120px] pointer-events-none"
       />
 
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
@@ -66,11 +66,11 @@ export default function Footer() {
           {/* Column 1: Company Info */}
           <motion.div variants={fadeUp} className="lg:pr-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                 <HiStar className="text-white text-xl" />
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-white text-lg tracking-tight leading-none group-hover:text-amber-400 transition-colors">
+                <span className="font-black text-white text-lg tracking-tight leading-none group-hover:text-green-400 transition-colors">
                   Shri Vinayak
                 </span>
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-tight">
@@ -90,7 +90,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visit our ${social.name} page`}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-white/5 border border-white/10 text-gray-400 hover:bg-amber-500 hover:text-white hover:border-amber-400 hover:-translate-y-1 transition-all duration-300"
+                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-white/5 border border-white/10 text-gray-400 hover:bg-green-500 hover:text-white hover:border-green-400 hover:-translate-y-1 transition-all duration-300"
                 >
                   <social.icon size={15} />
                 </a>
@@ -101,7 +101,7 @@ export default function Footer() {
           {/* Column 2: Quick Links */}
           <motion.div variants={fadeUp}>
             <h4 className="text-white font-bold text-base mb-6 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
               Quick Links
             </h4>
             <ul className="flex flex-col gap-3">
@@ -109,9 +109,9 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="group flex items-center gap-2 text-gray-400 text-sm hover:text-amber-400 transition-colors"
+                    className="group flex items-center gap-2 text-gray-400 text-sm hover:text-green-400 transition-colors"
                   >
-                    <HiArrowRight className="text-amber-500/0 -ml-4 group-hover:text-amber-500 group-hover:ml-0 transition-all duration-300" size={14} />
+                    <HiArrowRight className="text-green-500/0 -ml-4 group-hover:text-green-500 group-hover:ml-0 transition-all duration-300" size={14} />
                     {link.name}
                   </Link>
                 </li>
@@ -122,7 +122,7 @@ export default function Footer() {
           {/* Column 3: Services */}
           <motion.div variants={fadeUp}>
             <h4 className="text-white font-bold text-base mb-6 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
               Our Services
             </h4>
             <ul className="flex flex-col gap-3">
@@ -130,9 +130,9 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="group flex items-center gap-2 text-gray-400 text-sm hover:text-amber-400 transition-colors"
+                    className="group flex items-center gap-2 text-gray-400 text-sm hover:text-green-400 transition-colors"
                   >
-                    <HiArrowRight className="text-amber-500/0 -ml-4 group-hover:text-amber-500 group-hover:ml-0 transition-all duration-300" size={14} />
+                    <HiArrowRight className="text-green-500/0 -ml-4 group-hover:text-green-500 group-hover:ml-0 transition-all duration-300" size={14} />
                     {link.name}
                   </Link>
                 </li>
@@ -143,12 +143,12 @@ export default function Footer() {
           {/* Column 4: Contact Info */}
           <motion.div variants={fadeUp}>
             <h4 className="text-white font-bold text-base mb-6 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
               Contact Us
             </h4>
             <ul className="flex flex-col gap-5">
               <li className="flex items-start gap-3">
-                <HiLocationMarker className="text-amber-400 flex-shrink-0 mt-0.5" size={18} />
+                <HiLocationMarker className="text-green-400 flex-shrink-0 mt-0.5" size={18} />
                 <span className="text-gray-400 text-sm leading-relaxed">
                   {contactInfo.address}
                 </span>

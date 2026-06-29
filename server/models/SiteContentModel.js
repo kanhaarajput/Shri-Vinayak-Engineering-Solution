@@ -28,6 +28,17 @@ const siteContentSchema = new mongoose.Schema({
     whatsapp: String,
     email: String,
   },
+  global: {
+    companyName:     { type: String, default: 'Shri Vinayak' },
+    companySubtitle: { type: String, default: 'Engineering Solutions' },
+    logoUrl:         { type: String, default: '' },
+  },
+  gallery: {
+    beforeAfter: {
+      beforeImage: String,
+      afterImage: String,
+    }
+  }
 });
 
 module.exports = mongoose.model('SiteContent', siteContentSchema);
