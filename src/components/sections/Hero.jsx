@@ -1,271 +1,285 @@
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { HiArrowRight, HiChevronDown } from 'react-icons/hi'
-import { HiStar } from 'react-icons/hi2'
-import { useData } from '../../context/DataContext'
-import heroBg from '@assets/laser_welding_hero.png'
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { HiArrowRight, HiChevronDown } from 'react-icons/hi';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
 
-/* ─── Shared easing ──────────────────────────────────────────────────────── */
-const EASE = [0.25, 0.46, 0.45, 0.94]
+import { MACHINE_DATA } from '../../data/machineData';
+import workshopBg from '@assets/about_workshop.png';
 
-/* ─── Variants ───────────────────────────────────────────────────────────── */
+/* ─── Animation Variants ─────────────────────────────────────────────────── */
 const fadeUp = {
-  hidden:  { opacity: 0, y: 48 },
+  hidden: { opacity: 0, y: 50 },
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, delay: i * 0.18, ease: EASE },
+    transition: { duration: 0.8, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] },
   }),
-}
+};
 
-const fadeIn = {
-  hidden:  { opacity: 0 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    transition: { duration: 0.9, delay: i * 0.18, ease: EASE },
-  }),
-}
-
-const scaleIn = {
-  hidden:  { opacity: 0, scale: 0.88 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.7, delay: i * 0.16, ease: EASE },
-  }),
-}
-
-/* ─── Floating glow orb ──────────────────────────────────────────────────── */
-function GlowOrb({ color, size, position, delay, duration }) {
+/* ─── Particles & Glow ───────────────────────────────────────────────────── */
+function BackgroundEffects() {
   return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none"
-      style={{
-        width: size,
-        height: size,
-        background: color,
-        filter: 'blur(100px)',
-        ...position,
-      }}
-      animate={{
-        scale:   [1, 1.2, 1],
-        opacity: [0.3, 0.55, 0.3],
-      }}
-      transition={{
-        duration,
-        delay,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      }}
-    />
-  )
-}
-
-/* ─── Animated scroll caret ─────────────────────────────────────────────── */
-function ScrollIndicator() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.8, duration: 0.8, ease: EASE }}
-      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20
-                 flex flex-col items-center gap-2 cursor-default select-none"
-    >
-      <span className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/35">
-        Scroll
-      </span>
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* Base Background */}
+      <img
+        src={workshopBg}
+        alt="Industrial Workshop"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-30"
+      />
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900/90 to-black" />
+      
+      {/* Subtle Orange Glows */}
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        className="w-8 h-8 rounded-full border border-white/20
-                   flex items-center justify-center"
-      >
-        <HiChevronDown className="text-white/45" size={15} />
-      </motion.div>
-    </motion.div>
-  )
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[150px]"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-10 -left-20 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[120px]"
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.2, 0.5] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      
+      {/* Animated Particles */}
+      {Array.from({ length: 15 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-amber-500/40 rounded-full blur-[1px]"
+          initial={{
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+            scale: Math.random() * 2,
+          }}
+          animate={{
+            y: [null, -Math.random() * 200 - 100],
+            opacity: [0, 0.8, 0],
+          }}
+          transition={{
+            duration: Math.random() * 5 + 5,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+      
+      {/* Light Smoke Overlay */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 mix-blend-overlay" />
+    </div>
+  );
 }
 
-/* ─── Hero ───────────────────────────────────────────────────────────────── */
+/* ─── Hero Component ─────────────────────────────────────────────────────── */
 export default function Hero() {
-  const { siteContent } = useData();
-  const heroContent = siteContent.home.hero;
-  const stats = siteContent.home.stats;
+  const STATS = [
+    { value: '500+', label: 'Projects' },
+    { value: '100+', label: 'Clients' },
+    { value: '10+', label: 'Years Experience' },
+  ];
 
   return (
-    <section
-      id="hero"
-      className="relative w-full h-screen min-h-[680px]
-                 flex items-center overflow-hidden"
-    >
-      {/* ── BG image ─────────────────────────────────────────────── */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBg}
-          alt="Precision Industrial Laser Welding Process"
-          fetchpriority="high"
-          className="w-full h-full object-cover object-[center_30%]"
-          style={{ transform: 'scale(1.04)', filter: 'brightness(0.5) saturate(1.15)' }}
-        />
-      </div>
+    <section className="relative w-full min-h-screen flex flex-col justify-center bg-gray-950 pt-24 pb-32 lg:pt-0 lg:pb-0">
+      
+      <BackgroundEffects />
 
-      {/* ── Dark overlays ────────────────────────────────────────── */}
-      <div
-        className="absolute inset-0 z-[1]"
-        style={{
-          background:
-            'linear-gradient(170deg,rgba(2,6,23,.80) 0%,rgba(2,6,23,.38) 45%,rgba(2,6,23,.90) 100%)',
-        }}
-      />
-      <div
-        className="absolute inset-0 z-[1]"
-        style={{
-          background:
-            'radial-gradient(ellipse 75% 100% at 5% 50%,rgba(2,6,23,.70) 0%,transparent 65%)',
-        }}
-      />
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[calc(100vh-100px)]">
+        
+        {/* ─── Left Side: Content ──────────────────────────────────────── */}
+        <div className="flex flex-col justify-center order-2 lg:order-1 pt-10 lg:pt-0">
+          <motion.div
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md w-max mb-6"
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span className="text-xs font-semibold tracking-widest uppercase text-gray-300">
+              Premium Industrial Solutions
+            </span>
+          </motion.div>
 
-      {/* ── Floating glow orbs ───────────────────────────────────── */}
-      <GlowOrb
-        color="rgba(245,158,11,0.22)"
-        size="520px"
-        position={{ top: '-60px', right: '-60px' }}
-        delay={0}
-        duration={7}
-      />
-      <GlowOrb
-        color="rgba(234,88,12,0.18)"
-        size="380px"
-        position={{ bottom: '-40px', left: '-40px' }}
-        delay={2}
-        duration={9}
-      />
-      <GlowOrb
-        color="rgba(59,130,246,0.12)"
-        size="280px"
-        position={{ top: '35%', right: '18%' }}
-        delay={1}
-        duration={6}
-      />
-
-      {/* ── Content ──────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl">
-
-
-          {/* Heading */}
           <motion.h1
             custom={1}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="font-black tracking-tight leading-[1.06] mb-6
-                       text-4xl sm:text-5xl lg:text-[4.5rem]"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.2rem] font-black tracking-tight text-white leading-[1.1] mb-6"
           >
-            <span className="block text-white">{heroContent.titleLine1}</span>
-            <span
-              className="block mt-1"
-              style={{
-                backgroundImage: 'linear-gradient(90deg,#fbbf24,#f97316,#fb923c)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              {heroContent.titleHighlight}
+            Precision Engineering<br />
+            Solutions for{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-red-500">
+              Modern Industries
             </span>
-            <span className="block text-white mt-1">{heroContent.titleLine2}</span>
           </motion.h1>
 
-          {/* Amber divider */}
-          <motion.div
+          <motion.h2
             custom={2}
-            variants={fadeIn}
+            variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="flex items-center gap-3 mb-7"
+            className="text-amber-400/90 font-semibold text-lg sm:text-xl mb-4 max-w-2xl"
           >
-            <div
-              className="h-[2px] w-16 rounded-full"
-              style={{ background: 'linear-gradient(90deg,#fbbf24,#f97316)' }}
-            />
-            <div className="h-[2px] w-4 rounded-full bg-white/10" />
-          </motion.div>
+            Experts in Laser Welding, VMC Machining, Wirecut, TIG Welding, Argon Welding &amp; Industrial Repairing.
+          </motion.h2>
 
-          {/* Subheading */}
           <motion.p
             custom={3}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="text-gray-300/90 text-base sm:text-lg leading-relaxed mb-10
-                       max-w-2xl font-light"
+            className="text-gray-400 text-base sm:text-lg max-w-xl leading-relaxed mb-10"
           >
-            {heroContent.subtitle}
+            Delivering high-precision engineering, advanced machining, and industrial repair solutions with uncompromising quality and reliability for every client.
           </motion.p>
 
-          {/* CTA buttons */}
           <motion.div
             custom={4}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap items-center gap-4"
           >
-            {/* Primary */}
             <Link
               to="/contact"
-              id="hero-get-quote"
-              className="group inline-flex items-center gap-2.5
-                         px-8 py-4 rounded-xl font-bold text-sm tracking-wide
-                         text-gray-950 transition-all duration-300
-                         shadow-xl shadow-orange-600/35
-                         hover:shadow-orange-500/55 hover:scale-[1.04] active:scale-[0.97]"
-              style={{
-                backgroundImage:
-                  'linear-gradient(135deg,#fbbf24 0%,#f97316 55%,#ea580c 100%)',
-              }}
+              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-sm tracking-wide overflow-hidden shadow-lg shadow-orange-600/20 hover:shadow-orange-500/40 transition-all duration-300 hover:scale-105"
             >
-              <HiStar
-                size={16}
-                className="group-hover:rotate-12 transition-transform duration-200"
-              />
-              Get Quote
-              <HiArrowRight
-                size={16}
-                className="-translate-x-1 group-hover:translate-x-0 transition-transform duration-200"
-              />
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+              <span className="relative z-10">Get Quote</span>
+              <HiArrowRight className="relative z-10 group-hover:translate-x-1 transition-transform" size={16} />
             </Link>
 
-            {/* Secondary */}
             <Link
-              to="/contact"
-              id="hero-contact-us"
-              className="inline-flex items-center gap-2.5
-                         px-8 py-4 rounded-xl font-semibold text-sm tracking-wide
-                         text-white border border-white/20 bg-white/5 backdrop-blur-sm
-                         hover:bg-white/10 hover:border-white/35
-                         hover:scale-[1.03] active:scale-[0.97]
-                         transition-all duration-300"
+              to="/services"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm tracking-wide backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105"
             >
-              Contact Us
-              <HiArrowRight size={16} />
+              Explore Services
             </Link>
           </motion.div>
-
-
-
         </div>
+
+        {/* ─── Right Side: Machine Carousel ────────────────────────────── */}
+        <motion.div
+          custom={2}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="w-full max-w-[100vw] lg:max-w-none relative order-1 lg:order-2 px-4 lg:px-0"
+        >
+          {/* Subtle glow behind slider */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
+          
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={1.2}
+            breakpoints={{
+              640: { slidesPerView: 1.5 },
+              1024: { slidesPerView: 1.8 },
+              1280: { slidesPerView: 2 },
+            }}
+            loop={true}
+            coverflowEffect={{
+              rotate: 25,
+              stretch: -20,
+              depth: 250,
+              modifier: 1,
+              slideShadows: false, // We'll use CSS for better shadows
+            }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{ 
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            modules={[EffectCoverflow, Autoplay, Pagination]}
+            className="w-full pb-14 pt-10 hero-swiper"
+          >
+            {MACHINE_DATA.map((machine) => (
+              <SwiperSlide key={machine.id} className="w-[320px] sm:w-[400px] xl:w-[450px] aspect-[4/5] sm:aspect-[4/5] rounded-3xl overflow-hidden relative group">
+                
+                {/* Active Slide Glow Border (handled via CSS in global or inline but Swiper adds swiper-slide-active class) */}
+                <div className="absolute inset-0 border-2 border-transparent transition-colors duration-500 z-20 rounded-3xl group-[.swiper-slide-active]:border-amber-500/50 group-[.swiper-slide-active]:shadow-[0_0_30px_rgba(245,158,11,0.2)]" />
+                
+                <img
+                  src={machine.image}
+                  alt={machine.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] group-hover:scale-125"
+                />
+                
+                {/* Gradient Overlays */}
+                <div className="absolute inset-0 bg-gray-900/40 group-[.swiper-slide-active]:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent z-10 pointer-events-none" />
+                
+                {/* Content Overlay */}
+                <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 z-20 transform translate-y-4 group-[.swiper-slide-active]:translate-y-0 transition-transform duration-500">
+                  <div className="bg-black/40 backdrop-blur-md border border-white/10 p-5 rounded-2xl">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{machine.name}</h3>
+                    <p className="text-gray-300 text-sm line-clamp-2">
+                      {machine.description}
+                    </p>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
+
       </div>
 
-      {/* ── Scroll indicator ───────────────────────────────────────── */}
-      <ScrollIndicator />
+      {/* ─── Bottom Stats Bar ──────────────────────────────────────────── */}
+      <div className="relative z-20 w-full border-t border-white/5 bg-gray-950/80 backdrop-blur-lg mt-auto">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-6">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-8 sm:gap-16">
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={i}
+                custom={i + 5}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                className="flex items-center gap-4"
+              >
+                <span className="text-3xl sm:text-4xl font-black text-amber-500">
+                  {stat.value}
+                </span>
+                <span className="text-xs sm:text-sm font-semibold tracking-wider text-gray-400 uppercase w-20">
+                  {stat.label}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      {/* ─── Scroll Indicator ──────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-24 lg:bottom-12 right-12 z-20 hidden lg:flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500" style={{ writingMode: 'vertical-rl' }}>
+          Scroll Down
+        </span>
+        <div className="w-px h-12 bg-white/10 relative overflow-hidden">
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full bg-amber-500"
+            animate={{ y: ['-100%', '100%'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+          />
+        </div>
+      </motion.div>
 
-      {/* ── Bottom fade ────────────────────────────────────────────── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-36 z-[3] pointer-events-none"
-        style={{ background: 'linear-gradient(to top,rgb(3 7 18),transparent)' }}
-      />
     </section>
-  )
+  );
 }

@@ -35,25 +35,7 @@ export default function Home() {
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <Hero />
 
-      {/* ── Stats Bar ───────────────────────────────────────────────────── */}
-      <section className="relative z-20 py-6">
-        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 rounded-2xl overflow-hidden border border-white/[0.06] shadow-2xl shadow-black/40"
-          >
-            {STATS.map(({ value, label }) => (
-              <div key={label} className="bg-gray-900/80 backdrop-blur-xl px-6 py-8 text-center hover:bg-gray-800/80 transition-colors duration-300">
-                <p className="text-3xl sm:text-4xl font-black text-amber-400 mb-1">{value}</p>
-                <p className="text-xs text-gray-400 font-medium tracking-wider uppercase">{label}</p>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+
 
       {/* ── About ───────────────────────────────────────────────────────── */}
       <AboutSection />
