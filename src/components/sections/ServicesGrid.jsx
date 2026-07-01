@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { staggerContainer, fadeUp, hoverLift } from '@utils/animations'
 import { 
   HiStar, HiPencil, HiCog, HiScissors, 
@@ -63,6 +64,7 @@ export default function ServicesGrid() {
               whileHover={hoverLift}
               className="group relative h-full flex flex-col cursor-pointer"
             >
+              <Link to={`/services/${service.id}`} className="absolute inset-0 z-30" aria-label={`Explore ${service.title}`} />
               {/* Hover Gradient Border */}
               <div
                 className="absolute -inset-0.5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -88,10 +90,10 @@ export default function ServicesGrid() {
 
                 {/* Content Section */}
                 <div className="p-6 flex flex-col flex-grow relative z-20">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300" style={{ '--hover-color': service.color }}>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300 group-hover:text-green-500">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
                     {service.desc}
                   </p>
                   

@@ -141,13 +141,13 @@ export default function GoalsTab() {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/50 backdrop-blur-sm p-4">
-          <div className="bg-gray-900 rounded-2xl shadow-xl w-full max-w-lg">
-            <div className="p-6 border-b border-white/[0.06] flex justify-between items-center">
+          <div className="bg-gray-900 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-6 border-b border-white/[0.06] flex justify-between items-center shrink-0">
               <h3 className="text-xl font-bold text-white">{editingId ? 'Edit Goal' : 'Add Goal'}</h3>
               <button onClick={resetForm} className="text-gray-400 dark:text-gray-400 hover:text-gray-400 font-bold text-xl">&times;</button>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">Target Year *</label>

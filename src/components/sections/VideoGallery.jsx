@@ -91,20 +91,22 @@ export default function VideoGallery() {
               
               {/* Overlays */}
               <div className="absolute inset-0 bg-gray-950/40 group-hover:bg-gray-950/20 transition-colors duration-300 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none opacity-80" />
               
               {/* Play Button */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.5)] group-hover:scale-110 group-hover:bg-green-400 transition-all duration-300">
-                  <HiPlay className="text-white text-3xl sm:text-4xl ml-2" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-white/20 group-hover:scale-110 group-hover:bg-green-500 group-hover:border-green-400 transition-all duration-500 ease-out z-10">
+                  <HiPlay className="text-white text-3xl sm:text-4xl ml-2 group-hover:drop-shadow-md" />
                 </div>
               </div>
 
-              {/* Title */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="text-white font-bold text-lg sm:text-xl md:text-2xl drop-shadow-lg">
-                  {video.title}
-                </h3>
+              {/* Title Glass Card */}
+              <div className="absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6 z-10">
+                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 sm:p-5 shadow-2xl transform transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-black/60 group-hover:border-white/20 text-center">
+                  <h3 className="text-white font-bold text-lg sm:text-xl md:text-2xl drop-shadow-lg truncate">
+                    {video.title}
+                  </h3>
+                </div>
               </div>
             </SwiperSlide>
           ))}

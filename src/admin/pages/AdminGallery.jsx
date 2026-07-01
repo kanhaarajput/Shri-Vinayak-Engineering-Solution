@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { Plus, Edit2, Trash2, X, Upload } from 'lucide-react';
 
@@ -13,7 +14,7 @@ export default function AdminGallery() {
   
   const [formData, setFormData] = useState({
     title: '',
-    category: categories[0] || 'All',
+    category: '',
     desc: '',
     imageFile: null
   });
@@ -24,7 +25,7 @@ export default function AdminGallery() {
       setFormData({
         title: project.title,
         category: project.category,
-        desc: project.desc,
+        desc: project.description,
         imageFile: null
       });
       setPreviewImage(project.image);
@@ -32,7 +33,7 @@ export default function AdminGallery() {
       setEditingId(null);
       setFormData({
         title: '',
-        category: categories[0] || 'All',
+        category: '',
         desc: '',
         imageFile: null
       });
@@ -81,6 +82,12 @@ export default function AdminGallery() {
       } else {
         await addProject(submitData);
       }
+      
+      // Auto-add category if it doesn't exist
+      if (formData.category && !categories.includes(formData.category) && formData.category !== 'All') {
+        addCategory(formData.category);
+      }
+      
       closeModal();
     } catch (err) {
       console.error(err);
@@ -191,10 +198,10 @@ export default function AdminGallery() {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
+      {isModalOpen && createPortal(
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-white/[0.06]">
+          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="flex justify-between items-center p-6 border-b border-white/[0.06] shrink-0">
               <h3 className="text-xl font-bold text-white">
                 {editingId ? 'Edit Project' : 'Add New Project'}
               </h3>
@@ -203,7 +210,7 @@ export default function AdminGallery() {
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
                 <input
@@ -211,21 +218,20 @@ export default function AdminGallery() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">Category</label>
-                <select
+                <input
+                  type="text"
+                  required
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
-                >
-                  {categories.filter(c => c !== 'All').map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
+                  placeholder="e.g. CNC Machining"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                />
               </div>
 
               <div>
@@ -235,7 +241,7 @@ export default function AdminGallery() {
                   rows={3}
                   value={formData.desc}
                   onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
 
@@ -275,12 +281,12 @@ export default function AdminGallery() {
                 </button>
                 <button
                   type="submit"
-                  disabled={isUploading}
-                  className="px-4 py-2 bg-green-500 rounded-lg text-white dark:text-white font-medium hover:bg-green-600 transition-colors disabled:opacity-50 flex items-center gap-2"
+                  disabled={isUploading || (!editingId && !previewImage)}
+                  className="px-4 py-2 bg-green-500 rounded-lg text-white font-medium hover:bg-green-600 transition-colors disabled:opacity-50 flex items-center gap-2"
                 >
                   {isUploading ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                       Uploading...
                     </>
                   ) : (
@@ -290,9 +296,9 @@ export default function AdminGallery() {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
 }
-

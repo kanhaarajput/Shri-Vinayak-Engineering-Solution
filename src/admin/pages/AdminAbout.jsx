@@ -32,7 +32,7 @@ export default function AdminAbout() {
               required
               value={formData.heading}
               onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+              className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
               placeholder="Who We Are"
             />
           </div>
@@ -44,7 +44,7 @@ export default function AdminAbout() {
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+              className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
             />
           </div>
 
@@ -55,7 +55,7 @@ export default function AdminAbout() {
               required
               value={formData.description1}
               onChange={(e) => setFormData({ ...formData, description1: e.target.value })}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+              className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
             />
           </div>
 
@@ -104,7 +104,7 @@ export default function AdminAbout() {
               required
               value={formData.description2}
               onChange={(e) => setFormData({ ...formData, description2: e.target.value })}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+              className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
             />
           </div>
 

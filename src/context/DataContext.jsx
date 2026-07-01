@@ -17,6 +17,7 @@ export const DataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [videos, setVideos] = useState([]);
   const [industries, setIndustries] = useState([]);
+  const [beforeAfterList, setBeforeAfterList] = useState([]);
 
   const [projects, setProjects] = useState([]);
   const [services, setServices] = useState([]);
@@ -63,7 +64,8 @@ export const DataProvider = ({ children }) => {
           fetch(`${API_URL}/machinery`),
           fetch(`${API_URL}/videos`),
           fetch(`${API_URL}/industries`),
-          fetch(`${API_URL}/categories`)
+          fetch(`${API_URL}/categories`),
+          fetch(`${API_URL}/before-after`)
         ]);
 
         if (servicesRes.ok) {
@@ -143,8 +145,12 @@ export const DataProvider = ({ children }) => {
 
         if (categoriesRes.ok) {
           const catData = await categoriesRes.json();
-          // catData is just array of strings as per routes/categories.js
           setCategories(catData);
+        }
+        
+        if (beforeAfterRes) {
+          const baData = await beforeAfterRes.json();
+          setBeforeAfterList(baData.map(b => ({ ...b, id: b._id })));
         }
       } catch (err) {
         console.error("Error fetching data from MongoDB:", err);
@@ -545,6 +551,36 @@ export const DataProvider = ({ children }) => {
     } catch (err) { console.error(err); }
   };
 
+  // Before/After Methods
+  const addBeforeAfter = async (item) => {
+    try {
+      const res = await fetch(`${API_URL}/before-after`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setBeforeAfterList((prev) => [...prev, { ...newItem, id: newItem._id }]);
+      }
+    } catch (err) { console.error(err); }
+  };
+  const updateBeforeAfter = async (id, updated) => {
+    try {
+      const res = await fetch(`${API_URL}/before-after/${id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const newItem = await res.json();
+        setBeforeAfterList((prev) => prev.map((i) => (i.id === id ? { ...newItem, id: newItem._id } : i)));
+      }
+    } catch (err) { console.error(err); }
+  };
+  const deleteBeforeAfter = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/before-after/${id}`, { method: 'DELETE' });
+      if (res.ok) setBeforeAfterList((prev) => prev.filter((i) => i.id !== id));
+    } catch (err) { console.error(err); }
+  };
+
   const value = {
     categories,
     projects,
@@ -562,6 +598,7 @@ export const DataProvider = ({ children }) => {
     machinery,
     videos,
     industries,
+    beforeAfterList,
     isAuthenticated,
     loading,
     error,
@@ -597,7 +634,10 @@ export const DataProvider = ({ children }) => {
     deleteVideo,
     addIndustry,
     updateIndustry,
-    deleteIndustry
+    deleteIndustry,
+    addBeforeAfter,
+    updateBeforeAfter,
+    deleteBeforeAfter
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

@@ -32,7 +32,7 @@ export default function AdminContact() {
               required
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+              className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
             />
           </div>
 
@@ -44,7 +44,7 @@ export default function AdminContact() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
               />
             </div>
             
@@ -55,7 +55,7 @@ export default function AdminContact() {
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
                 placeholder="+91 1234567890"
               />
             </div>
@@ -67,7 +67,7 @@ export default function AdminContact() {
                 required
                 value={formData.whatsapp}
                 onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none transition-shadow"
                 placeholder="911234567890 (no plus)"
               />
               <p className="text-xs text-gray-500 mt-1">Include country code without '+', e.g., 917505487656</p>

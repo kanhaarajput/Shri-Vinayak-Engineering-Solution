@@ -4,21 +4,21 @@ import { fadeUp } from '@utils/animations'
 import { HiSwitchHorizontal } from 'react-icons/hi'
 import { useData } from '../../context/DataContext'
 
-import defaultImgBefore from '@assets/die_before.png'
-import defaultImgAfter from '@assets/die_after.png'
-
 export default function BeforeAfterSlider() {
-  const { siteContent } = useData();
-  const galleryData = siteContent?.gallery?.beforeAfter || {};
-  
-  const imgBefore = galleryData.beforeImage || defaultImgBefore;
-  const imgAfter = galleryData.afterImage || defaultImgAfter;
+  const { beforeAfterList } = useData();
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
   const containerRef = useRef(null)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  if (!beforeAfterList || beforeAfterList.length === 0) return null;
+
+  const activeItem = beforeAfterList[activeIndex] || beforeAfterList[0];
+  const imgBefore = activeItem.beforeImage;
+  const imgAfter = activeItem.afterImage;
 
   const handleMove = (clientX) => {
     if (!containerRef.current) return
@@ -42,7 +42,7 @@ export default function BeforeAfterSlider() {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseup', () => setIsDragging(false))
-      window.addEventListener('touchmove', handleTouchMove)
+      window.addEventListener('touchmove', handleTouchMove, { passive: false })
       window.addEventListener('touchend', () => setIsDragging(false))
     }
     return () => {
@@ -52,6 +52,11 @@ export default function BeforeAfterSlider() {
       window.removeEventListener('touchend', () => setIsDragging(false))
     }
   }, [isDragging])
+
+  // Reset slider position when switching images
+  useEffect(() => {
+    setSliderPosition(50);
+  }, [activeIndex]);
 
   return (
     <section ref={ref} className="py-24 bg-gray-50 dark:bg-[#030610] relative overflow-hidden">
@@ -81,7 +86,7 @@ export default function BeforeAfterSlider() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 select-none group touch-none"
+          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 select-none group touch-none bg-gray-900"
           ref={containerRef}
           onMouseDown={(e) => {
             setIsDragging(true)
@@ -104,7 +109,7 @@ export default function BeforeAfterSlider() {
             />
             
             {/* Before Label */}
-            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
+            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 pointer-events-none">
               <span className="px-4 py-2 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md text-gray-900 dark:text-white text-sm font-bold tracking-widest uppercase rounded-full border border-black/10 dark:border-white/10">
                 Before
               </span>
@@ -112,7 +117,7 @@ export default function BeforeAfterSlider() {
 
             {/* Foreground Image Wrapper (After) */}
             <div 
-              className="absolute inset-0 z-20 overflow-hidden border-r border-white/50"
+              className="absolute inset-0 z-20 overflow-hidden border-r border-white/50 pointer-events-none"
               style={{ width: `${sliderPosition}%` }}
             >
               {/* Foreground Image */}
@@ -139,13 +144,42 @@ export default function BeforeAfterSlider() {
               className="absolute top-0 bottom-0 z-30 w-1 bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] cursor-ew-resize flex items-center justify-center -translate-x-1/2"
               style={{ left: `${sliderPosition}%` }}
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-green-400 group-hover:scale-110 transition-transform">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-2xl text-gray-900 border-4 border-green-400 group-hover:scale-110 transition-transform pointer-events-none">
                 <HiSwitchHorizontal size={20} />
               </div>
             </div>
 
           </div>
+          
+          {/* Overlay text if title/description exist */}
+          {(activeItem.title || activeItem.description) && (
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pointer-events-none">
+              <h3 className="text-white text-xl font-bold">{activeItem.title}</h3>
+              {activeItem.description && <p className="text-gray-300 text-sm mt-1">{activeItem.description}</p>}
+            </div>
+          )}
         </motion.div>
+
+        {/* Thumbnails to Switch Between Items */}
+        {beforeAfterList.length > 1 && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-8 max-w-4xl mx-auto flex gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar"
+          >
+            {beforeAfterList.map((item, index) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveIndex(index)}
+                className={`relative shrink-0 snap-center w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeIndex === index ? 'border-green-500 scale-105 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : 'border-transparent opacity-60 hover:opacity-100'}`}
+              >
+                <img src={item.afterImage} className="w-full h-full object-cover" alt={item.title} />
+                <div className={`absolute inset-0 bg-black/40 transition-colors ${activeIndex === index ? 'bg-transparent' : ''}`} />
+              </button>
+            ))}
+          </motion.div>
+        )}
 
       </div>
     </section>

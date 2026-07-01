@@ -96,7 +96,7 @@ export default function AdminTestimonials() {
                   type="text" required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
               <div>
@@ -105,7 +105,7 @@ export default function AdminTestimonials() {
                   type="text" required
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
               <div>
@@ -114,7 +114,7 @@ export default function AdminTestimonials() {
                   type="number" min="1" max="5" required
                   value={formData.rating}
                   onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function AdminTestimonials() {
                 required rows={3}
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
 

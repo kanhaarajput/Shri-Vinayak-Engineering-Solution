@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
@@ -125,10 +126,10 @@ export default function AdminIndustries() {
         </table>
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && createPortal(
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-white/[0.06]">
+          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="flex justify-between items-center p-6 border-b border-white/[0.06] shrink-0">
               <h3 className="text-xl font-bold text-white">
                 {editingId ? 'Edit Application' : 'Add New Application'}
               </h3>
@@ -145,7 +146,7 @@ export default function AdminIndustries() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
 
@@ -156,7 +157,7 @@ export default function AdminIndustries() {
                   rows={2}
                   value={formData.desc}
                   onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
 
@@ -168,7 +169,7 @@ export default function AdminIndustries() {
                     required
                     value={formData.iconName}
                     onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                    className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                    className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                     placeholder="FaIndustry"
                   />
                   <p className="text-xs text-gray-500 mt-1">e.g., FaIndustry, FaCar, FaTools (From react-icons/fa)</p>
@@ -194,24 +195,25 @@ export default function AdminIndustries() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex justify-end gap-3 pt-4 border-t border-white/[0.06]">
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="px-4 py-2 border border-white/10 rounded-lg text-gray-300 font-medium hover:bg-gray-950 transition-colors"
+                  className="px-4 py-2 border border-white/10 rounded-lg text-gray-300 hover:bg-gray-950 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-500 rounded-lg text-white font-medium hover:bg-green-600 transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-green-500 rounded-lg text-white font-medium hover:bg-green-600 transition-colors"
                 >
                   {editingId ? 'Save Changes' : 'Add Application'}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

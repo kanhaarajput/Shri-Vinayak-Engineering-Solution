@@ -86,7 +86,7 @@ export default function AdminMachinery() {
               <input
                 type="text" required value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
             
@@ -95,7 +95,7 @@ export default function AdminMachinery() {
               <textarea
                 required rows={3} value={formData.specs} placeholder="E.g. Max Load: 500kg, Accuracy: 0.01mm, Bed Size: 1000x500mm"
                 onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
 

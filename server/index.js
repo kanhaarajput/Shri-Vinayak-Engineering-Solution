@@ -35,6 +35,7 @@ const machineryRoutes = require('./routes/machinery');
 const videosRoutes = require('./routes/videos');
 const industriesRoutes = require('./routes/industries');
 const categoriesRoutes = require('./routes/categories');
+const beforeAfterRoutes = require('./routes/beforeAfter');
 
 app.use('/api/services', servicesRoutes);
 app.use('/api/gallery', galleryRoutes);
@@ -53,6 +54,7 @@ app.use('/api/machinery', machineryRoutes);
 app.use('/api/videos', videosRoutes);
 app.use('/api/industries', industriesRoutes);
 app.use('/api/categories', categoriesRoutes);
+app.use('/api/before-after', beforeAfterRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

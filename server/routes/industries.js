@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
     desc: req.body.desc,
     iconName: req.body.iconName,
     color: req.body.color,
+    image: req.body.image,
   });
 
   try {
@@ -39,6 +40,7 @@ router.put('/:id', async (req, res) => {
     if (req.body.desc != null) industry.desc = req.body.desc;
     if (req.body.iconName != null) industry.iconName = req.body.iconName;
     if (req.body.color != null) industry.color = req.body.color;
+    if (req.body.image !== undefined) industry.image = req.body.image;
 
     const updatedIndustry = await industry.save();
     res.json(updatedIndustry);

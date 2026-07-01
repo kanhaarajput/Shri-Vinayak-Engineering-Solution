@@ -41,7 +41,7 @@ export default function AdminHome() {
                       required
                       value={stat.value}
                       onChange={(e) => handleStatChange(index, 'value', e.target.value)}
-                      className="w-full border border-white/10 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-green-500 outline-none"
+                      className="bg-gray-950 text-white w-full border border-white/10 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-green-500 outline-none"
                     />
                   </div>
                   <div className="w-2/3">
@@ -51,7 +51,7 @@ export default function AdminHome() {
                       required
                       value={stat.label}
                       onChange={(e) => handleStatChange(index, 'label', e.target.value)}
-                      className="w-full border border-white/10 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-green-500 outline-none"
+                      className="bg-gray-950 text-white w-full border border-white/10 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-green-500 outline-none"
                     />
                   </div>
                 </div>

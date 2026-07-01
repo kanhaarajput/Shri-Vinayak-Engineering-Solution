@@ -14,13 +14,16 @@ export default function ProjectCategories() {
   }
 
   // Safe icon renderer
-  const renderIcon = (iconName, color) => {
-    const IconComponent = FaIcons[iconName];
+  const renderIcon = (cat) => {
+    if (cat.image) {
+      return <img src={cat.image} alt={cat.title} className="w-full h-full object-cover rounded-2xl" />;
+    }
+    const IconComponent = FaIcons[cat.iconName];
     if (IconComponent) {
-      return <IconComponent size={24} style={{ color }} />;
+      return <IconComponent size={24} style={{ color: cat.color }} />;
     }
     const FallbackIcon = FaIcons['FaIndustry'];
-    return <FallbackIcon size={24} style={{ color }} />;
+    return <FallbackIcon size={24} style={{ color: cat.color }} />;
   };
 
   return (
@@ -83,13 +86,13 @@ export default function ProjectCategories() {
 
               {/* Icon */}
               <div 
-                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 shadow-lg"
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 shadow-lg ${cat.image ? '' : 'p-3'}`}
                 style={{ 
-                  background: `linear-gradient(135deg, ${cat.color}20, transparent)`,
-                  border: `1px solid ${cat.color}40`
+                  background: cat.image ? 'transparent' : `linear-gradient(135deg, ${cat.color}20, transparent)`,
+                  border: cat.image ? 'none' : `1px solid ${cat.color}40`
                 }}
               >
-                {renderIcon(cat.iconName, cat.color)}
+                {renderIcon(cat)}
               </div>
 
               {/* Content */}

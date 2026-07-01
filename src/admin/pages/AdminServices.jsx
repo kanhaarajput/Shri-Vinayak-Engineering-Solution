@@ -1,14 +1,15 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
-import { Plus, Edit2, Trash2, X } from 'lucide-react';
-import { 
-  HiStar, HiPencil, HiCog, HiScissors, 
-  HiFire, HiBeaker, HiCubeTransparent, HiShieldCheck 
+import { Plus, Edit2, Trash2, X, Upload, Loader } from 'lucide-react';
+import {
+  HiStar, HiPencil, HiCog, HiScissors,
+  HiFire, HiBeaker, HiCubeTransparent, HiShieldCheck
 } from 'react-icons/hi';
 import { FaWrench } from 'react-icons/fa';
 
 const iconMap = {
-  HiStar, HiPencil, HiCog, HiScissors, 
+  HiStar, HiPencil, HiCog, HiScissors,
   HiFire, HiBeaker, HiCubeTransparent, HiShieldCheck,
   FaWrench
 };
@@ -17,7 +18,8 @@ export default function AdminServices() {
   const { services, addService, updateService, deleteService } = useData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
@@ -116,13 +118,13 @@ export default function AdminServices() {
                   <td className="p-4 font-medium text-white">{service.title}</td>
                   <td className="p-4 text-sm text-gray-500 max-w-xs truncate">{service.desc}</td>
                   <td className="p-4 text-right">
-                    <button 
+                    <button
                       onClick={() => openModal(service)}
                       className="p-2 text-gray-400 dark:text-gray-400 hover:text-blue-500 transition-colors"
                     >
                       <Edit2 size={18} />
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         if (window.confirm('Are you sure you want to delete this service?')) {
                           deleteService(service.id);
@@ -140,19 +142,19 @@ export default function AdminServices() {
         </table>
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && createPortal(
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-white/[0.06]">
+          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col">
+            <div className="flex justify-between items-center p-6 border-b border-white/[0.06] shrink-0">
               <h3 className="text-xl font-bold text-white">
                 {editingId ? 'Edit Service' : 'Add New Service'}
               </h3>
-              <button onClick={closeModal} className="text-gray-400 dark:text-gray-400 hover:text-gray-400">
+              <button type="button" onClick={closeModal} className="text-gray-400 dark:text-gray-400 hover:text-gray-400">
                 <X size={24} />
               </button>
             </div>
-            
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
                 <input
@@ -160,7 +162,7 @@ export default function AdminServices() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
 
@@ -171,17 +173,17 @@ export default function AdminServices() {
                   rows={2}
                   value={formData.desc}
                   onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">Icon Name</label>
                   <select
                     value={formData.iconName}
                     onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                    className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                    className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                   >
                     {Object.keys(iconMap).map(icon => (
                       <option key={icon} value={icon}>{icon}</option>
@@ -201,15 +203,45 @@ export default function AdminServices() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Image URL (For Services Grid)</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
-                  placeholder="/assets/svc_vmc.png or https://..."
-                />
+                <label className="block text-sm font-medium text-gray-300 mb-1">Service Image</label>
+                <div className="flex items-center gap-4">
+                  {formData.image ? (
+                    <div className="flex items-center gap-4">
+                      <img src={formData.image} alt="Preview" className="h-16 w-16 object-cover rounded-lg border border-white/10" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, image: '' })}
+                        className="text-sm text-red-500 hover:text-red-400 font-medium"
+                      >
+                        Remove Image
+                      </button>
+                    </div>
+                  ) : (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setIsUploadingImage(true);
+                        try {
+                          const uploadData = new FormData();
+                          uploadData.append('image', file);
+                          const API_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+                          const res = await fetch(`${API_URL}/upload`, { method: 'POST', body: uploadData });
+                          const data = await res.json();
+                          setFormData({ ...formData, image: data.url });
+                        } catch (err) {
+                          console.error('Upload failed:', err);
+                          alert('Image upload failed');
+                        } finally {
+                          setIsUploadingImage(false);
+                        }
+                      }}
+                      className="flex-1 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500/10 file:text-green-500 hover:file:bg-green-500/20"
+                    />
+                  )}
+                </div>
               </div>
 
               <div>
@@ -218,7 +250,7 @@ export default function AdminServices() {
                   rows={2}
                   value={formData.benefits}
                   onChange={(e) => setFormData({ ...formData, benefits: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                   placeholder="High accuracy&#10;Fast repair"
                 />
               </div>
@@ -229,7 +261,7 @@ export default function AdminServices() {
                   rows={2}
                   value={formData.applications}
                   onChange={(e) => setFormData({ ...formData, applications: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                   placeholder="Die repair&#10;Mold repair"
                 />
               </div>
@@ -240,7 +272,7 @@ export default function AdminServices() {
                   rows={2}
                   value={formData.features}
                   onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                   placeholder="Milling&#10;Drilling"
                 />
               </div>
@@ -262,7 +294,8 @@ export default function AdminServices() {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

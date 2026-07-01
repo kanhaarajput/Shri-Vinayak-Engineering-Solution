@@ -60,7 +60,7 @@ export default function AdminWorkflow() {
                 <input
                   type="text" required value={formData.step}
                   onChange={(e) => setFormData({ ...formData, step: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
               <div>
@@ -68,7 +68,7 @@ export default function AdminWorkflow() {
                 <input
                   type="text" required value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
             </div>
@@ -78,7 +78,7 @@ export default function AdminWorkflow() {
               <textarea
                 required rows={2} value={formData.desc}
                 onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
 

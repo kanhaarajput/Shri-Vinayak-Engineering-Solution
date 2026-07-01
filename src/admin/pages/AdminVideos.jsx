@@ -142,13 +142,13 @@ export default function AdminVideos() {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-white/[0.06]">
+        <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto p-4 flex justify-center items-start pt-10 pb-10">
+          <div className="bg-gray-900 rounded-xl shadow-xl w-full max-w-lg flex flex-col">
+            <div className="flex justify-between items-center p-6 border-b border-white/[0.06] shrink-0">
               <h3 className="text-xl font-bold text-white">
                 {editingId ? 'Edit Video' : 'Add New Video'}
               </h3>
-              <button onClick={closeModal} className="text-gray-400 hover:text-gray-400" disabled={isUploading}>
+              <button type="button" onClick={closeModal} className="text-gray-400 hover:text-gray-400" disabled={isUploading}>
                 <X size={24} />
               </button>
             </div>
@@ -161,7 +161,7 @@ export default function AdminVideos() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
 
@@ -172,7 +172,7 @@ export default function AdminVideos() {
                   value={formData.videoUrl}
                   onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
                   placeholder="https://youtube.com/..."
-                  className="w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="bg-gray-950 text-white w-full border border-white/10 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none"
                 />
               </div>
 

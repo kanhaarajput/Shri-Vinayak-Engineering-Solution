@@ -15,7 +15,7 @@ import heroBg from '@assets/services_hero_bg.png'
 
 export default function Services() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <SEO 
         title="Our Services | Shri Vinayak Engineering Solutions"
         description="Explore our precision engineering services: Laser Welding, Laser Engraving, VMC Wirecut Job Work, and Custom Manufacturing."

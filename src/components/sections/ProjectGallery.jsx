@@ -40,7 +40,10 @@ export default function ProjectGallery() {
         </div>
 
         {/* Masonry Grid */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
+        >
           <AnimatePresence>
             {filteredProjects.map((project) => (
               <motion.div
@@ -61,19 +64,28 @@ export default function ProjectGallery() {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">
-                    {project.category}
-                  </span>
-                  <h3 className="text-white text-xl font-bold mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 text-sm mb-4 line-clamp-2">
-                    {project.desc}
-                  </p>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                    <HiArrowsExpand size={16} /> View Image
+                {/* Subtle dark gradient for text contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                {/* Glassmorphic Info Card */}
+                <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4 z-10">
+                  <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 sm:p-5 shadow-2xl transform transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-black/60 group-hover:border-white/20">
+                    <div className="flex justify-between items-center gap-4">
+                      <div className="flex-1 min-w-0">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 text-green-400 text-[10px] font-bold uppercase tracking-widest rounded-md mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                          {project.category}
+                        </span>
+                        <h3 className="text-white text-lg sm:text-xl font-bold leading-tight truncate">
+                          {project.title}
+                        </h3>
+                      </div>
+                      
+                      {/* Interactive Icon */}
+                      <div className="w-10 h-10 shrink-0 rounded-full bg-white/10 text-white flex items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-green-500 group-hover:shadow-[0_0_15px_rgba(34,197,94,0.5)] transition-all duration-500 ease-out">
+                        <HiArrowsExpand size={18} className="transform group-hover:rotate-90 transition-transform duration-500" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -123,8 +135,8 @@ export default function ProjectGallery() {
                     <h2 className="text-3xl font-black text-white mb-4">
                       {selectedImage.title}
                     </h2>
-                    <p className="text-gray-400 leading-relaxed">
-                      {selectedImage.desc}
+                    <p className="text-gray-400 leading-relaxed whitespace-pre-wrap">
+                      {selectedImage.description}
                     </p>
                   </div>
                 </div>
