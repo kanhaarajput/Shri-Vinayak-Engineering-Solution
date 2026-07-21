@@ -64,7 +64,7 @@ export default function ServicesGrid() {
               whileHover={hoverLift}
               className="group relative h-full flex flex-col cursor-pointer"
             >
-              <Link to={`/services/${service.id}`} className="absolute inset-0 z-30" aria-label={`Explore ${service.title}`} />
+              <Link to={`/services/${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} className="absolute inset-0 z-30" aria-label={`Explore ${service.title}`} />
               {/* Hover Gradient Border */}
               <div
                 className="absolute -inset-0.5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"

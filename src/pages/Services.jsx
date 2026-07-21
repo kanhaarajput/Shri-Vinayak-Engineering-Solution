@@ -17,8 +17,9 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <SEO 
-        title="Our Services | Shri Vinayak Engineering Solutions"
-        description="Explore our precision engineering services: Laser Welding, Laser Engraving, VMC Wirecut Job Work, and Custom Manufacturing."
+        title="Engineering Services | CNC Machining, VMC, Wire Cut EDM, Laser Welding"
+        description="Explore our complete engineering services including CNC Machining, Wire Cut EDM, EDM Drill, Laser Welding, Laser Engraving, Argon Welding, Tool Room and Die Manufacturing."
+        url="https://www.shrivinayakengineeringsolutions.com/services"
       />
 
       {/* ── Services Hero Section ────────────────────────────────────────── */}

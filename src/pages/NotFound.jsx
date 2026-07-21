@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Button } from '@components/ui/button'
+import SEO from '@components/seo/SEO'
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
+      <SEO 
+        title="404 Page Not Found | Shri Vinayak Engineering Solutions"
+        description="The page you are looking for does not exist. Return to Shri Vinayak Engineering Solutions homepage."
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

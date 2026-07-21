@@ -9,8 +9,15 @@ export default function About() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white pt-28 pb-20 overflow-hidden relative">
       <SEO 
-        title="About Us | ShriVinayak Engineering Solution"
-        description="Meet the dedicated team behind the success of ShriVinayak Engineering Solution."
+        title="About Shri Vinayak Engineering Solutions | Precision Engineering Company"
+        description="Learn about Shri Vinayak Engineering Solutions, our experienced engineering team, advanced machinery, commitment to quality and precision manufacturing excellence."
+        url="https://www.shrivinayakengineeringsolutions.com/about"
+        schemas={[{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Shri Vinayak Engineering Solutions",
+          "url": "https://www.shrivinayakengineeringsolutions.com/"
+        }]}
       />
 
       {/* ── Background Elements ────────────────────────────────────── */}

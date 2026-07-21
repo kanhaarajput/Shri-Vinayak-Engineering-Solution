@@ -6,8 +6,9 @@ import RootLayout from '@components/layout/RootLayout'
 const Home = lazy(() => import('@pages/Home'))
 const About = lazy(() => import('@pages/About'))
 const Services = lazy(() => import('@pages/Services'))
-const ServicePage = lazy(() => import('@pages/ServicePage'))
+const ServiceDetail = lazy(() => import('@pages/ServiceDetail'))
 const Gallery = lazy(() => import('@pages/Gallery'))
+const Team = lazy(() => import('@pages/Team'))
 const Contact = lazy(() => import('@pages/Contact'))
 const NotFound = lazy(() => import('@pages/NotFound'))
 
@@ -33,8 +34,9 @@ const router = createBrowserRouter([
       { index: true,        element: <Home /> },
       { path: 'about',      element: <About /> },
       { path: 'services',   element: <Services /> },
-      { path: 'services/:id', element: <ServicePage /> },
+      { path: 'services/:slug', element: <ServiceDetail /> },
       { path: 'gallery',    element: <Gallery /> },
+      { path: 'team',       element: <Team /> },
       { path: 'contact',    element: <Contact /> },
     ],
   },

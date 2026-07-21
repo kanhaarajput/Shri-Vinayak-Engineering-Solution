@@ -25,11 +25,27 @@ const fadeUp = {
 export default function Home() {
   const { siteContent } = useData();
   const STATS = siteContent.home.stats;
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Shri Vinayak Engineering Solutions",
+    "url": "https://www.shrivinayakengineeringsolutions.com/",
+    "logo": "https://www.shrivinayakengineeringsolutions.com/favicon.jpeg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9876543210",
+      "contactType": "customer service"
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
       <SEO 
-        title="Industrial Laser Welding & VMC Services | Shri Vinayak"
-        description="Premium laser welding, VMC wirecut job work, die & mould manufacturing and repair services by Shri Vinayak Engineering Solutions."
+        title="Shri Vinayak Engineering Solutions | CNC Machining, Wire Cut EDM, VMC & Precision Engineering"
+        description="Shri Vinayak Engineering Solutions is a leading precision engineering company in Gurgaon offering CNC Machining, VMC Machining, Wire Cut EDM, EDM Drilling, Laser Welding, Laser Engraving, Argon Welding, Tool Room Services, Die & Mold Manufacturing."
+        url="https://www.shrivinayakengineeringsolutions.com/"
+        keywords="CNC Machining, Wire Cut EDM, VMC Machining, Precision Engineering, Tool Room, Laser Welding, Laser Engraving, EDM Drill, Argon Welding, Die Manufacturing, Mold Manufacturing"
+        schemas={[organizationSchema]}
       />
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
